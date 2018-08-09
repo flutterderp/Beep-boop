@@ -34,9 +34,14 @@ ul { list-style-position: inside; margin: 1rem auto; width: 97%; }
 li { padding-bottom: 0.1875rem; padding-left: 1.5625rem; text-indent: -1.4375rem; }
 /* End global styles */
 
-.masthead { margin: 0 auto; max-width: 75rem; overflow: auto; padding: 0 0.625rem; position: relative;
-	width: 100%; }
-.container { margin: 1rem auto; max-width: 75rem; width: 100%; }
+/* Utility classes */
+.clearfix { clear: both; }
+.float-left { float: left; }
+.float-right { float: right; }
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+/* End utility classes */
 
 /* Rows and columns */
 .row { display: table; margin: 0 auto; max-width: 75rem; table-layout: fixed; width: 100%; }
@@ -52,14 +57,28 @@ li { padding-bottom: 0.1875rem; padding-left: 1.5625rem; text-indent: -1.4375rem
 }
 /* End rows and columns */
 
-/* Utility classes */
-.clearfix { clear: both; }
-.float-left { float: left; }
-.float-right { float: right; }
-.text-center { text-align: center; }
-.text-left { text-align: left; }
-.text-right { text-align: right; }
-/* End utility classes */
+/* Menus and navigation */
+ul.menu { list-style: none; margin: 0; width: auto; }
+.menu li { padding: 0; text-indent: 0; }
+.menu a { display: block; padding: 0.375rem 0.4375rem; }
+
+.menu.vertical li { border-bottom: 0.0625rem dotted #215e87; }
+.menu.vertical li:last-child { border-bottom: 0; }
+.menu.vertical a { position: relative; }
+
+.breadcrumb { background: #f0f0f0; border-radius: 0.25rem; box-shadow: 0 0.0625rem 0.4375rem rgba(0,0,0,0.3);
+  -webkit-box-shadow: 0 0.0625rem 0.4375rem rgba(0,0,0,0.3); display: block; font-size: 0;
+  list-style: none; margin: 0 0 2rem; padding: 0.625rem 0.75rem; width: auto; }
+.breadcrumb li { padding: 0; text-indent: 0; }
+.breadcrumb li:not(:last-child)::after { content: '/'; margin-left: 0.75rem; }
+.breadcrumb > * { display: inline-block; font-size: 0.875rem; line-height: calc(20 / 14);
+  margin-right: 0.75rem; vertical-align: middle; }
+
+/* End navigation */
+
+.masthead { margin: 0 auto; max-width: 75rem; overflow: auto; padding: 0 0.625rem; position: relative;
+	width: 100%; }
+.container { margin: 1rem auto; max-width: 75rem; width: 100%; }
 
 /* Media queries */
 @media screen and (max-width: 919px) {

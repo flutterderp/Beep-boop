@@ -527,6 +527,7 @@
 /templates/system/*
 /templates/index.html
 /tmp/*
+/*.code-workspace
 /configuration.php
 /index.php
 /joomla.xml
