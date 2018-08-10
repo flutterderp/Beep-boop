@@ -32,12 +32,20 @@ img { display: inline-block; max-width: 100%; vertical-align: middle; }
 p { margin: 1.125rem 0; }
 ul { list-style-position: inside; margin: 1rem auto; width: 97%; }
 li { padding-bottom: 0.1875rem; padding-left: 1.5625rem; text-indent: -1.4375rem; }
+table { border: 0; border-collapse: collapse; margin: 1.5rem 0; }
+tbody tr:nth-child(even), thead tr { background: #f8f8f8; }
+td, th { border: 0.0625rem solid #f0f0f0; font-size: 0.875rem; line-height: 1.3125rem;
+  padding: 0.4375rem 0.75rem; }
+td { vertical-align: top; }
+th { text-align: left; vertical-align: middle; }
 /* End global styles */
 
 /* Utility classes */
 .clearfix { clear: both; }
 .float-left { float: left; }
 .float-right { float: right; }
+.label { background: #f0f0f0; border-radius: 0.3125rem; display: inline-block; font-size: 0.875rem;
+  line-height: 1.3125rem; padding: 0.3125rem 0.75rem; margin: 0.4375rem 0.3125rem; }
 .text-center { text-align: center; }
 .text-left { text-align: left; }
 .text-right { text-align: right; }
