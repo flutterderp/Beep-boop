@@ -26,8 +26,6 @@ h3 { font-size: 1.25rem; font-family: 'Open Sans', 'Helvetica Neue', Helvetica, 
 aside h3 { font-family: Caveat, cursive; font-size: 1.6875rem; line-height: calc(32 / 27);
   margin: 1rem 0; text-transform: none; }
 aside h3:first-child { margin-top: 0; }
-header, footer { background: #4b9cd3; color: #fff; min-height: 3.125rem; }
-header { margin: 0 0 1.5rem; position: fixed; top: 0; width: 100%; z-index: 1; }
 footer { margin: 1.5rem 0 0; }
 img { display: inline-block; max-width: 100%; vertical-align: middle; }
 p { margin: 1.125rem 0; }
@@ -70,10 +68,24 @@ th { text-align: left; vertical-align: middle; }
 }
 /* End rows and columns */
 
+/* Masthead */
+header, footer { background: #4b9cd3; color: #fff; min-height: 3.125rem; }
+header { margin: 0 0 1.5rem; position: relative; top: 0; width: 100%; z-index: 1; }
+.masthead { margin: 0 auto; max-width: 75rem; overflow: auto; padding: 0 0.625rem; position: relative;
+  width: 100%; }
+.masthead h1 { margin: 0.625rem 0 1.5rem; }
+
 /* Menus and navigation */
 ul.menu { list-style: none; margin: 0; width: auto; }
 .menu li { padding: 0; text-indent: 0; }
 .menu a { display: block; padding: 0.375rem 0.4375rem; }
+
+.mainmenu { font-size: 0; text-transform: uppercase; }
+.mainmenu a { color: #fefefe; padding: 0.625rem 1rem; position: relative; text-decoration: none; }
+.mainmenu div { display: inline-block; font-size: 1rem; letter-spacing: 0.0625rem; position: relative; }
+.mainmenu div:hover a { background: #2e83bd; }
+.mainmenu div:not(:last-child) a::after { border-right: 0.0625rem solid #2e83bd; content: '';
+  height: 100%; position: absolute; right: 0; top: 0; }
 
 .menu.vertical li { border-bottom: 0.0625rem dotted #215e87; }
 .menu.vertical li:last-child { border-bottom: 0; }
@@ -88,12 +100,13 @@ ul.menu { list-style: none; margin: 0; width: auto; }
   margin-right: 0.75rem; vertical-align: middle; }
 
 /* End navigation */
+/* End masthead */
 
-.masthead { margin: 0 auto; max-width: 75rem; overflow: auto; padding: 0 0.625rem; position: relative;
-	width: 100%; }
-.container { margin: 5rem auto 1rem; max-width: 75rem; width: 100%; }
+/* Copyarea */
+.container { margin: 3.375rem auto 1rem; max-width: 75rem; width: 100%; }
 
 .article-info { font-size: 0.8125rem; line-height: calc(20 / 13); margin: -0.625rem 0 0; }
+/* End copyarea */
 
 /* Media queries */
 @media screen and (max-width: 919px) {
