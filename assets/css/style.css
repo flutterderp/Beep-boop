@@ -118,6 +118,14 @@ aside > p:last-child, blockquote > p:last-child { margin-bottom: 0; }
 .article-info { font-size: 0.8125rem; line-height: calc(20 / 13); margin: -0.625rem 0 0; }
 .item-image { margin: 0.625rem auto 1rem; }
 .item-image img { max-height: 31.25rem; border: 0.0625rem solid #215e87; }
+
+.menu.vertical li.lastfm-track { border-bottom: 0; }
+a.lastfm-link { font-size: 0; }
+span[class*='lastfm-'] { display: inline-block; font-size: 0.875rem; vertical-align: middle; }
+span.lastfm-img { text-align: right; width: 2.625rem; }
+span.lastfm-title { text-decoration: underline; width: calc(100% - 2.625rem); }
+.lastfm-link:active .lastfm-title, .lastfm-link:focus .lastfm-title,
+  .lastfm-link:hover .lastfm-title { text-decoration: none; }
 /* End copyarea */
 
 /* Footer */
