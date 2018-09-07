@@ -68,6 +68,7 @@ header { margin: 0 0 1.5rem; position: relative; top: 0; width: 100%; z-index: 1
 .masthead { margin: 0 auto; max-width: 75rem; overflow: auto; padding: 0 0.625rem; position: relative;
   width: 100%; }
 .masthead h1 { margin: 0.625rem 0 1.5rem; }
+/* End masthead */
 
 /* Menus and navigation */
 ul.menu { list-style: none; margin: 0; width: auto; }
@@ -92,11 +93,19 @@ ul.menu { list-style: none; margin: 0; width: auto; }
 .breadcrumb li:not(:last-child)::after { content: '/'; margin-left: 0.75rem; }
 .breadcrumb > * { display: inline-block; font-size: 0.875rem; line-height: calc(20 / 14);
   margin-right: 0.75rem; vertical-align: middle; }
+
+nav.pagination { clear: both; margin: 3.125rem auto 2rem; }
+.pagination ul { display: block; font-size: 0; list-style: none; margin: 0; }
+.pagination li { background: #f0f0f0; border-radius: 0.3125rem; display: inline-block;
+  font-size: 1rem; line-height: 1; margin: 0 0.3125rem; padding: 0; text-indent: 0; vertical-align: middle; }
+/* .pagination li:first-child { margin-left: 0; } */
+.pagination a { color: inherit; display: block; padding: 0.5rem 0.75rem; text-decoration: none; }
+.pagination li:active, .pagination li:focus, .pagination li:hover { background: #e8e8e8; }
+.pagination li:active a, .pagination li:focus a, .pagination li:hover a { text-decoration: underline; }
 /* End navigation */
-/* End masthead */
 
 /* Copyarea */
-article.lead-item:not(:last-child)::after { border-bottom: 0.0625rem solid #cacaca; content: '';
+article.lead-item:not(:last-of-type)::after { border-bottom: 0.0625rem solid #cacaca; content: '';
   display: block; margin: 2rem auto; width: 100%; }
 
 aside, blockquote { background: #f8f8f8; margin: 1.6875rem 0; padding: 1.25rem 1.5rem; }
