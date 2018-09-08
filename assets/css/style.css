@@ -51,12 +51,12 @@ th { text-align: left; vertical-align: middle; }
 .row { display: table; margin: 0 auto; max-width: 75rem; table-layout: fixed; width: 100%; }
 .column { display: table-cell; padding: 0 1.5rem; vertical-align: top; }
 .contentarea { width: 65.75%; }
-.sidebar { width: 73.7%; }
+.sidebar { width: 34.25%; }
 
 @supports (display: flex) {
   .row { display: flex; flex-wrap: wrap; table-layout: initial; }
   .column { display: block; flex: 1; }
-  .contentarea { flex: 2; order: 2; }
+  .contentarea { flex: 2.5; order: 2; }
   .col2 { flex: 2; }
   .col3 { flex: 3; }
 }
