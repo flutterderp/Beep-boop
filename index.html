@@ -10,7 +10,7 @@
 
     <title>Beep Boop</title>
   </head>
-  <body>
+  <body itemscope itemtype="https://schema.org/WebPage">
     <header>
       <section class="masthead">
         <h1>Sitename</h1>
@@ -35,85 +35,89 @@
 
       <div class="row">
         <section class="contentarea column">
-          <article>
-            <h1>Beep boop</h1>
+          <article itemscope itemtype="https://schema.org/Article">
+            <h1 itemprop="name">Beep boop</h1>
+
             <div class="article-info">
               <div class="created">
-                <time datetime="2014-10-05T14:24:27-04:00" itemprop="dateCreate">
+                <time datetime="2014-10-05T14:24:27-04:00" itemprop="datePublished">
                   Posted on 5 Oct 2014
                 </time>
-                <span class="createdby">by Gracelynn</span>
+                <span class="createdby">by <span itemprop="author">Gracelynn</span></span>
               </div>
             </div>
-            <div class="item-image">
-              <!-- <img src="https://78.media.tumblr.com/2b54f38d7226ad9a1822d342117eee56/tumblr_pe5p0smeci1rqb8bbo1_1280.png" alt="image" width="1280"> -->
-              <img src="https://78.media.tumblr.com/6f11ac01d71c825f1ae68044f92fc478/tumblr_p8e7ikMy821rqb8bbo1_1280.png" alt="image" width="1280">
-              <!-- <img src="https://78.media.tumblr.com/557c2181ffb8074c9cf95a84bed7ab79/tumblr_pdsfvrz0yX1rqb8bbo1_1280.png" alt="image" width="1280"> -->
-            </div>
-            <p>Lorem ipsum dolor sit amet, <a href="#">consectetur adipiscing elit</a>. Duis posuere nisl vitae sem cursus, vitae convallis turpis egestas. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dapibus tempus ligula vel fermentum. Pellentesque cursus ullamcorper vulputate. Suspendisse quam tortor, feugiat nec interdum et, mattis et nisi. Integer et hendrerit lacus, sit amet pellentesque nisi. Phasellus et rutrum purus. Mauris pulvinar semper leo, quis pulvinar massa porttitor eget.</p>
-            <h2>Nam rutrum nisl mi, sit amet ornare.</h2>
-            <p>Vivamus nec porta metus. Sed porttitor ex ligula, vel mattis nibh hendrerit quis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; In mattis interdum felis quis euismod. Etiam malesuada, turpis id efficitur vulputate, nulla velit semper justo, ac aliquam purus felis vel lacus. Donec in porttitor dui. Nunc id pulvinar purus. Morbi in arcu arcu. Phasellus mollis arcu et lacus gravida auctor. Donec elementum interdum felis, quis ornare tortor suscipit quis. Proin at enim id lectus placerat tincidunt. Cras mi leo, laoreet in auctor sed, suscipit vitae dolor.</p>
-            <div class="table-wrapper">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Ut pharetra sem.</th>
-                    <th>Curabitur eleifend ullamcorper.</th>
-                    <th>Aliquam pulvinar euismod.</th>
-                    <th>Nunc eu nibh.</th>
-                    <th>Cras eu dui quis tortor.</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Fusce quis mollis lorem. Suspendisse.</td>
-                    <td>Aliquam sem erat, volutpat nec.</td>
-                    <td>Curabitur auctor metus nec massa.</td>
-                    <td>Suspendisse potenti. Donec luctus est.</td>
-                    <td>Aenean vulputate eu erat vel.</td>
-                  </tr>
-                  <tr>
-                    <td>Fusce quis mollis lorem. Suspendisse.</td>
-                    <td>Aliquam sem erat, volutpat nec.</td>
-                    <td>Curabitur auctor metus nec massa.</td>
-                    <td>Suspendisse potenti. Donec luctus est.</td>
-                    <td>Nam vulputate justo vitae quam.</td>
-                  </tr>
-                  <tr>
-                    <td>Fusce quis mollis lorem. Suspendisse.</td>
-                    <td>Aliquam sem erat, volutpat nec.</td>
-                    <td>Curabitur auctor metus nec massa.</td>
-                    <td>Suspendisse potenti. Donec luctus est.</td>
-                    <td>Phasellus libero diam, posuere vitae.</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
 
-            <blockquote>
-              <p>Fusce a lacinia ex, sit amet rutrum risus. Fusce tortor elit, congue non laoreet a, posuere et lacus. Cras vestibulum tempor pellentesque. Sed semper porta risus, non dapibus justo euismod sed. Morbi bibendum sodales turpis auctor gravida. Nullam cursus quis elit et finibus. Cras sodales nec neque sit amet vestibulum. Quisque viverra in metus et imperdiet.</p>
-            </blockquote>
-            <h3>Nam rutrum nisl mi, sit amet ornare.</h3>
-            <p>Sed ex diam, maximus ac orci nec, laoreet mollis dolor. Vivamus laoreet pharetra ipsum, iaculis semper leo viverra ut. Donec finibus ultricies pharetra. Curabitur leo felis, interdum vitae elit eu, feugiat tincidunt dui. Curabitur sodales purus a risus pharetra dapibus. Aenean dictum ipsum risus, quis placerat sem sollicitudin id. Curabitur ac mattis nunc. Maecenas elementum elementum risus ac ultricies.</p>
+            <section itemprop="articleBody">
+              <div class="item-image">
+                <!-- <img src="https://78.media.tumblr.com/2b54f38d7226ad9a1822d342117eee56/tumblr_pe5p0smeci1rqb8bbo1_1280.png" alt="image" width="1280" itemprop="image"> -->
+                <img src="https://78.media.tumblr.com/6f11ac01d71c825f1ae68044f92fc478/tumblr_p8e7ikMy821rqb8bbo1_1280.png" alt="image" width="1280" itemprop="image">
+                <!-- <img src="https://78.media.tumblr.com/557c2181ffb8074c9cf95a84bed7ab79/tumblr_pdsfvrz0yX1rqb8bbo1_1280.png" alt="image" width="1280" itemprop="image"> -->
+              </div>
+              <p>Lorem ipsum dolor sit amet, <a href="#">consectetur adipiscing elit</a>. Duis posuere nisl vitae sem cursus, vitae convallis turpis egestas. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dapibus tempus ligula vel fermentum. Pellentesque cursus ullamcorper vulputate. Suspendisse quam tortor, feugiat nec interdum et, mattis et nisi. Integer et hendrerit lacus, sit amet pellentesque nisi. Phasellus et rutrum purus. Mauris pulvinar semper leo, quis pulvinar massa porttitor eget.</p>
+              <h2>Nam rutrum nisl mi, sit amet ornare.</h2>
+              <p>Vivamus nec porta metus. Sed porttitor ex ligula, vel mattis nibh hendrerit quis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; In mattis interdum felis quis euismod. Etiam malesuada, turpis id efficitur vulputate, nulla velit semper justo, ac aliquam purus felis vel lacus. Donec in porttitor dui. Nunc id pulvinar purus. Morbi in arcu arcu. Phasellus mollis arcu et lacus gravida auctor. Donec elementum interdum felis, quis ornare tortor suscipit quis. Proin at enim id lectus placerat tincidunt. Cras mi leo, laoreet in auctor sed, suscipit vitae dolor.</p>
+              <div class="table-wrapper">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Ut pharetra sem.</th>
+                      <th>Curabitur eleifend ullamcorper.</th>
+                      <th>Aliquam pulvinar euismod.</th>
+                      <th>Nunc eu nibh.</th>
+                      <th>Cras eu dui quis tortor.</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Fusce quis mollis lorem. Suspendisse.</td>
+                      <td>Aliquam sem erat, volutpat nec.</td>
+                      <td>Curabitur auctor metus nec massa.</td>
+                      <td>Suspendisse potenti. Donec luctus est.</td>
+                      <td>Aenean vulputate eu erat vel.</td>
+                    </tr>
+                    <tr>
+                      <td>Fusce quis mollis lorem. Suspendisse.</td>
+                      <td>Aliquam sem erat, volutpat nec.</td>
+                      <td>Curabitur auctor metus nec massa.</td>
+                      <td>Suspendisse potenti. Donec luctus est.</td>
+                      <td>Nam vulputate justo vitae quam.</td>
+                    </tr>
+                    <tr>
+                      <td>Fusce quis mollis lorem. Suspendisse.</td>
+                      <td>Aliquam sem erat, volutpat nec.</td>
+                      <td>Curabitur auctor metus nec massa.</td>
+                      <td>Suspendisse potenti. Donec luctus est.</td>
+                      <td>Phasellus libero diam, posuere vitae.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
 
-            <ul>
-              <li>Pellentesque faucibus, velit in pellentesque iaculis, odio.</li>
-              <li>Nam at laoreet risus. Cras elementum et.</li>
-              <li>Sed ac cursus erat, sed tristique orci.</li>
-            </ul>
+              <blockquote>
+                <p>Fusce a lacinia ex, sit amet rutrum risus. Fusce tortor elit, congue non laoreet a, posuere et lacus. Cras vestibulum tempor pellentesque. Sed semper porta risus, non dapibus justo euismod sed. Morbi bibendum sodales turpis auctor gravida. Nullam cursus quis elit et finibus. Cras sodales nec neque sit amet vestibulum. Quisque viverra in metus et imperdiet.</p>
+              </blockquote>
+              <h3>Nam rutrum nisl mi, sit amet ornare.</h3>
+              <p>Sed ex diam, maximus ac orci nec, laoreet mollis dolor. Vivamus laoreet pharetra ipsum, iaculis semper leo viverra ut. Donec finibus ultricies pharetra. Curabitur leo felis, interdum vitae elit eu, feugiat tincidunt dui. Curabitur sodales purus a risus pharetra dapibus. Aenean dictum ipsum risus, quis placerat sem sollicitudin id. Curabitur ac mattis nunc. Maecenas elementum elementum risus ac ultricies.</p>
 
-            <p>Nam posuere elementum consequat. Integer tempus pulvinar faucibus. Quisque at auctor arcu, a rhoncus lacus. Proin accumsan egestas orci, eget lobortis felis consectetur vel. Proin maximus ante vitae iaculis porta. Etiam sed gravida lorem. Donec vitae nunc nec magna mattis faucibus et et enim. Pellentesque eu congue purus. Cras risus sem, dictum eu ligula vitae, commodo venenatis nulla. Sed massa lacus, scelerisque sed quam vel, vehicula porta lectus. Aliquam erat volutpat. Maecenas pulvinar diam sed massa elementum tempor. Nam quis venenatis mauris. Vivamus sed semper massa. Nulla finibus, nisl sed bibendum finibus, tellus magna ultricies ipsum, non accumsan nunc lacus id nibh.</p>
-            <h2>Fusce tristique dolor tortor, ut vehicula nibh.</h2>
-            <p>Phasellus aliquet nisi ut dui lacinia, sed consequat urna blandit. Sed id auctor mi. Nullam ligula nulla, rhoncus in vulputate dignissim, luctus nec elit. Pellentesque tempus libero in augue gravida ultricies. Fusce at eros ac massa tincidunt dapibus eu et ex. In vestibulum scelerisque enim at mattis. Aliquam mattis tortor vitae sodales semper. Donec at dolor urna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Phasellus eget dignissim arcu. Phasellus ac sollicitudin erat, et auctor tellus. Quisque fringilla, dui eu aliquam gravida, dolor nunc rutrum mauris, eget consectetur metus lectus id justo.</p>
-            <div>
-              <span class="label">Nullam</span>
-              <span class="label">non</span>
-              <span class="label">nisl</span>
-              <span class="label">vel</span>
-              <span class="label">arcu</span>
-              <span class="label">lobortis</span>
-              <span class="label">commodo</span>
-            </div>
+              <ul>
+                <li>Pellentesque faucibus, velit in pellentesque iaculis, odio.</li>
+                <li>Nam at laoreet risus. Cras elementum et.</li>
+                <li>Sed ac cursus erat, sed tristique orci.</li>
+              </ul>
+
+              <p>Nam posuere elementum consequat. Integer tempus pulvinar faucibus. Quisque at auctor arcu, a rhoncus lacus. Proin accumsan egestas orci, eget lobortis felis consectetur vel. Proin maximus ante vitae iaculis porta. Etiam sed gravida lorem. Donec vitae nunc nec magna mattis faucibus et et enim. Pellentesque eu congue purus. Cras risus sem, dictum eu ligula vitae, commodo venenatis nulla. Sed massa lacus, scelerisque sed quam vel, vehicula porta lectus. Aliquam erat volutpat. Maecenas pulvinar diam sed massa elementum tempor. Nam quis venenatis mauris. Vivamus sed semper massa. Nulla finibus, nisl sed bibendum finibus, tellus magna ultricies ipsum, non accumsan nunc lacus id nibh.</p>
+              <h2>Fusce tristique dolor tortor, ut vehicula nibh.</h2>
+              <p>Phasellus aliquet nisi ut dui lacinia, sed consequat urna blandit. Sed id auctor mi. Nullam ligula nulla, rhoncus in vulputate dignissim, luctus nec elit. Pellentesque tempus libero in augue gravida ultricies. Fusce at eros ac massa tincidunt dapibus eu et ex. In vestibulum scelerisque enim at mattis. Aliquam mattis tortor vitae sodales semper. Donec at dolor urna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Phasellus eget dignissim arcu. Phasellus ac sollicitudin erat, et auctor tellus. Quisque fringilla, dui eu aliquam gravida, dolor nunc rutrum mauris, eget consectetur metus lectus id justo.</p>
+              <div>
+                <span class="label">Nullam</span>
+                <span class="label">non</span>
+                <span class="label">nisl</span>
+                <span class="label">vel</span>
+                <span class="label">arcu</span>
+                <span class="label">lobortis</span>
+                <span class="label">commodo</span>
+              </div>
+            </section>
           </article>
         </section>
 
