@@ -86,9 +86,8 @@ ul.menu { list-style: none; margin: 0; width: auto; }
 .menu.vertical li:last-child { border-bottom: 0; }
 .menu.vertical a { position: relative; }
 
-.breadcrumb { background: #f8f8f8; border-radius: 0.25rem; box-shadow: 0 0.0625rem 0.4375rem rgba(0,0,0,0.3);
-  -webkit-box-shadow: 0 0.0625rem 0.4375rem rgba(0,0,0,0.3); display: block; font-size: 0;
-  list-style: none; margin: 0 0 2rem; padding: 0.625rem 0.75rem; width: auto; }
+.breadcrumb { background: #f8f8f8; display: block; font-size: 0; list-style: none; margin: 0 0 2rem;
+  padding: 0.625rem 0.75rem; width: auto; }
 .breadcrumb li { padding: 0; text-indent: 0; }
 .breadcrumb li:not(:last-child)::after { content: '/'; margin-left: 0.75rem; }
 .breadcrumb > * { display: inline-block; font-size: 0.875rem; line-height: calc(20 / 14);
@@ -108,10 +107,10 @@ nav.pagination { clear: both; margin: 3.125rem auto 2rem; }
 article.lead-item:not(:last-of-type)::after { border-bottom: 0.0625rem solid #cacaca; content: '';
   display: block; margin: 2rem auto; width: 100%; }
 
-aside, blockquote { background: #f8f8f8; margin: 1.6875rem 0; padding: 1.25rem 1.5rem; }
+aside, blockquote { background: #f8f8f8; margin: 3.25rem 0; padding: 1.25rem 1.5rem; }
 aside { border-bottom-right-radius: 0.75rem; border-top: 0.25rem solid #4b9cd3;
-  border-bottom-left-radius: 0.75rem; box-shadow: 0 0.0625rem 0.4375rem rgba(0,0,0,0.3);
-  -webkit-box-shadow: 0 0.0625rem 0.4375rem rgba(0,0,0,0.3); font-size: 0.875rem;
+  border-bottom-left-radius: 0.75rem; box-shadow: 0 0.0625rem 0.4375rem rgba(0,0,0,0.15);
+  -webkit-box-shadow: 0 0.0625rem 0.4375rem rgba(0,0,0,0.15); font-size: 0.875rem;
   line-height: calc(22 / 14); }
 aside:first-child { margin-top: 0; }
 blockquote { border-bottom-left-radius: 0.75rem; border-left: 0.25rem solid #1f1f1f;
@@ -143,16 +142,23 @@ footer p { margin-top: 0; }
 /* End footer */
 
 /* Media queries */
-@media screen and (max-width: 919px) {
+@media only screen and (max-width: 45.563em) {
+  footer .column { display: block; margin-bottom: 1rem; width: 100%; }
+
+  @supports (display: flex) {
+    footer .column { flex: unset; }
+  }
+}
+
+@media only screen and (max-width: 57.438em) {
   aside:first-child { margin-top: 1.6875rem; }
-  .contentarea.column, .sidebar.column { display: block; }
-  .contentarea.column, .sidebar.column { width: 100%; }
+  .contentarea.column, .sidebar.column { display: block; width: 100%; }
 
   @supports (display: flex) {
     .contentarea.column, .sidebar.column { flex: unset; order: unset; }
   }
 }
 
-@media screen and (min-width: 920px) and (max-width: 1024px) {
+@media only screen and (min-width: 57.500em) and (max-width: 64.000em) {
 
 }
