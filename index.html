@@ -5,19 +5,34 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css?family=Caveat|Open+Sans:400,400i,700" rel="stylesheet">
+    <link href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" rel="stylesheet" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <link href="assets/css/style.css" rel="stylesheet">
     <link href="favicon.ico" rel="shortcut icon" type="image/vnc.microsoft.icon">
 
     <title>Beep Boop</title>
   </head>
-  <body itemscope itemtype="https://schema.org/WebPage">
+  <body>
     <header>
       <section class="masthead">
         <h1>Sitename</h1>
-        <nav class="menu mainmenu">
-          <div><a href="home.html">Home</a></div>
-          <div><a href="index.html">Blog</a></div>
-          <div><a href="#">Stuff</a></div>
+        <nav class="menu mainmenu" role="navigation">
+          <div class="menu-item"><a href="index.html">Home</a></div>
+          <div class="menu-item has-submenu">
+            <a>About</a>
+            <nav class="submenu">
+              <div class="menu-item"><a>Blog</a></div>
+              <div class="menu-item has-submenu">
+                <a>Stuff</a>
+                <nav class="submenu">
+                  <div class="menu-item"><a>Blog</a></div>
+                  <div class="menu-item"><a>Stuff</a></div>
+                  <div class="menu-item"><a>Stuff</a></div>
+                </nav>
+              </div>
+              <div class="menu-item"><a>Stuff</a></div>
+            </nav>
+          </div>
+          <div class="menu-item"><a href="home.html">Stuff</a></div>
         </nav>
       </section>
     </header>
@@ -35,89 +50,80 @@
 
       <div class="row">
         <section class="contentarea column">
-          <article itemscope itemtype="https://schema.org/Article">
-            <h1 itemprop="name">Beep boop</h1>
-
+          <article class="lead-item">
+            <h1>Beep boop</h1>
             <div class="article-info">
               <div class="created">
-                <time datetime="2014-10-05T14:24:27-04:00" itemprop="datePublished">
+                <time datetime="2014-10-05T14:24:27-04:00" itemprop="dateCreate">
                   Posted on 5 Oct 2014
                 </time>
-                <span class="createdby">by <span itemprop="author">Gracelynn</span></span>
+                <span class="createdby">by Gracelynn</span>
               </div>
             </div>
+            <p>Lorem ipsum dolor sit amet, <a href="#">consectetur adipiscing elit</a>. Duis posuere nisl vitae sem cursus, vitae convallis turpis egestas. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dapibus tempus ligula vel fermentum. Pellentesque cursus ullamcorper vulputate. Suspendisse quam tortor, feugiat nec interdum et, mattis et nisi. Integer et hendrerit lacus, sit amet pellentesque nisi. Phasellus et rutrum purus. Mauris pulvinar semper leo, quis pulvinar massa porttitor eget.</p>
 
-            <section itemprop="articleBody">
-              <div class="item-image">
-                <!-- <img src="https://78.media.tumblr.com/6f11ac01d71c825f1ae68044f92fc478/tumblr_p8e7ikMy821rqb8bbo1_1280.png" alt="image" width="1280" itemprop="image"> -->
-                <img src="https://66.media.tumblr.com/845a22abd0316417925828dbf2f4b438/tumblr_pr43tupp3C1rqb8bbo1_1280.pnj" alt="image" width="1280" itemprop="image">
-              </div>
-              <p>Lorem ipsum dolor sit amet, <a href="#">consectetur adipiscing elit</a>. Duis posuere nisl vitae sem cursus, vitae convallis turpis egestas. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dapibus tempus ligula vel fermentum. Pellentesque cursus ullamcorper vulputate. Suspendisse quam tortor, feugiat nec interdum et, mattis et nisi. Integer et hendrerit lacus, sit amet pellentesque nisi. Phasellus et rutrum purus. Mauris pulvinar semper leo, quis pulvinar massa porttitor eget.</p>
-              <h2>Nam rutrum nisl mi, sit amet ornare.</h2>
-              <p>Vivamus nec porta metus. Sed porttitor ex ligula, vel mattis nibh hendrerit quis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; In mattis interdum felis quis euismod. Etiam malesuada, turpis id efficitur vulputate, nulla velit semper justo, ac aliquam purus felis vel lacus. Donec in porttitor dui. Nunc id pulvinar purus. Morbi in arcu arcu. Phasellus mollis arcu et lacus gravida auctor. Donec elementum interdum felis, quis ornare tortor suscipit quis. Proin at enim id lectus placerat tincidunt. Cras mi leo, laoreet in auctor sed, suscipit vitae dolor.</p>
-              <div class="table-wrapper">
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Ut pharetra sem.</th>
-                      <th>Curabitur eleifend ullamcorper.</th>
-                      <th>Aliquam pulvinar euismod.</th>
-                      <th>Nunc eu nibh.</th>
-                      <th>Cras eu dui quis tortor.</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>Fusce quis mollis lorem. Suspendisse.</td>
-                      <td>Aliquam sem erat, volutpat nec.</td>
-                      <td>Curabitur auctor metus nec massa.</td>
-                      <td>Suspendisse potenti. Donec luctus est.</td>
-                      <td>Aenean vulputate eu erat vel.</td>
-                    </tr>
-                    <tr>
-                      <td>Fusce quis mollis lorem. Suspendisse.</td>
-                      <td>Aliquam sem erat, volutpat nec.</td>
-                      <td>Curabitur auctor metus nec massa.</td>
-                      <td>Suspendisse potenti. Donec luctus est.</td>
-                      <td>Nam vulputate justo vitae quam.</td>
-                    </tr>
-                    <tr>
-                      <td>Fusce quis mollis lorem. Suspendisse.</td>
-                      <td>Aliquam sem erat, volutpat nec.</td>
-                      <td>Curabitur auctor metus nec massa.</td>
-                      <td>Suspendisse potenti. Donec luctus est.</td>
-                      <td>Phasellus libero diam, posuere vitae.</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+            <p><a class="readmore">Read more</a></p>
 
-              <blockquote>
-                <p>Fusce a lacinia ex, sit amet rutrum risus. Fusce tortor elit, congue non laoreet a, posuere et lacus. Cras vestibulum tempor pellentesque. Sed semper porta risus, non dapibus justo euismod sed. Morbi bibendum sodales turpis auctor gravida. Nullam cursus quis elit et finibus. Cras sodales nec neque sit amet vestibulum. Quisque viverra in metus et imperdiet.</p>
-              </blockquote>
-              <h3>Nam rutrum nisl mi, sit amet ornare.</h3>
-              <p>Sed ex diam, maximus ac orci nec, laoreet mollis dolor. Vivamus laoreet pharetra ipsum, iaculis semper leo viverra ut. Donec finibus ultricies pharetra. Curabitur leo felis, interdum vitae elit eu, feugiat tincidunt dui. Curabitur sodales purus a risus pharetra dapibus. Aenean dictum ipsum risus, quis placerat sem sollicitudin id. Curabitur ac mattis nunc. Maecenas elementum elementum risus ac ultricies.</p>
-
-              <ul>
-                <li>Pellentesque faucibus, velit in pellentesque iaculis, odio.</li>
-                <li>Nam at laoreet risus. Cras elementum et.</li>
-                <li>Sed ac cursus erat, sed tristique orci.</li>
-              </ul>
-
-              <p>Nam posuere elementum consequat. Integer tempus pulvinar faucibus. Quisque at auctor arcu, a rhoncus lacus. Proin accumsan egestas orci, eget lobortis felis consectetur vel. Proin maximus ante vitae iaculis porta. Etiam sed gravida lorem. Donec vitae nunc nec magna mattis faucibus et et enim. Pellentesque eu congue purus. Cras risus sem, dictum eu ligula vitae, commodo venenatis nulla. Sed massa lacus, scelerisque sed quam vel, vehicula porta lectus. Aliquam erat volutpat. Maecenas pulvinar diam sed massa elementum tempor. Nam quis venenatis mauris. Vivamus sed semper massa. Nulla finibus, nisl sed bibendum finibus, tellus magna ultricies ipsum, non accumsan nunc lacus id nibh.</p>
-              <h2>Fusce tristique dolor tortor, ut vehicula nibh.</h2>
-              <p>Phasellus aliquet nisi ut dui lacinia, sed consequat urna blandit. Sed id auctor mi. Nullam ligula nulla, rhoncus in vulputate dignissim, luctus nec elit. Pellentesque tempus libero in augue gravida ultricies. Fusce at eros ac massa tincidunt dapibus eu et ex. In vestibulum scelerisque enim at mattis. Aliquam mattis tortor vitae sodales semper. Donec at dolor urna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Phasellus eget dignissim arcu. Phasellus ac sollicitudin erat, et auctor tellus. Quisque fringilla, dui eu aliquam gravida, dolor nunc rutrum mauris, eget consectetur metus lectus id justo.</p>
-              <div>
-                <span class="label">Nullam</span>
-                <span class="label">non</span>
-                <span class="label">nisl</span>
-                <span class="label">vel</span>
-                <span class="label">arcu</span>
-                <span class="label">lobortis</span>
-                <span class="label">commodo</span>
-              </div>
-            </section>
+            <div>
+              <a class="taglink">Nullam</a><a class="taglink">non</a><a class="taglink">nisl</a>
+              <a class="taglink">vel</a><a class="taglink">arcu</a><a class="taglink">lobortis</a>
+              <a class="taglink">commodo</a>
+            </div>
           </article>
+
+          <article class="lead-item">
+            <h1>Beep boop</h1>
+            <div class="article-info">
+              <div class="created">
+                <time datetime="2014-10-05T14:24:27-04:00" itemprop="dateCreate">
+                  Posted on 5 Oct 2014
+                </time>
+                <span class="createdby">by Gracelynn</span>
+              </div>
+            </div>
+            <p>Lorem ipsum dolor sit amet, <a href="#">consectetur adipiscing elit</a>. Duis posuere nisl vitae sem cursus, vitae convallis turpis egestas. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dapibus tempus ligula vel fermentum. Pellentesque cursus ullamcorper vulputate. Suspendisse quam tortor, feugiat nec interdum et, mattis et nisi. Integer et hendrerit lacus, sit amet pellentesque nisi. Phasellus et rutrum purus. Mauris pulvinar semper leo, quis pulvinar massa porttitor eget.</p>
+
+            <p><a class="readmore">Read more</a></p>
+
+            <div>
+              <a class="taglink">Nullam</a><a class="taglink">non</a><a class="taglink">nisl</a>
+              <a class="taglink">vel</a><a class="taglink">arcu</a><a class="taglink">lobortis</a>
+              <a class="taglink">commodo</a>
+            </div>
+          </article>
+
+          <article class="lead-item">
+            <h1>Beep boop</h1>
+            <div class="article-info">
+              <div class="created">
+                <time datetime="2014-10-05T14:24:27-04:00" itemprop="dateCreate">
+                  Posted on 5 Oct 2014
+                </time>
+                <span class="createdby">by Gracelynn</span>
+              </div>
+            </div>
+            <p>Lorem ipsum dolor sit amet, <a href="#">consectetur adipiscing elit</a>. Duis posuere nisl vitae sem cursus, vitae convallis turpis egestas. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dapibus tempus ligula vel fermentum. Pellentesque cursus ullamcorper vulputate. Suspendisse quam tortor, feugiat nec interdum et, mattis et nisi. Integer et hendrerit lacus, sit amet pellentesque nisi. Phasellus et rutrum purus. Mauris pulvinar semper leo, quis pulvinar massa porttitor eget.</p>
+
+            <p><a class="readmore">Read more</a></p>
+
+            <div>
+              <a class="taglink">Nullam</a><a class="taglink">non</a><a class="taglink">nisl</a>
+              <a class="taglink">vel</a><a class="taglink">arcu</a><a class="taglink">lobortis</a>
+              <a class="taglink">commodo</a>
+            </div>
+          </article>
+
+          <nav class="pagination">
+            <ul>
+              <li><a href=""><i class="fa fa-angle-double-left"></i></a></li>
+              <li><a href=""><i class="fa fa-angle-left"></i></a></li>
+              <li><a href="">1</a></li>
+              <li><a href="">2</a></li>
+              <li><a href="">3</a></li>
+              <li><a href=""><i class="fa fa-angle-right"></i></a></li>
+              <li><a href=""><i class="fa fa-angle-double-right"></i></a></li>
+            </ul>
+          </nav>
         </section>
 
         <section class="sidebar column">
@@ -139,6 +145,78 @@
               <li><a href="https://www.google.com" target="_blank" rel="noopener">Google</a></li>
               <li><a href="https://www.example.com" target="_blank" rel="noopener">Example link</a></li>
               <li><a href="https://www.google.com" target="_blank" rel="noopener">Google</a></li>
+            </ul>
+          </aside>
+
+          <aside>
+            <h3>Last.fm</h3>
+            <ul class="lastfm menu vertical">
+              <li class="lastfm-track">
+                <a class="lastfm-link" href="https://www.last.fm/music/%E5%88%86%E5%B3%B6%E8%8A%B1%E9%9F%B3/_/%E3%83%9E%E3%83%9C%E3%83%AD%E3%82%B7" target="_blank">
+                  <span class="lastfm-title">分島花音 – マボロシ</span>
+                  <span class="lastfm-img"><img src="https://lastfm-img2.akamaized.net/i/u/34s/493055bd674e45468af39f9bfaae1134.png" class="right" alt="分島花音 – マボロシ" width="34" height="34"></span>
+                </a>
+              </li>
+              <li class="lastfm-track">
+                <a class="lastfm-link" href="https://www.last.fm/music/%E5%88%86%E5%B3%B6%E8%8A%B1%E9%9F%B3/_/still+doll+(album+ver.)" target="_blank">
+                  <span class="lastfm-title">分島花音 – still doll (album ver.)</span>
+                  <span class="lastfm-img"><img src="https://lastfm-img2.akamaized.net/i/u/34s/493055bd674e45468af39f9bfaae1134.png" class="right" alt="分島花音 – still doll (album ver.)" width="34" height="34"></span>
+                </a>
+              </li>
+              <li class="lastfm-track">
+                <a class="lastfm-link" href="https://www.last.fm/music/%E5%88%86%E5%B3%B6%E8%8A%B1%E9%9F%B3/_/%E9%8F%A1" target="_blank">
+                  <span class="lastfm-title">分島花音 – 鏡</span>
+                  <span class="lastfm-img"><img src="https://lastfm-img2.akamaized.net/i/u/34s/493055bd674e45468af39f9bfaae1134.png" class="right" alt="分島花音 – 鏡" width="34" height="34"></span>
+                </a>
+              </li>
+              <li class="lastfm-track">
+                <a class="lastfm-link" href="https://www.last.fm/music/%E5%88%86%E5%B3%B6%E8%8A%B1%E9%9F%B3/_/%E7%9C%9F%E7%B4%85%E3%81%AE%E3%83%95%E3%82%A7%E3%83%BC%E3%82%BF%E3%83%AA%E3%82%BA%E3%83%A0" target="_blank">
+                  <span class="lastfm-title">分島花音 – 真紅のフェータリズム</span>
+                  <span class="lastfm-img"><img src="https://lastfm-img2.akamaized.net/i/u/34s/493055bd674e45468af39f9bfaae1134.png" class="right" alt="分島花音 – 真紅のフェータリズム" width="34" height="34"></span>
+                </a>
+              </li>
+              <li class="lastfm-track">
+                <a class="lastfm-link" href="https://www.last.fm/music/%E5%88%86%E5%B3%B6%E8%8A%B1%E9%9F%B3/_/sweet+ticket" target="_blank">
+                  <span class="lastfm-title">分島花音 – sweet ticket</span>
+                  <span class="lastfm-img"><img src="https://lastfm-img2.akamaized.net/i/u/34s/493055bd674e45468af39f9bfaae1134.png" class="right" alt="分島花音 – sweet ticket" width="34" height="34"></span>
+                </a>
+              </li>
+              <li class="lastfm-track">
+                <a class="lastfm-link" href="https://www.last.fm/music/Michael+Bolton/_/This+River" target="_blank">
+                  <span class="lastfm-title">Michael Bolton – This River</span>
+                  <span class="lastfm-img"><img src="https://lastfm-img2.akamaized.net/i/u/34s/f459b039a4e14bb0cb0998491611d340.png" class="right" alt="Michael Bolton – This River" width="34" height="34"></span>
+                </a>
+              </li>
+              <li class="lastfm-track">
+                <a class="lastfm-link" href="https://www.last.fm/music/Michael+Bolton/_/A+Love+So+Beautiful" target="_blank">
+                  <span class="lastfm-title">Michael Bolton – A Love So Beautiful</span>
+                  <span class="lastfm-img"><img src="https://lastfm-img2.akamaized.net/i/u/34s/f459b039a4e14bb0cb0998491611d340.png" class="right" alt="Michael Bolton – A Love So Beautiful" width="34" height="34"></span>
+                </a>
+              </li>
+              <li class="lastfm-track">
+                <a class="lastfm-link" href="https://www.last.fm/music/Michael+Bolton/_/I+Found+Someone" target="_blank">
+                  <span class="lastfm-title">Michael Bolton – I Found Someone</span>
+                  <span class="lastfm-img"><img src="https://lastfm-img2.akamaized.net/i/u/34s/f459b039a4e14bb0cb0998491611d340.png" class="right" alt="Michael Bolton – I Found Someone" width="34" height="34"></span>
+                </a>
+              </li>
+              <li class="lastfm-track">
+                <a class="lastfm-link" href="https://www.last.fm/music/Michael+Bolton/_/I+Promise+You" target="_blank">
+                  <span class="lastfm-title">Michael Bolton – I Promise You</span>
+                  <span class="lastfm-img"><img src="https://lastfm-img2.akamaized.net/i/u/34s/f459b039a4e14bb0cb0998491611d340.png" class="right" alt="Michael Bolton – I Promise You" width="34" height="34"></span>
+                </a>
+              </li>
+              <li class="lastfm-track">
+                <a class="lastfm-link" href="https://www.last.fm/music/Michael+Bolton/_/Can+I+Touch+You...There%3F" target="_blank">
+                  <span class="lastfm-title">Michael Bolton – Can I Touch You...There?</span>
+                  <span class="lastfm-img"><img src="https://lastfm-img2.akamaized.net/i/u/34s/f459b039a4e14bb0cb0998491611d340.png" class="right" alt="Michael Bolton – Can I Touch You...There?" width="34" height="34"></span>
+                </a>
+              </li>
+              <li class="lastfm-track">
+                <a class="lastfm-link" href="https://www.last.fm/music/Michael+Bolton/_/Said+I+Loved+You...But+I+Lied" target="_blank">
+                  <span class="lastfm-title">Michael Bolton – Said I Loved You...But I Lied</span>
+                  <span class="lastfm-img"><img src="https://lastfm-img2.akamaized.net/i/u/34s/f459b039a4e14bb0cb0998491611d340.png" class="right" alt="Michael Bolton – Said I Loved You...But I Lied" width="34" height="34"></span>
+                </a>
+              </li>
             </ul>
           </aside>
 
