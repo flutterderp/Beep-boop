@@ -29,7 +29,7 @@ th { text-align: left; vertical-align: middle; }
 .label, .readmore, .taglink { border-radius: 0.3125rem; color: inherit; display: inline-block;
   font-size: 0.875rem; line-height: 1.3125rem; margin: 0.4375rem 0.3125rem;
   padding: 0.3125rem 0.75rem; }
-.readmore, .taglink { cursor: pointer; transition: all 0.3s; }
+.readmore, .taglink { cursor: pointer; transition: background-color 0.3s; }
 .label, .taglink { background: #f0f0f0; text-decoration: none; }
 
 .readmore { background: #2e83bd; text-decoration: none; }
@@ -147,8 +147,9 @@ span.lastfm-title { text-decoration: underline; width: calc(100% - 2.625rem); }
 /* End copyarea */
 
 /* Footer */
-footer { font-size: 0.875rem; line-height: calc(22 / 14); margin: 1.5rem 0 0; padding: 2rem 0; }
-footer p { margin-top: 0; }
+footer { font-size: 0.875rem; line-height: calc(22 / 14); margin: 1.5rem 0 0; padding: 2rem 0; text-align: center; }
+footer p { margin: 0; }
+.footer-item { margin: 14px auto; }
 /* End footer */
 
 /* Media queries */
