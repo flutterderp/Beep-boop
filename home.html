@@ -21,12 +21,12 @@
           <div class="menu-item"><a href="index.html">Home</a></div>
           <div class="menu-item has-submenu">
             <a>Articles <span class="fa fa-angle-right"></span></a>
-            <nav class="submenu">
+            <nav class="submenu" aria-label="Submenu – articles">
               <div class="menu-item"><a>Blog</a></div>
               <div class="menu-item"><a>Elegant Gothic Lolita</a></div>
               <div class="menu-item has-submenu">
                 <a>Music <span class="fa fa-angle-right"></span></a>
-                <nav class="submenu">
+                <nav class="submenu" aria-label="Submenu – music">
                   <div class="menu-item"><a>Malice Mizer</a></div>
                   <div class="menu-item"><a>Moi dix Mois</a></div>
                 </nav>
@@ -39,7 +39,7 @@
       </section>
     </header>
 
-    <main class="container">
+    <section class="container">
       <div class="row">
         <nav class="column" role="navigation" aria-label="Breadcrumbs">
           <ul class="breadcrumb">
@@ -51,7 +51,7 @@
       </div>
 
       <div class="row">
-        <section class="contentarea column">
+        <main class="contentarea column">
           <article itemscope itemtype="https://schema.org/Article">
             <h1 itemprop="name">Beep boop</h1>
 
@@ -135,7 +135,7 @@
               </div>
             </section>
           </article>
-        </section>
+        </main>
 
         <aside class="sidebar column" role="complementary">
           <div>
@@ -169,7 +169,7 @@
           </div>
         </aside>
       </div>
-    </main>
+    </section>
 
     <footer role="contentinfo">
       <div class="footer-item"><p>&copy; 2018 Sitename</p></div>
