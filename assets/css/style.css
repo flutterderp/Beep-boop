@@ -14,8 +14,16 @@ h3 { font-size: 1.25rem; font-family: 'Open Sans', 'Helvetica Neue', Helvetica, 
   line-height: calc(26 / 20); margin: 1.125rem 0 0.75rem; text-transform: uppercase; }
 img { display: inline-block; max-width: 100%; vertical-align: middle; }
 p { margin: 1.125rem 0; }
-ul { list-style-position: inside; margin: 1rem auto; width: 97%; }
-li { padding-bottom: 0.1875rem; padding-left: 1.5625rem; text-indent: -1.4375rem; }
+ol, ul { list-style: none; margin: 1rem auto; padding: 0 0 0 1.875rem; width: 100%; }
+ol { counter-reset: li; }
+li { padding-bottom: 0.1875rem; /* padding-left: 25px; */ position: relative; /* text-indent: -23px; */ }
+li { padding-left: 1.875rem; text-indent: 0; }
+li::before { color: #b92d80; content: '•'; direction: rtl; display: inline-block; font-weight: bold; left: 0; margin: 0; position: absolute; text-align: right; top: 0; width: 0.75rem; }
+ol > li { counter-increment: li; }
+ol > li::before { content: '.' counter(li); width: 1rem; }
+
+/* colored list bullets/numbers inspired by https://www.w3.org/Style/Examples/007/color-bullets.en.html */
+
 table { border: 0; border-collapse: collapse; margin: 1.5rem 0; }
 tbody tr:nth-child(even), thead tr { background: #f8f8f8; }
 td, th { border: 0.0625rem solid #f0f0f0; font-size: 0.875rem; line-height: 1.3125rem;
@@ -73,8 +81,9 @@ header { margin: 0 0 1.5rem; position: relative; top: 0; width: 100%; z-index: 1
 /* End masthead */
 
 /* Menus and navigation */
-ul.menu { list-style: none; margin: 0; width: auto; }
+ul.menu { list-style: none; margin: 0; padding: 0; width: auto; }
 .menu li { padding: 0; text-indent: 0; }
+.menu li::before { content: none; }
 .menu a { display: block; padding: 0.375rem 0.4375rem; }
 /* main menu */
 .mainmenu { font-size: 0; text-transform: uppercase; }
@@ -104,14 +113,16 @@ a.mobilenav__btn { color: #fefefe; position: absolute; right: 4.5vw; top: 2.5vh;
 .breadcrumb { background: #f8f8f8; display: block; font-size: 0; list-style: none; margin: 0 0 2rem;
   padding: 0.625rem 0.75rem; width: auto; }
 .breadcrumb li { padding: 0; text-indent: 0; }
+.breadcrumb li::before { content: none; }
 .breadcrumb li:not(:last-child)::after { content: '/'; margin-left: 0.75rem; }
 .breadcrumb > * { display: inline-block; font-size: 0.875rem; line-height: calc(20 / 14);
   margin-right: 0.75rem; vertical-align: middle; }
 
 nav.pagination { clear: both; margin: 3.125rem auto 2rem; }
-.pagination ul { display: block; font-size: 0; list-style: none; margin: 0; }
+.pagination ul { display: block; font-size: 0; list-style: none; margin: 0; padding: 0; }
 .pagination li { background: #f0f0f0; border-radius: 0.3125rem; display: inline-block;
   font-size: 1rem; line-height: 1; margin: 0 0.3125rem; padding: 0; text-indent: 0; vertical-align: middle; }
+.pagination ul li::before { content: none; }
 /* .pagination li:first-child { margin-left: 0; } */
 .pagination a { color: inherit; display: block; padding: 0.5rem 0.75rem; text-decoration: none; }
 .pagination li:active, .pagination li:focus, .pagination li:hover { background: #e8e8e8; }
@@ -152,7 +163,7 @@ span.lastfm-title { text-decoration: underline; width: calc(100% - 2.625rem); }
 /* End copyarea */
 
 /* Footer */
-footer { font-size: 0.875rem; line-height: calc(22 / 14); margin: 1.5rem 0 0; padding: 2rem 0; text-align: center; }
+footer { font-size: 0.875rem; line-height: calc(22 / 14); margin: 3.125rem 0 0; padding: 2rem 0; text-align: center; }
 footer p { margin: 0; }
 .footer-item { margin: 14px auto; }
 /* End footer */
