@@ -36,17 +36,34 @@ th { text-align: left; vertical-align: middle; }
 .clearfix { clear: both; }
 .float-left { float: left; }
 .float-right { float: right; }
-.label, .readmore, .taglink { border-radius: 0.3125rem; color: inherit; display: inline-block;
+.label, .button, .taglink { border-radius: 0.3125rem; color: inherit; display: inline-block;
   font-size: 0.875rem; line-height: 1.3125rem; margin: 0.4375rem 0.3125rem;
   padding: 0.3125rem 0.75rem; }
-.readmore, .taglink { cursor: pointer; transition: background-color 0.3s; }
+.button, .taglink { cursor: pointer; transition: background-color 0.3s; }
 .label, .taglink { background: #f0f0f0; text-decoration: none; }
 
-.readmore { background: #b92d80; text-decoration: none; }
-.readmore, .readmore:active, .readmore:focus, .readmore:hover { color: #fefefe; }
-.readmore:active, .readmore:focus, .readmore:hover { background: #e50188; }
+.button { background: #b92d80; text-decoration: none; }
+.button, .button:active, .button:focus, .button:hover { color: #fefefe; }
+.button:active, .button:focus, .button:hover { background: #e50188; }
 .taglink:active, .taglink:focus, .taglink:hover { background: #e8e8e8; color: inherit;
   text-decoration: underline; }
+
+.button.alert { background: #cf0115; }
+.button.alert:focus, .button.alert:hover { background: #fe051d; }
+.button.secondary { background: #f0f0f0; color: #0a0a0a; }
+.button.secondary:focus, .button.secondary:hover { background: #e8e8e8; color: #0a0a0a; }
+.button.success { background: #109c01; }
+.button.success:focus, .button.success:hover { background: #12b601; }
+.button.warning { background: #fee605; color: #0a0a0a; }
+.button.warning:focus, .button.warning:hover { background: #fff6a9; }
+
+.button-group { font-size: 0; margin: 0.3125rem auto; padding: 0 5px; }
+.button-group > .button { border: 1px solid #902364; border-radius: 0; margin: 0; }
+.button-group > .button.alert { border-color: #9c0110; }
+.button-group > .button.secondary { border-color: #d3d3d3; }
+.button-group > .button.success { border-color: #0b6901; }
+.button-group > .button.warning { border-color: #e9d201; }
+.button-group > .button:not(:last-child) { border-right-width: 0; }
 
 .table-wrapper { box-shadow: 0.0625rem 0.125rem 0.4375rem -0.125rem rgba(0,0,0,0.25);
   -webkit-box-shadow: 0.0625rem 0.125rem 0.4375rem -0.125rem rgba(0,0,0,0.25);
