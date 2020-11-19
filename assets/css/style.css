@@ -54,8 +54,8 @@ th { text-align: left; vertical-align: middle; }
 .button.alert:focus, .button.alert:hover { background: #fe051d; }
 .button.secondary { background: #e6e6e6; color: #0a0a0a; }
 .button.secondary:focus, .button.secondary:hover { background: #f0f0f0; color: #0a0a0a; }
-.button.success { background: #109c01; }
-.button.success:focus, .button.success:hover { background: #12b601; }
+.button.success { background: #1ffe08; color: #0a0a0a; }
+.button.success:focus, .button.success:hover { background: #9bff91; }
 .button.warning { background: #fee605; color: #0a0a0a; }
 .button.warning:focus, .button.warning:hover { background: #fff48e; }
 
