@@ -3,6 +3,10 @@ window.addEventListener('DOMContentLoaded', function() {
       mainmenu    = document.querySelector('nav.mainmenu'),
       has_submenu = document.querySelectorAll('.has-submenu')
 
+  // Cycle through anchor links and attach click listeners
+  document.addEventListener('click', clickListener);
+  document.addEventListener('touch', clickListener);
+
   // toggle mobile nav open/closed
   mobile_nav.addEventListener('click', function(e) {
     e.preventDefault()
@@ -30,5 +34,29 @@ window.addEventListener('DOMContentLoaded', function() {
       icon.classList.toggle('fa-angle-right')
       icon.classList.toggle('fa-angle-down')
     })
+  }
+
+  function clickListener(event) {
+    const href = event.target.getAttribute('href');
+
+    if(href !== null) {
+      let hash_split = href.split('#'),
+          target     = document.querySelector('[id="'+hash_split[1]+'"]'),
+          coords     = null;
+
+      if(hash_split.length === 2 && hash_split[0].length === 0 && typeof target === 'object') {
+        try {
+          coords = target.getBoundingClientRect();
+        } catch(e) {
+          // Scroll to top if we can't find a target to scroll to
+          coords = document.body.getBoundingClientRect();
+          // console.warn('No anchor available to scroll to or something hecked up.\r\n'+e);
+        }
+
+        // Scroll the window to the anchor
+        event.preventDefault();
+        window.scrollTo({left: coords['x'], top: coords['y'], behavior: 'smooth'});
+      }
+    }
   }
 })

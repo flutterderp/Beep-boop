@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Caveat&family=Nunito:ital,wght@0,400;0,600;0,700;1,400;1,700&display=swap" rel="stylesheet">
@@ -13,22 +12,24 @@
   </head>
   <body itemscope itemtype="https://schema.org/WebPage">
     <header>
+      <nav class="skiplink__landmark" aria-label="Skip to main content"><a class="skiplink" href="#MainContent">Skip to Main Content</a></nav>
+
       <section class="masthead">
         <h1>Sitename</h1>
-        <a href="#" class="mobilenav__btn" id="mobilenav"><span class="fa fa-bars fa-2x"></span></a>
+        <a href="#" class="mobilenav__btn" id="mobilenav" aria-label="Click to expand mobile menu"><span class="fa fa-bars fa-2x"></span></a>
 
         <nav class="menu mainmenu" role="navigation" aria-label="Main menu">
           <div class="menu-item"><a href="index.html">Home</a></div>
           <div class="menu-item has-submenu">
-            <a>Articles <span class="fa fa-angle-right"></span></a>
+            <a href="#">Articles <span class="fa fa-angle-right"></span></a>
             <nav class="submenu" aria-label="Submenu – articles">
-              <div class="menu-item"><a>Blog</a></div>
-              <div class="menu-item"><a>Elegant Gothic Lolita</a></div>
+              <div class="menu-item"><a href="home.html">Blog</a></div>
+              <div class="menu-item"><a href="home.html">Elegant Gothic Lolita</a></div>
               <div class="menu-item has-submenu">
-                <a>Music <span class="fa fa-angle-right"></span></a>
+                <a href="#">Music <span class="fa fa-angle-right"></span></a>
                 <nav class="submenu" aria-label="Submenu – music">
-                  <div class="menu-item"><a>Malice Mizer</a></div>
-                  <div class="menu-item"><a>Moi dix Mois</a></div>
+                  <div class="menu-item"><a href="home.html">Malice Mizer</a></div>
+                  <div class="menu-item"><a href="home.html">Moi dix Mois</a></div>
                 </nav>
               </div>
               <div class="menu-item"><a>Stuff</a></div>
@@ -39,7 +40,7 @@
       </section>
     </header>
 
-    <section class="container">
+    <section class="container" id="MainContent">
       <div class="row">
         <nav class="column" role="navigation" aria-label="Breadcrumbs">
           <ul class="breadcrumb">
