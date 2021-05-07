@@ -1,0 +1,38 @@
+/* @function rem-calc($pxValue) {
+  @return $pxValue / 16;
+} */
+body {
+  background: #fefefe;
+  font-family: Nunito, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  color: #b92d80;
+  text-decoration: underline;
+}
+a:focus, a:hover {
+  color: #e50188;
+  text-decoration: none;
+}
+
+a.skiplink {
+  background: #0a0a0a;
+  color: #fefefe;
+  font-size: 1rem;
+  font-weight: 600;
+  left: 0;
+  opacity: 1;
+  padding: 0.75rem 1rem;
+  position: fixed;
+  text-shadow: 0.125rem 0.0625rem 0.1875rem black;
+  top: -62.5rem;
+  z-index: 10000;
+}
+a.skiplink:focus {
+  top: 0;
+}
+
+/*# sourceMappingURL=styles.css.map */
