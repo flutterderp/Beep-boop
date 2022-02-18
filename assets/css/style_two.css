@@ -85,13 +85,34 @@ th { text-align: left; vertical-align: middle; }
 .sidebar { width: 34.25%; }
 
 @supports (display: flex) {
-  .row { display: flex; flex-wrap: wrap; table-layout: initial; }
-  .column { display: block; flex: 1 1 auto; }
-  .contentarea.column { width: unset; }
-  .sidebar.column { flex: 0 0 34.25%; width: unset; }
-  .contentarea { flex: 2.5; order: 2; }
-  .col2 { flex: 2; }
-  .col3 { flex: 3; }
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 48px;
+    table-layout: initial;
+  }
+  .column {
+    display: block;
+    flex: 1 1 auto;
+    padding: 0;
+  }
+  .contentarea.column {
+    width: unset;
+  }
+  .sidebar.column {
+    flex: 0 0 34.25%;
+    width: unset;
+  }
+  .contentarea {
+    flex: 2.5;
+    order: 2;
+  }
+  .col2 {
+    flex: 2;
+  }
+  .col3 {
+    flex: 3;
+  }
 }
 /* End rows and columns */
 
