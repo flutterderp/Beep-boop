@@ -12,7 +12,17 @@
     "start": "npm run dev"
   },
   "port": 6969,
+  "dependencies": {},
   "devDependencies": {
-    "lite-server": "^2.6.1"
+    "lite-server": "^2.6.1",
+    "axios": "^0.21.2",
+    "engine.io": "^4.0.0",
+    "follow-redirects": "^1.14.8",
+    "glob-parent": "^5.1.2",
+    "lodash": "^4.17.21",
+    "minimist": "^1.2.6",
+    "socket.io-parser": "^3.3.2",
+    "ua-parser-js": "^0.7.24",
+    "xmlhttprequest-ssl": "^1.6.2"
   }
 }
