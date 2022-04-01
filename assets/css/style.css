@@ -113,7 +113,8 @@ ul.menu { list-style: none; margin: 0; padding: 0; width: auto; }
 .mainmenu a { background: #2974a7; color: #fefefe; cursor: pointer; padding: 0.625rem 1rem; text-decoration: none; }
 .mainmenu>div.menu-item { display: inline-block; font-size: 1rem; letter-spacing: 0.0625rem; }
 .mainmenu div.menu-item { position: relative; }
-.mainmenu a:focus, .mainmenu a:hover { background: #215e87; }
+.mainmenu a:is(:focus, :hover) { text-decoration: underline; }
+.mainmenu a:is(:focus, :hover), .mainmenu .active a { background: #215e87; }
 /* submenu */
 .submenu { display: block; left: -1000%; min-width: 100%; max-width: 50vw; opacity: 0; position: absolute; text-transform: capitalize;
   top: calc(100% + 1px); transition: opacity 0.2s; width: max-content; }

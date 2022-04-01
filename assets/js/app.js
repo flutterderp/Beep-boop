@@ -4,8 +4,8 @@ window.addEventListener('DOMContentLoaded', function() {
       has_submenu = document.querySelectorAll('.has-submenu')
 
   // Cycle through anchor links and attach click listeners
-  document.addEventListener('click', clickListener);
-  document.addEventListener('touch', clickListener);
+  document.addEventListener('click', clickListener)
+  document.addEventListener('touch', clickListener)
 
   // toggle mobile nav open/closed
   mobile_nav.addEventListener('click', function(e) {
@@ -25,14 +25,17 @@ window.addEventListener('DOMContentLoaded', function() {
   // toggle submenus open/closed
   for(let i = 0, lgth = has_submenu.length; i < lgth; i++) {
     has_submenu[i].addEventListener('click', function(e) {
-      let icon = has_submenu[i].querySelector('a:first-child>span.fa')
+      let icon   = has_submenu[i].querySelector('a:first-child>span.fa'),
+          parent = e.target.parentElement
 
-      e.preventDefault()
-      e.stopPropagation()
+      if(parent.classList.contains('has-submenu')) {
+        e.preventDefault()
+        e.stopPropagation()
 
-      has_submenu[i].classList.toggle('is-open')
-      icon.classList.toggle('fa-angle-right')
-      icon.classList.toggle('fa-angle-down')
+        has_submenu[i].classList.toggle('is-open')
+        icon.classList.toggle('fa-angle-right')
+        icon.classList.toggle('fa-angle-down')
+      }
     })
   }
 
@@ -42,20 +45,21 @@ window.addEventListener('DOMContentLoaded', function() {
     if(href !== null) {
       let hash_split = href.split('#'),
           target     = document.querySelector('[id="'+hash_split[1]+'"]'),
-          coords     = null;
+          coords     = null
 
-      if(hash_split.length === 2 && hash_split[0].length === 0 && typeof target === 'object') {
+      if((hash_split.length === 2 && hash_split[0].length === 0) && (target !== null && typeof target === 'object')) {
         try {
-          coords = target.getBoundingClientRect();
+          coords = target.getBoundingClientRect()
         } catch(e) {
           // Scroll to top if we can't find a target to scroll to
-          coords = document.body.getBoundingClientRect();
+          coords = document.body.getBoundingClientRect()
           // console.warn('No anchor available to scroll to or something hecked up.\r\n'+e);
         }
 
         // Scroll the window to the anchor
-        event.preventDefault();
-        window.scrollTo({left: coords['x'], top: coords['y'], behavior: 'smooth'});
+        event.preventDefault()
+
+        window.scrollTo({left: coords['x'], top: coords['y'], behavior: 'smooth'})
       }
     }
   }
