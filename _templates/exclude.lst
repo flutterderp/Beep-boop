@@ -1,0 +1,10 @@
+_extras/*
+_foundation/*
+_foundation-files/*
+create-package.sh
+exclude.lst
+*._*
+*.git*
+*.svn*
+*.DS_Store
+foundation-files.zip

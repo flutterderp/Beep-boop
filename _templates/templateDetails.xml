@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="3.9" type="template" client="site" method="upgrade">
+	<name>candelaaluminium</name>
+	<creationDate>January 2020</creationDate>
+	<author>Southern Anime</author>
+	<authorEmail>webmaster@southernanime.com</authorEmail>
+	<authorUrl>https://www.southernanime.com</authorUrl>
+	<copyright>LICENSE.txt</copyright>
+	<license>MIT</license>
+	<version>1.7.5</version>
+	<description>TPL_CANDELAALUMINIUM_XML_DESCRIPTION</description>
+
+	<files>
+		<folder>css</folder>
+		<folder>fonts</folder>
+		<folder>forms</folder>
+		<folder>html</folder>
+		<folder>images</folder>
+		<folder>includes</folder>
+		<folder>javascript</folder>
+		<folder>language</folder>
+		<folder>libraries</folder>
+		<folder>webfonts</folder>
+		<filename>index.html</filename>
+		<filename>favicon.ico</filename>
+		<filename>component.php</filename>
+		<filename>error.php</filename>
+		<filename>index.php</filename>
+		<filename>offline.php</filename>
+		<filename>template_preview.png</filename>
+		<filename>template_thumbnail.png</filename>
+		<filename>LICENSE.txt</filename>
+		<filename>templateDetails.xml</filename>
+	</files>
+
+	<positions>
+		<position>bottom</position>
+		<position>breadcrumb</position>
+		<position>copyhead</position>
+		<position>copyfoot</position>
+		<position>debug</position>
+		<position>footer</position>
+		<position>homeblocks</position>
+		<position>left</position>
+		<position>logo</position>
+		<position>mobilemenu</position>
+		<position>navigation</position>
+		<position>right</position>
+		<position>sidebar</position>
+		<position>slideshow</position>
+		<position>structureddata</position>
+		<position>top</position>
+	</positions>
+
+	<languages folder="language">
+		<language tag="en-GB">en-GB/en-GB.tpl_candelaaluminium.ini</language>
+		<language tag="en-GB">en-GB/en-GB.tpl_candelaaluminium.sys.ini</language>
+	</languages>
+
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+				<field name="logo" type="media"
+					label="TPL_CANDELAALUMINIUM_FIELD_LOGO_LABEL" description="TPL_CANDELAALUMINIUM_FIELD_LOGO_DESC" />
+
+				<field name="logo_footer" type="media"
+					label="TPL_CANDELAALUMINIUM_FIELD_LOGO_FOOTER_LABEL" description="TPL_CANDELAALUMINIUM_FIELD_LOGO_DESC" />
+
+				<field name="base_image" type="media"
+					label="TPL_CANDELAALUMINIUM_FIELD_BASE_IMAGE_LABEL" description="TPL_CANDELAALUMINIUM_FIELD_BASE_IMAGE_DESC" />
+
+				<field name="show_offline_login" type="list" default="0"
+					label="TPL_CANDELAALUMINIUM_FIELD_SHOW_OFFLINE_LOGIN_LABEL"
+					description="TPL_CANDELAALUMINIUM_FIELD_SHOW_OFFLINE_LOGIN_DESC"
+					class="chzn-color-state">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+
+				<field name="gacode" type="text" default=""
+					label="TPL_CANDELAALUMINIUM_FIELD_GACODE_LABEL"
+					description="TPL_CANDELAALUMINIUM_FIELD_GACODE_DESC"
+					filter="string" />
+
+				<field name="gtmcode" type="text" default=""
+					label="TPL_CANDELAALUMINIUM_FIELD_GTMCODE_LABEL"
+					description="TPL_CANDELAALUMINIUM_FIELD_GTMCODE_DESC"
+					filter="string" />
+
+				<field name="ga_anonymizeip" type="list" default="1"
+					label="TPL_CANDELAALUMINIUM_FIELD_GA_ANONYMIZEIP_LABEL"
+					description="TPL_CANDELAALUMINIUM_FIELD_GA_ANONYMIZEIP_DESC"
+					class="chzn-color-state">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+
+				<field name="googleads" type="text" default=""
+					label="TPL_CANDELAALUMINIUM_FIELD_GOOGLEADS_LABEL"
+					description="TPL_CANDELAALUMINIUM_FIELD_GOOGLEADS_DESC"
+					filter="string" />
+
+				<field name="grc_sitekey" type="text" default=""
+					label="TPL_CANDELAALUMINIUM_FIELD_GRC_SITEKEY_LABEL"
+					description="TPL_CANDELAALUMINIUM_FIELD_GRC_SITEKEY_DESC"
+					filter="string" />
+
+				<field name="grc_secretkey" type="text" default=""
+					label="TPL_CANDELAALUMINIUM_FIELD_GRC_SECRETKEY_LABEL"
+					description="TPL_CANDELAALUMINIUM_FIELD_GRC_SECRETKEY_DESC"
+					filter="string" />
+
+				<field name="google_maps_apikey" type="text" default=""
+					label="TPL_CANDELAALUMINIUM_FIELD_GOOGLE_MAPS_APIKEY_LABEL"
+					description="TPL_CANDELAALUMINIUM_FIELD_GOOGLE_MAPS_APIKEY_DESC"
+					filter="string" />
+
+				<field name="google_maps_geokey" type="text" default=""
+					label="TPL_CANDELAALUMINIUM_FIELD_GOOGLE_MAPS_GEOKEY_LABEL"
+					description="TPL_CANDELAALUMINIUM_FIELD_GOOGLE_MAPS_GEOKEY_DESC"
+					filter="string" />
+
+				<field name="fbpixel" type="text" default=""
+					label="TPL_CANDELAALUMINIUM_FIELD_FBPIXEL_LABEL"
+					description="TPL_CANDELAALUMINIUM_FIELD_FBPIXEL_DESC"
+					filter="string" />
+
+				<field name="publisher_name" type="text" default=""
+					label="TPL_CANDELAALUMINIUM_FIELD_PUBLISHER_NAME_LABEL"
+					description="TPL_CANDELAALUMINIUM_FIELD_PUBLISHER_NAME_DESC"
+					filter="string" />
+
+				<!-- <field name="publisher_logo" type="media"
+					label="TPL_CANDELAALUMINIUM_FIELD_PUBLISHER_LOGO_LABEL" description="TPL_CANDELAALUMINIUM_FIELD_PUBLISHER_LOGO_DESC" /> -->
+
+				<field name="sitetitle"  type="text" default=""
+					label="TPL_CANDELAALUMINIUM_FIELD_SITETITLE_LABEL"
+					description="TPL_CANDELAALUMINIUM_FIELD_SITETITLE_DESC"
+					filter="string" />
+
+				<field name="sitedescription"  type="text" default=""
+					label="TPL_CANDELAALUMINIUM_FIELD_DESCRIPTION_LABEL"
+					description="TPL_CANDELAALUMINIUM_FIELD_DESCRIPTION_DESC"
+					filter="string" />
+
+			</fieldset>
+		</fields>
+	</config>
+</extension>
