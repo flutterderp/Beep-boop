@@ -7,15 +7,17 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-defined('JPATH_BASE') or die;
+defined('_JEXEC') or die;
 
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
 ?>
 <dd class="parent-category-name">
 	<?php $title = $this->escape($displayData['item']->parent_title); ?>
 	<?php if ($displayData['params']->get('link_parent_category') && !empty($displayData['item']->parent_slug)) : ?>
-		<?php $url = '<a href="' . JRoute::_($displayData['helperRoute']::getCategoryRoute($displayData['item']->parent_slug)) . '" itemprop="genre">' . $title . '</a>'; ?>
-		<?php echo JText::sprintf($displayData['context.option'].'_PARENT', $url); ?>
+		<?php $url = '<a href="' . Route::_($displayData['helperRoute']::getCategoryRoute($displayData['item']->parent_slug)) . '" itemprop="genre">' . $title . '</a>'; ?>
+		<?php echo Text::sprintf($displayData['context.option'].'_PARENT', $url); ?>
 	<?php else : ?>
-		<?php echo JText::sprintf($displayData['context.option'].'_PARENT', '<span itemprop="genre">' . $title . '</span>'); ?>
+		<?php echo Text::sprintf($displayData['context.option'].'_PARENT', '<span itemprop="genre">' . $title . '</span>'); ?>
 	<?php endif; ?>
 </dd>

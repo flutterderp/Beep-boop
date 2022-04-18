@@ -7,8 +7,13 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-defined('JPATH_BASE') or die;
+defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\Layout\LayoutHelper;
+use Joomla\CMS\Filter\OutputFilter;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
 use Joomla\Registry\Registry;
 
 $list = $displayData['list'];
@@ -49,12 +54,12 @@ if ($currentPage >= $step)
 }
 ?>
 
-<form action="<?php echo JFilterOutput::ampReplace(JFactory::getUri()->toString()); ?>" id="paginationForm" name="paginationForm" method="post">
+<form action="<?php echo OutputFilter::ampReplace(Uri::getInstance()->toString()); ?>" id="paginationForm" name="paginationForm" method="post">
 	<div class="pagination-toolbar clearfix">
 
 		<?php if ($showLimitBox) : ?>
 			<div class="limit pull-right">
-				<?php echo JText::_('JGLOBAL_DISPLAY_NUM') . $list['limitfield']; ?>
+				<?php echo Text::_('JGLOBAL_DISPLAY_NUM') . $list['limitfield']; ?>
 			</div>
 		<?php else : ?>
 			<input type="hidden" name="<?php echo $list['prefix']; ?>limit" value="<?php echo $list['limit']; ?>" />
@@ -63,11 +68,11 @@ if ($currentPage >= $step)
 		<?php if ($showPagesLinks && (!empty($pages))) : ?>
 			<ul class="pagination">
 				<?php
-					echo JLayoutHelper::render('joomla.pagination.link', $pages['start']);
-					echo JLayoutHelper::render('joomla.pagination.link', $pages['previous']); ?>
+					echo LayoutHelper::render('joomla.pagination.link', $pages['start']);
+					echo LayoutHelper::render('joomla.pagination.link', $pages['previous']); ?>
 				<?php foreach ($pages['pages'] as $k => $page) : ?>
 
-					<?php $output = JLayoutHelper::render('joomla.pagination.link', $page); ?>
+					<?php $output = LayoutHelper::render('joomla.pagination.link', $page); ?>
 					<?php if (in_array($k, range($range * $step - ($step + 1), $range * $step), true)) : ?>
 						<?php if (($k % $step === 0 || $k === $range * $step - ($step + 1)) && $k !== $currentPage && $k !== $range * $step - $step) : ?>
 							<?php $output = preg_replace('#(<a.*?>).*?(</a>)#', '$1...$2', $output); ?>
@@ -77,8 +82,8 @@ if ($currentPage >= $step)
 					<?php echo $output; ?>
 				<?php endforeach; ?>
 				<?php
-					echo JLayoutHelper::render('joomla.pagination.link', $pages['next']);
-					echo JLayoutHelper::render('joomla.pagination.link', $pages['end']); ?>
+					echo LayoutHelper::render('joomla.pagination.link', $pages['next']);
+					echo LayoutHelper::render('joomla.pagination.link', $pages['end']); ?>
 			</ul>
 		<?php endif; ?>
 

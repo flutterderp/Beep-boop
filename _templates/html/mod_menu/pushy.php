@@ -9,6 +9,8 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Helper\ModuleHelper;
+
 // Note. It is important to remove spaces between elements.
 // $class_sfx
 ?>
@@ -28,7 +30,7 @@ defined('_JEXEC') or die;
 		$class = $item->deeper ? 'pushy-submenu' : 'pushy-link';
 		$class .= ' item-' . $item->id;
 
-		if (($item->id == $active_id) OR ($item->type == 'alias' AND $item->params->get('aliasoptions') == $active_id))
+		if (($item->id == $active_id) OR ($item->type == 'alias' AND $item->getParams()->get('aliasoptions') == $active_id))
 		{
 			$class .= ' current';
 		}
@@ -39,7 +41,7 @@ defined('_JEXEC') or die;
 		}
 		elseif ($item->type == 'alias')
 		{
-			$aliasToId = $item->params->get('aliasoptions');
+			$aliasToId = $item->getParams()->get('aliasoptions');
 
 			if (count($path) > 0 && $aliasToId == $path[count($path) - 1])
 			{
@@ -122,11 +124,11 @@ function renderItem($item_type, $item, $params)
 		case 'url':
 		case 'component':
 		case 'heading':
-			require JModuleHelper::getLayoutPath('mod_menu', 'pushy_' . $item_type);
+			require ModuleHelper::getLayoutPath('mod_menu', 'pushy_' . $item_type);
 			break;
 
 		default:
-			require JModuleHelper::getLayoutPath('mod_menu', 'pushy_url');
+			require ModuleHelper::getLayoutPath('mod_menu', 'pushy_url');
 			break;
 	endswitch;
 }

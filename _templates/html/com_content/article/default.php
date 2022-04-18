@@ -9,12 +9,25 @@
 
 defined('_JEXEC') or die;
 
-JHtml::addIncludePath(JPATH_COMPONENT . '/helpers');
+use Joomla\Component\Content\Administrator\Extension\ContentComponent;
+// use Joomla\Component\Content\Site\Helper\RouteHelper;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Filter\OutputFilter;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Associations;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Layout\FileLayout;
+use Joomla\CMS\Layout\LayoutHelper;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Version;
+
+HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers');
 
 // Create shortcuts to some parameters.
-$app        = JFactory::getApplication();
-$doc        = JFactory::getDocument();
-$user       = JFactory::getUser();
+$app        = Factory::getApplication();
+$doc        = Factory::getDocument();
+$user       = Factory::getUser();
 $tpl        = $app->getTemplate($tpl_params = true);
 $tpl_params = $tpl->params;
 $params     = $this->item->params;
@@ -30,20 +43,27 @@ foreach($this->item->jcfields as $key => $field)
 }
 
 // Check if associations are implemented. If they are, define the parameter.
-$assocParam = (JLanguageAssociations::isEnabled() && $params->get('show_associations'));
-JHtml::_('behavior.caption');
+$assocParam           = (Associations::isEnabled() && $params->get('show_associations'));
+$currentDate          = Factory::getDate()->format('Y-m-d H:i:s');
+$conditionUnpublished = (Version::MAJOR_VERSION === 4) ? ContentComponent::CONDITION_UNPUBLISHED : 0;
+$isNotPublishedYet    = $this->item->publish_up > $currentDate;
+$isExpired            = !is_null($this->item->publish_down) && $this->item->publish_down < $currentDate && $this->item->publish_down !== Factory::getDbo()->getNullDate();
 
+if(Version::MAJOR_VERSION < 4)
+{
+	HTMLHelper::_('behavior.caption');
+}
 ?>
-<div class="item-page<?php echo $this->pageclass_sfx; ?>" itemscope itemtype="https://schema.org/Article">
+<article class="item-page<?php echo $this->pageclass_sfx; ?>" itemscope itemtype="https://schema.org/Article">
 	<?php
 	$image_fulltext = $images->image_fulltext ? $images->image_fulltext : $images->image_intro;
 	$image_fulltext = ($image_fulltext && file_exists(JPATH_BASE . '/' . $image_fulltext)) ? $image_fulltext : $tpl_params->get('logo', '');
 	// echo '<meta name="twitter:card" content="summary_large_image">';
-	// echo '<meta name="twitter:url" content="'.JRoute::_(ContentHelperRoute::getArticleRoute($this->item->slug, $this->item->catid)).'">';
+	// echo '<meta name="twitter:url" content="'.Route::_(ContentHelperRoute::getArticleRoute($this->item->slug, $this->item->catid)).'">';
 	echo '<meta name="twitter:description" content="'.$this->escape($this->item->introtext).'">';
 
 	?>
-	<link itemprop="mainEntityOfPage" href="<?php echo JRoute::_(ContentHelperRoute::getArticleRoute($this->item->slug, $this->item->catid)); ?>">
+	<link itemprop="mainEntityOfPage" href="<?php echo Route::_(ContentHelperRoute::getArticleRoute($this->item->slug, $this->item->catid)); ?>">
 	<meta itemprop="headline" content="<?php echo $this->escape($this->item->title); ?>">
 	<meta itemprop="author" content="<?php echo $this->item->created_by_alias ? $this->item->created_by_alias : $this->item->author; ?>">
 	<div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
@@ -51,7 +71,7 @@ JHtml::_('behavior.caption');
 		<?php if(file_exists(JPATH_BASE . '/images/template/logo.png')) : ?>
 			<?php list($tpl_width, $tpl_height) = getimagesize(JPATH_BASE . '/images/template/logo.png'); ?>
 			<span itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
-				<link itemprop="url" content="<?php echo JUri::root() . 'images/template/logo.png'; ?>">
+				<link itemprop="url" content="<?php echo Uri::root() . 'images/template/logo.png'; ?>">
 				<meta itemprop="width" content="<?php echo $tpl_width; ?>px">
 				<meta itemprop="height" content="<?php echo $tpl_height; ?>px">
 			</span>
@@ -59,14 +79,14 @@ JHtml::_('behavior.caption');
 	</div>
 
 	<?php if(!$params->get('show_modify_date')) : ?>
-		<time datetime="<?php echo JHtml::_('date', ($this->item->modified ? $this->item->modified : $this->item->publish_up), 'c'); ?>" itemprop="dateModified"></time>
+		<time datetime="<?php echo HTMLHelper::_('date', ($this->item->modified ? $this->item->modified : $this->item->publish_up), 'c'); ?>" itemprop="dateModified"></time>
 	<?php endif; ?>
 
 	<?php if(!$params->get('show_publish_date')) : ?>
-		<time datetime="<?php echo JHtml::_('date', $this->item->publish_up, 'c'); ?>" itemprop="datePublished"></time>
+		<time datetime="<?php echo HTMLHelper::_('date', $this->item->publish_up, 'c'); ?>" itemprop="datePublished"></time>
 	<?php endif; ?>
 
-	<meta itemprop="inLanguage" content="<?php echo ($this->item->language === '*') ? JFactory::getConfig()->get('language') : $this->item->language; ?>" />
+	<meta itemprop="inLanguage" content="<?php echo ($this->item->language === '*') ? $app->get('language') : $this->item->language; ?>" />
 	<?php if ($this->params->get('show_page_heading')) : ?>
 	<div class="page-header">
 		<h4> <?php echo $this->escape($this->params->get('page_heading')); ?> </h4>
@@ -84,7 +104,7 @@ JHtml::_('behavior.caption');
 
 	<?php if (!$useDefList && $this->print) : ?>
 		<div id="pop-print" class="btn hidden-print">
-			<?php echo JHtml::_('icon.print_screen', $this->item, $params); ?>
+			<?php echo HTMLHelper::_('icon.print_screen', $this->item, $params); ?>
 		</div>
 		<div class="clearfix"> </div>
 	<?php endif; ?>
@@ -100,26 +120,25 @@ JHtml::_('behavior.caption');
 			<h2><?php echo $this->escape($jcfields['subheading']->rawvalue); ?></h2>
 		<?php endif; */ ?>
 
-
-		<?php if ($this->item->state == 0) : ?>
-			<span class="label label-warning"><?php echo JText::_('JUNPUBLISHED'); ?></span>
+		<?php if ($this->item->state == $conditionUnpublished) : ?>
+			<span class="label label-warning"><?php echo Text::_('JUNPUBLISHED'); ?></span>
 		<?php endif; ?>
-		<?php if (strtotime($this->item->publish_up) > strtotime(JFactory::getDate())) : ?>
-			<span class="label label-warning"><?php echo JText::_('JNOTPUBLISHEDYET'); ?></span>
+		<?php if ($isNotPublishedYet) : ?>
+			<span class="label label-warning"><?php echo Text::_('JNOTPUBLISHEDYET'); ?></span>
 		<?php endif; ?>
-		<?php if ((strtotime($this->item->publish_down) < strtotime(JFactory::getDate())) && $this->item->publish_down != JFactory::getDbo()->getNullDate()) : ?>
-			<span class="label label-warning"><?php echo JText::_('JEXPIRED'); ?></span>
+		<?php if ($isExpired) : ?>
+			<span class="label label-warning"><?php echo Text::_('JEXPIRED'); ?></span>
 		<?php endif; ?>
 	</div>
 	<?php endif; ?>
 	<?php if (!$this->print) : ?>
 		<?php if ($canEdit || $params->get('show_print_icon') || $params->get('show_email_icon')) : ?>
-			<?php echo JLayoutHelper::render('joomla.content.icons', array('params' => $params, 'item' => $this->item, 'print' => false)); ?>
+			<?php echo LayoutHelper::render('joomla.content.icons', array('params' => $params, 'item' => $this->item, 'print' => false)); ?>
 		<?php endif; ?>
 	<?php else : ?>
 		<?php if ($useDefList) : ?>
 			<div id="pop-print" class="btn hidden-print">
-				<?php echo JHtml::_('icon.print_screen', $this->item, $params); ?>
+				<?php echo HTMLHelper::_('icon.print_screen', $this->item, $params); ?>
 			</div>
 		<?php endif; ?>
 	<?php endif; ?>
@@ -128,11 +147,11 @@ JHtml::_('behavior.caption');
 	<?php echo $this->item->event->afterDisplayTitle; ?>
 
 	<?php if ($useDefList && ($info == 0 || $info == 2)) : ?>
-		<?php echo JLayoutHelper::render('joomla.content.info_block', array('item' => $this->item, 'params' => $params, 'position' => 'above')); ?>
+		<?php echo LayoutHelper::render('joomla.content.info_block', array('item' => $this->item, 'params' => $params, 'position' => 'above')); ?>
 	<?php endif; ?>
 
 	<?php if ($info == 0 && $params->get('show_tags', 1) && !empty($this->item->tags->itemTags)) : ?>
-		<?php $this->item->tagLayout = new JLayoutFile('joomla.content.tags'); ?>
+		<?php $this->item->tagLayout = new FileLayout('joomla.content.tags'); ?>
 
 		<?php echo $this->item->tagLayout->render($this->item->tags->itemTags); ?>
 	<?php endif; ?>
@@ -145,7 +164,7 @@ JHtml::_('behavior.caption');
 	<?php echo $this->loadTemplate('links'); ?>
 	<?php endif; ?>
 	<?php if ($params->get('access-view')) : ?>
-	<?php echo JLayoutHelper::render('joomla.content.full_image', $this->item); ?>
+	<?php echo LayoutHelper::render('joomla.content.full_image', $this->item); ?>
 	<?php
 	if (!empty($this->item->pagination) && $this->item->pagination && !$this->item->paginationposition && !$this->item->paginationrelative) :
 		echo $this->item->pagination;
@@ -156,7 +175,7 @@ JHtml::_('behavior.caption');
 	endif; ?>
 	<div itemprop="articleBody">
 		<?php if(isset($jcfields['video-url']) && !empty($jcfields['video-url']->rawvalue)) : ?>
-			<iframe src="<?php echo JFilterOutput::ampReplace($jcfields['video-url']->rawvalue); ?>" height="480" width="640"></iframe>
+			<iframe src="<?php echo OutputFilter::ampReplace($jcfields['video-url']->rawvalue); ?>" height="480" width="640"></iframe>
 		<?php endif; ?>
 
 		<?php echo $this->item->text; ?>
@@ -164,10 +183,10 @@ JHtml::_('behavior.caption');
 
 	<?php if ($info == 1 || $info == 2) : ?>
 		<?php if ($useDefList) : ?>
-			<?php echo JLayoutHelper::render('joomla.content.info_block', array('item' => $this->item, 'params' => $params, 'position' => 'below')); ?>
+			<?php echo LayoutHelper::render('joomla.content.info_block', array('item' => $this->item, 'params' => $params, 'position' => 'below')); ?>
 		<?php endif; ?>
 		<?php if ($params->get('show_tags', 1) && !empty($this->item->tags->itemTags)) : ?>
-			<?php $this->item->tagLayout = new JLayoutFile('joomla.content.tags'); ?>
+			<?php $this->item->tagLayout = new FileLayout('joomla.content.tags'); ?>
 			<?php echo $this->item->tagLayout->render($this->item->tags->itemTags); ?>
 		<?php endif; ?>
 	<?php endif; ?>
@@ -182,31 +201,31 @@ JHtml::_('behavior.caption');
 	<?php endif; ?>
 	<?php // Optional teaser intro text for guests ?>
 	<?php elseif ($params->get('show_noauth') == true && $user->get('guest')) : ?>
-	<?php echo JLayoutHelper::render('joomla.content.intro_image', $this->item); ?>
-	<?php echo JHtml::_('content.prepare', $this->item->introtext); ?>
+	<?php echo LayoutHelper::render('joomla.content.intro_image', $this->item); ?>
+	<?php echo HTMLHelper::_('content.prepare', $this->item->introtext); ?>
 	<?php // Optional link to let them register to see the whole article. ?>
 	<?php if ($params->get('show_readmore') && $this->item->fulltext != null) : ?>
-	<?php $menu = JFactory::getApplication()->getMenu(); ?>
+	<?php $menu = $app->getMenu(); ?>
 	<?php $active = $menu->getActive(); ?>
 	<?php $itemId = $active->id; ?>
-	<?php $link = new JUri(JRoute::_('index.php?option=com_users&view=login&Itemid=' . $itemId, false)); ?>
+	<?php $link = new Uri(Route::_('index.php?option=com_users&view=login&Itemid=' . $itemId, false)); ?>
 	<?php $link->setVar('return', base64_encode(ContentHelperRoute::getArticleRoute($this->item->slug, $this->item->catid, $this->item->language))); ?>
 	<p class="readmore">
 		<a href="<?php echo $link; ?>" class="register">
 		<?php $attribs = json_decode($this->item->attribs); ?>
 		<?php
 		if ($attribs->alternative_readmore == null) :
-			echo JText::_('COM_CONTENT_REGISTER_TO_READ_MORE');
+			echo Text::_('COM_CONTENT_REGISTER_TO_READ_MORE');
 		elseif ($readmore = $attribs->alternative_readmore) :
 			echo $readmore;
 			if ($params->get('show_readmore_title', 0) != 0) :
-				echo JHtml::_('string.truncate', $this->item->title, $params->get('readmore_limit'));
+				echo HTMLHelper::_('string.truncate', $this->item->title, $params->get('readmore_limit'));
 			endif;
 		elseif ($params->get('show_readmore_title', 0) == 0) :
-			echo JText::sprintf('COM_CONTENT_READ_MORE_TITLE');
+			echo Text::sprintf('COM_CONTENT_READ_MORE_TITLE');
 		else :
-			echo JText::_('COM_CONTENT_READ_MORE');
-			echo JHtml::_('string.truncate', $this->item->title, $params->get('readmore_limit'));
+			echo Text::_('COM_CONTENT_READ_MORE');
+			echo HTMLHelper::_('string.truncate', $this->item->title, $params->get('readmore_limit'));
 		endif; ?>
 		</a>
 	</p>
@@ -219,4 +238,4 @@ JHtml::_('behavior.caption');
 	<?php endif; ?>
 	<?php // Content is generated by content plugin event "onContentAfterDisplay" ?>
 	<?php echo $this->item->event->afterDisplayContent; ?>
-</div>
+</article>

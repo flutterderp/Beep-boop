@@ -22,4 +22,4 @@ else
 	$linktype = $item->title;
 }
 ?>
-<a class="nav-header <?php echo $item->anchor_css; ?>" <?php echo $title; ?>><?php echo $linktype; ?></a>
+<a class="nav-header <?php echo $item->anchor_css; ?>" <?php echo $title; ?> tabindex="0"><?php echo $linktype; ?></a>

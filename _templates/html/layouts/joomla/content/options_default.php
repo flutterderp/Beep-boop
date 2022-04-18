@@ -7,7 +7,10 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-defined('JPATH_BASE') or die;
+defined('_JEXEC') or die;
+
+use Joomla\CMS\Form\FormHelper;
+use Joomla\CMS\HTML\HTMLHelper;
 ?>
 
 <fieldset class="<?php echo !empty($displayData->formclass) ? $displayData->formclass : 'form-horizontal'; ?>">
@@ -21,9 +24,9 @@ defined('JPATH_BASE') or die;
 			<?php $datashowon = ''; ?>
 			<?php $groupClass = $field->type === 'Spacer' ? ' field-spacer' : ''; ?>
 			<?php if ($field->showon) : ?>
-				<?php JHtml::_('jquery.framework'); ?>
-				<?php JHtml::_('script', 'jui/cms.js', array('version' => 'auto', 'relative' => true)); ?>
-				<?php $datashowon = ' data-showon=\'' . json_encode(JFormHelper::parseShowOnConditions($field->showon, $field->formControl, $field->group)) . '\''; ?>
+				<?php HTMLHelper::_('jquery.framework'); ?>
+				<?php HTMLHelper::_('script', 'jui/cms.js', array('version' => 'auto', 'relative' => true)); ?>
+				<?php $datashowon = ' data-showon=\'' . json_encode(FormHelper::parseShowOnConditions($field->showon, $field->formControl, $field->group)) . '\''; ?>
 			<?php endif; ?>
 			<div class="control-group<?php echo $groupClass; ?>"<?php echo $datashowon; ?>>
 				<?php if (!isset($displayData->showlabel) || $displayData->showlabel) : ?>

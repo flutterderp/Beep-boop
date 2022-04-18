@@ -7,7 +7,11 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-defined('JPATH_BASE') or die;
+defined('_JEXEC') or die;
+
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Layout\LayoutHelper;
+use Joomla\CMS\Language\Text;
 
 /**
  * Note that this layout opens a div with the page class suffix. If you do not use the category children
@@ -54,13 +58,13 @@ $tagsData = $category->tags->itemTags;
 
 		<?php if ($params->get('show_category_title', 1)) : ?>
 			<h2>
-				<?php echo JHtml::_('content.prepare', $category->title, '', $extension . '.category.title'); ?>
+				<?php echo HTMLHelper::_('content.prepare', $category->title, '', $extension . '.category.title'); ?>
 			</h2>
 		<?php endif; ?>
 		<?php echo $afterDisplayTitle; ?>
 
 		<?php if ($params->get('show_cat_tags', 1)) : ?>
-			<?php echo JLayoutHelper::render('joomla.content.tags', $tagsData); ?>
+			<?php echo LayoutHelper::render('joomla.content.tags', $tagsData); ?>
 		<?php endif; ?>
 
 		<?php if ($beforeDisplayContent || $afterDisplayContent || $params->get('show_description', 1) || $params->def('show_description_image', 1)) : ?>
@@ -70,7 +74,7 @@ $tagsData = $category->tags->itemTags;
 				<?php endif; ?>
 				<?php echo $beforeDisplayContent; ?>
 				<?php if ($params->get('show_description') && $category->description) : ?>
-					<?php echo JHtml::_('content.prepare', $category->description, '', $extension . '.category.description'); ?>
+					<?php echo HTMLHelper::_('content.prepare', $category->description, '', $extension . '.category.description'); ?>
 				<?php endif; ?>
 				<?php echo $afterDisplayContent; ?>
 				<div class="clr"></div>
@@ -82,7 +86,7 @@ $tagsData = $category->tags->itemTags;
 			<div class="cat-children">
 				<?php if ($params->get('show_category_heading_title_text', 1) == 1) : ?>
 					<h3>
-						<?php echo JText::_('JGLOBAL_SUBCATEGORIES'); ?>
+						<?php echo Text::_('JGLOBAL_SUBCATEGORIES'); ?>
 					</h3>
 				<?php endif; ?>
 				<?php echo $displayData->loadTemplate('children'); ?>

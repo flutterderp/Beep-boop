@@ -7,11 +7,13 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-defined('JPATH_BASE') or die;
+defined('_JEXEC') or die;
 
-$app = JFactory::getApplication();
-$option = $app->input->get('option', 'com_content', 'string');
-$component = ucwords(str_ireplace('com_', '', $option));
+use Joomla\CMS\Factory;
+
+$app           = Factory::getApplication();
+$option        = $app->input->get('option', 'com_content', 'string');
+$component     = ucwords(str_ireplace('com_', '', $option));
 $blockPosition = $displayData['params']->get('info_block_position', 0);
 
 $displayData['context.option'] = $option;

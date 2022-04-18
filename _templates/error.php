@@ -7,7 +7,13 @@
  */
 
 defined('_JEXEC') or die;
-defined('DS') or define('DS', DIRECTORY_SEPARATOR);
+
+use Joomla\CMS\Factory;
+use Joomla\CMS\Filter\OutputFilter;
+use Joomla\CMS\Helper\ModuleHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Version;
 
 // Set HTTP header
 switch($this->error->getCode())
@@ -22,20 +28,23 @@ switch($this->error->getCode())
 		break;
 }
 
-$today   = new \DateTime(null, new \DateTimeZone('UTC'));
+$utc_tz  = new DateTimeZone('UTC');
+$today   = new DateTime(null, $utc_tz);
 $logFile = JPATH_BASE . '/error_log';
 $handle  = fopen($logFile, 'a+');
 error_log('[' . $today->format('H:i:s') . '] ' . htmlspecialchars($this->error->getCode() . ': ' . $this->error->getMessage(), ENT_QUOTES, 'utf-8') . ' in ', 3, $logFile);
-error_log(JFilterOutput::ampReplace(JUri::getInstance()->getPath()) . PHP_EOL, 3, $logFile);
+error_log(OutputFilter::ampReplace(Uri::getInstance()->getPath()) . PHP_EOL, 3, $logFile);
 fclose($handle);
 
-$app             = JFactory::getApplication();
-$doc             = JFactory::getDocument();
-$user            = JFactory::getUser();
-$isHtml          = ($doc->_type === 'html') ? true : false;
+$app             = Factory::getApplication();
+$doc             = Factory::getDocument();
+$user            = Factory::getUser();
+$error_type      = Version::MAJOR_VERSION === 4 ? 'error' : 'html';
+$isHtml          = ($doc->_type === $error_type) ? true : false;
 // $isHtml          = (method_exists($doc, 'getHeadData') !== true) ? true : false;
-$this->baseurl   = JUri::root(false);
+$this->baseurl   = Uri::root(false);
 $this->language  = $doc->language;
+$this->debug     = true;
 $this->direction = $doc->direction;
 $this->template  = 'candelaaluminium';
 // Getting params from template
@@ -52,10 +61,10 @@ $sitename        = $app->get('sitename');
 
 if($isHtml !== true)
 {
-	$uri      = JUri::getInstance();
+	$uri      = Uri::getInstance();
 	$pathname = pathinfo($uri->getPath(), PATHINFO_DIRNAME);
 	$basename = pathinfo($uri->getPath(), PATHINFO_BASENAME);
-	$new_base = '/' . JFilterOutput::stringUrlSafe($basename) . '_' . time() . '.html';
+	$new_base = '/' . OutputFilter::stringUrlSafe($basename) . '_' . time() . '.html';
 	$app->redirect($uri->getScheme() . '://' . $uri->getHost() . str_replace('//', '/', $pathname . $new_base));
 }
 
@@ -65,7 +74,7 @@ $doc->resetHeadData();
 $doc->_custom                       = $oldHeadData['custom'];
 $doc->title                         = $oldHeadData['title'];
 $doc->description                   = $oldHeadData['description'];
-$doc->_metaTags['name']['keywords'] = $oldHeadData['metaTags']['name']['keywords'];
+$doc->_metaTags['name']['keywords'] = isset($oldHeadData['metaTags']['name']['keywords']) ? $oldHeadData['metaTags']['name']['keywords'] : '';
 
 if($task == "edit" || $layout == "form" )
 {
@@ -84,12 +93,10 @@ $doc->addScript($this->baseurl . '/templates/' . $this->template . '/javascript/
 // $doc->addScript($this->baseurl . '/templates/' . $this->template . '/javascript/jquery-migrate-1.4.1.min.js', null, array('async' => true));
 $doc->addScript($this->baseurl . '/templates/' . $this->template . '/javascript/jquery-migrate-3.0.0.min.js', null, array('async' => true));
 // Stylesheets
-$doc->addStyleSheet('https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700,700i&display=swap');
+$doc->addHeadLink('https://fonts.googleapis.com', 'preconnect');
+$doc->addHeadLink('https://fonts.gstatic.com', 'preconnect', 'rel', array('crossorigin' => 'crossorigin'));
+$doc->addStyleSheet('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,700;1,700&family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 $doc->addStyleSheet($this->baseurl . '/templates/system/css/system.css');
-$doc->addStyleSheet($this->baseurl . '/templates/' . $this->template . '/css/app.css');
-$doc->addStyleSheet($this->baseurl . '/templates/' . $this->template . '/css/pushy.min.css');
-$doc->addStyleSheet($this->baseurl . '/templates/' . $this->template . '/css/lightcase.css');
-$doc->addStyleSheet($this->baseurl . '/templates/' . $this->template . '/css/jquery.bxslider.min.css');
 $doc->addStyleSheet($this->baseurl . '/templates/' . $this->template . '/css/fa59-all.min.css');
 $doc->addStyleSheet($this->baseurl . '/templates/' . $this->template . '/css/custom.css');
 
@@ -99,7 +106,7 @@ $doc->addStyleSheet($this->baseurl . '/templates/' . $this->template . '/css/cus
 }
 else
 {
-	$uri = JUri::getInstance();
+	$uri = Uri::getInstance();
 	$app->redirect('https://' . $uri->getHost() . $uri->getPath() . '.html', false);
 } */
 $head_data = $doc->getHeadData();
@@ -111,6 +118,7 @@ $head_data = $doc->getHeadData();
 		<title><?php echo $this->title; ?> <?php echo htmlspecialchars($this->error->getMessage(), ENT_QUOTES, 'UTF-8'); ?></title>
 		<meta name="msapplication-config" content="none">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<base href="<?php echo $this->baseurl; ?>">
 		<link href="<?php echo $this->baseurl; ?>/templates/<?php echo $this->template; ?>/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon">
 		<?php
 		foreach($head_data['styleSheets'] as $key => $style)
@@ -161,30 +169,30 @@ $head_data = $doc->getHeadData();
 					echo $doc->getBuffer('modules', 'copyhead', array('style' => 'xhtml5'));
 					?>
 					<!-- Begin Content -->
-					<h1 class="page-header"><?php echo JText::_('JERROR_LAYOUT_PAGE_NOT_FOUND'); ?></h1>
+					<h1 class="page-header"><?php echo Text::_('JERROR_LAYOUT_PAGE_NOT_FOUND'); ?></h1>
 					<div class="well">
 						<div class="row collapse">
 							<div class="small-12 columns">
-								<p><strong><?php echo JText::_('JERROR_LAYOUT_ERROR_HAS_OCCURRED_WHILE_PROCESSING_YOUR_REQUEST'); ?></strong></p>
-								<p><?php echo JText::_('JERROR_LAYOUT_NOT_ABLE_TO_VISIT'); ?></p>
+								<p><strong><?php echo Text::_('JERROR_LAYOUT_ERROR_HAS_OCCURRED_WHILE_PROCESSING_YOUR_REQUEST'); ?></strong></p>
+								<p><?php echo Text::_('JERROR_LAYOUT_NOT_ABLE_TO_VISIT'); ?></p>
 								<ul>
-									<li><?php echo JText::_('JERROR_LAYOUT_AN_OUT_OF_DATE_BOOKMARK_FAVOURITE'); ?></li>
-									<li><?php echo JText::_('JERROR_LAYOUT_MIS_TYPED_ADDRESS'); ?></li>
-									<li><?php echo JText::_('JERROR_LAYOUT_SEARCH_ENGINE_OUT_OF_DATE_LISTING'); ?></li>
-									<li><?php echo JText::_('JERROR_LAYOUT_YOU_HAVE_NO_ACCESS_TO_THIS_PAGE'); ?></li>
+									<li><?php echo Text::_('JERROR_LAYOUT_AN_OUT_OF_DATE_BOOKMARK_FAVOURITE'); ?></li>
+									<li><?php echo Text::_('JERROR_LAYOUT_MIS_TYPED_ADDRESS'); ?></li>
+									<li><?php echo Text::_('JERROR_LAYOUT_SEARCH_ENGINE_OUT_OF_DATE_LISTING'); ?></li>
+									<li><?php echo Text::_('JERROR_LAYOUT_YOU_HAVE_NO_ACCESS_TO_THIS_PAGE'); ?></li>
 								</ul>
 							</div>
 							<div class="small-12 columns">
 								<?php if(JModuleHelper::getModule('search')) : ?>
-									<p><strong><?php echo JText::_('JERROR_LAYOUT_SEARCH'); ?></strong></p>
-									<p><?php echo JText::_('JERROR_LAYOUT_SEARCH_PAGE'); ?></p>
+									<p><strong><?php echo Text::_('JERROR_LAYOUT_SEARCH'); ?></strong></p>
+									<p><?php echo Text::_('JERROR_LAYOUT_SEARCH_PAGE'); ?></p>
 									<?php echo $doc->getBuffer('module', 'search'); ?>
 								<?php endif; ?>
-								<p><a href="<?php echo $this->baseurl; ?>/" class="button"><span class="fa fa-home"></span> <?php echo JText::_('JERROR_LAYOUT_GO_TO_THE_HOME_PAGE'); ?></a></p>
+								<p><a href="<?php echo $this->baseurl; ?>/" class="button"><span class="fa fa-home"></span> <?php echo Text::_('JERROR_LAYOUT_GO_TO_THE_HOME_PAGE'); ?></a></p>
 							</div>
 						</div>
 						<hr>
-						<p><?php echo JText::_('JERROR_LAYOUT_PLEASE_CONTACT_THE_SYSTEM_ADMINISTRATOR'); ?></p>
+						<p><?php echo Text::_('JERROR_LAYOUT_PLEASE_CONTACT_THE_SYSTEM_ADMINISTRATOR'); ?></p>
 						<p>
 							<span class="label alert"><?php echo $this->error->getCode(); ?></span> <?php echo htmlspecialchars($this->error->getMessage(), ENT_QUOTES, 'UTF-8');?>
 						</p>
@@ -198,7 +206,7 @@ $head_data = $doc->getHeadData();
 									<?php // Make the first assignment to setError() outside the loop so the loop does not skip Exceptions ?>
 									<?php $this->setError($this->_error->getPrevious()); ?>
 									<?php while($loop === true) : ?>
-										<p><strong><?php echo JText::_('JERROR_LAYOUT_PREVIOUS_ERROR'); ?></strong></p>
+										<p><strong><?php echo Text::_('JERROR_LAYOUT_PREVIOUS_ERROR'); ?></strong></p>
 										<p><?php echo htmlspecialchars($this->_error->getMessage(), ENT_QUOTES, 'UTF-8'); ?></p>
 										<?php echo $this->renderBacktrace(); ?>
 										<?php $loop = $this->setError($this->_error->getPrevious()); ?>
@@ -227,7 +235,7 @@ $head_data = $doc->getHeadData();
 				<div class="row dev-copyright">
 					<div class="small-12 columns text-center">
 						<a href="http://www.southernanime.com" target="_blank">
-							<?php echo JText::sprintf('TPL_CANDELAALUMINIUM_COPYRIGHT', JDate::getInstance('UTC')->format('Y')); ?>
+							<?php echo Text::sprintf('TPL_CANDELAALUMINIUM_COPYRIGHT', JDate::getInstance('UTC')->format('Y')); ?>
 						</a>
 					</div>
 				</div>
@@ -239,12 +247,6 @@ $head_data = $doc->getHeadData();
 
 			<a class="up-button" href="#pagetop" aria-label="Action: scroll to top of page"></a>
 		</div><?php /* end of wrapper */ ?>
-
-		<script src="<?php echo $this->baseurl . '/templates/' . $this->template; ?>/javascript/foundation.min.js"></script>
-		<script src="<?php echo $this->baseurl . '/templates/' . $this->template; ?>/javascript/pushy.min.js"></script>
-		<script src="<?php echo $this->baseurl . '/templates/' . $this->template; ?>/javascript/lightcase.js"></script>
-		<?php /*<script src="<?php echo $this->baseurl . '/templates/' . $this->template; ?>/javascript/right-height.min.js"></script>*/ ?>
-		<script src="<?php echo $this->baseurl . '/templates/' . $this->template; ?>/javascript/jquery.bxslider.min.js"></script>
 
 		<?php
 		$script_keys = array_keys($oldHeadData['scripts']);

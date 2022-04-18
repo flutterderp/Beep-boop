@@ -7,13 +7,12 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-defined('JPATH_BASE') or die;
+defined('_JEXEC') or die;
 
-$class = ' class="first"';
-
-$item = $displayData->item;
-$items = $displayData->get('items');
-$params = $displayData->params;
+$class     = ' class="first"';
+$item      = $displayData->item;
+$items     = $displayData->get('items');
+$params    = $displayData->params;
 $extension = $displayData->get('extension');
 $className = substr($extension, 4);
 // This will work for the core components but not necessarily for other components

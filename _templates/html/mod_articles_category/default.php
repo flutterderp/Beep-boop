@@ -8,6 +8,10 @@
  */
 
 defined('_JEXEC') or die;
+
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
+
 $default_img = 'https://placeholdit.imgix.net/~text?txtsize=24&txt=No%20image&w=176&h=96';
 ?>
 <div class="category-module<?php echo $moduleclass_sfx; ?>">
@@ -21,7 +25,7 @@ $default_img = 'https://placeholdit.imgix.net/~text?txtsize=24&txt=No%20image&w=
 			<div class="small-4 columns">
 				<div class="photoblock" style="background-image: url('<?php echo $images->image_intro; ?>');"></div>
 			</div>
-			
+
 			<div class="small-8 columns end">
 				<h3>
 				<?php if ($params->get('link_titles') == 1) : ?>
@@ -65,15 +69,15 @@ $default_img = 'https://placeholdit.imgix.net/~text?txtsize=24&txt=No%20image&w=
 					<p class="mod-articles-category-readmore readmore">
 						<a class="mod-articles-category-title <?php echo $item->active; ?>" href="<?php echo $item->link; ?>">
 							<?php if ($item->params->get('access-view') == false) : ?>
-								<?php echo JText::_('MOD_ARTICLES_CATEGORY_REGISTER_TO_READ_MORE'); ?>
+								<?php echo Text::_('MOD_ARTICLES_CATEGORY_REGISTER_TO_READ_MORE'); ?>
 							<?php elseif ($readmore = $item->alternative_readmore) : ?>
 								<?php echo $readmore; ?>
-								<?php echo JHtml::_('string.truncate', $item->title, $params->get('readmore_limit')); ?>
+								<?php echo HTMLHelper::_('string.truncate', $item->title, $params->get('readmore_limit')); ?>
 							<?php elseif ($params->get('show_readmore_title', 0) == 0) : ?>
-								<?php echo JText::sprintf('MOD_ARTICLES_CATEGORY_READ_MORE_TITLE'); ?>
+								<?php echo Text::sprintf('MOD_ARTICLES_CATEGORY_READ_MORE_TITLE'); ?>
 							<?php else : ?>
-								<?php echo JText::_('MOD_ARTICLES_CATEGORY_READ_MORE'); ?>
-								<?php echo JHtml::_('string.truncate', $item->title, $params->get('readmore_limit')); ?>
+								<?php echo Text::_('MOD_ARTICLES_CATEGORY_READ_MORE'); ?>
+								<?php echo HTMLHelper::_('string.truncate', $item->title, $params->get('readmore_limit')); ?>
 							<?php endif; ?>
 						</a>
 					</p>

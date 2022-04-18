@@ -9,6 +9,9 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\CMS\Router\Route;
 use Joomla\String\StringHelper;
 
 // Get the mime type class.
@@ -43,7 +46,7 @@ if ($show_description)
 	$space = StringHelper::strpos($full_description, ' ', $start > 0 ? $start - 1 : 0);
 	$start = ($space && $space < $pos) ? $space + 1 : $start;
 
-	$description = JHtml::_('string.truncate', StringHelper::substr($full_description, $start), $desc_length, true);
+	$description = HTMLHelper::_('string.truncate', StringHelper::substr($full_description, $start), $desc_length, true);
 }
 
 $route = $this->result->route;
@@ -52,7 +55,7 @@ $route = $this->result->route;
 if (!empty($this->query->highlight)
 	&& empty($this->result->mime)
 	&& $this->params->get('highlight_terms', 1)
-	&& JPluginHelper::isEnabled('system', 'highlight'))
+	&& PluginHelper::isEnabled('system', 'highlight'))
 {
 	$route .= '&highlight=' . base64_encode(json_encode($this->query->highlight));
 }
@@ -60,7 +63,7 @@ if (!empty($this->query->highlight)
 ?>
 <div class="search-result">
 	<h4 class="result-title <?php echo $mime; ?>">
-		<a href="<?php echo JRoute::_($route); ?>">
+		<a href="<?php echo Route::_($route); ?>">
 			<?php echo $this->result->title; ?>
 		</a>
 	</h4>
@@ -71,7 +74,7 @@ if (!empty($this->query->highlight)
 	<?php endif; ?>
 	<?php if ($this->params->get('show_url', 1)) : ?>
 		<div class="small result-url<?php echo $this->pageclass_sfx; ?>">
-			<?php echo $this->baseUrl, JRoute::_($this->result->route); ?>
+			<?php echo $this->baseUrl, Route::_($this->result->route); ?>
 		</div>
 	<?php endif; ?>
 </div>

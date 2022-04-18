@@ -23,4 +23,4 @@ else
 	$linktype = $item->title;
 }
 ?>
-<a class="separator"<?php echo $title; ?>><?php echo $linktype; ?></a>
+<a class="separator"<?php echo $title; ?> tabindex="0"><?php echo $linktype; ?></a>

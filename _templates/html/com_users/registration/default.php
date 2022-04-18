@@ -9,8 +9,12 @@
 
 defined('_JEXEC') or die;
 
-JHtml::_('behavior.keepalive');
-JHtml::_('behavior.formvalidator');
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
+
+HTMLHelper::_('behavior.keepalive');
+HTMLHelper::_('behavior.formvalidator');
 
 ?>
 <div class="registration<?php echo $this->pageclass_sfx; ?>">
@@ -19,7 +23,7 @@ JHtml::_('behavior.formvalidator');
 			<h1><?php echo $this->escape($this->params->get('page_heading')); ?></h1>
 		</div>
 	<?php endif; ?>
-	<form id="member-registration" action="<?php echo JRoute::_('index.php?option=com_users&task=registration.register'); ?>" method="post" class="form-validate form-horizontal well" enctype="multipart/form-data">
+	<form id="member-registration" action="<?php echo Route::_('index.php?option=com_users&task=registration.register'); ?>" method="post" class="form-validate form-horizontal well" enctype="multipart/form-data">
 		<?php // Iterate through the form fieldsets and display each one. ?>
 		<?php foreach ($this->form->getFieldsets() as $fieldset) : ?>
 			<?php $fields = $this->form->getFieldset($fieldset->name); ?>
@@ -27,7 +31,7 @@ JHtml::_('behavior.formvalidator');
 				<fieldset>
 					<?php // If the fieldset has a label set, display it as the legend. ?>
 					<?php if (isset($fieldset->label)) : ?>
-						<legend><?php echo JText::_($fieldset->label); ?></legend>
+						<legend><?php echo Text::_($fieldset->label); ?></legend>
 					<?php endif; ?>
 
 					<p><label id="jform_spacer-lbl" class=""><b class="red">*</b> Required field</label></p>
@@ -48,7 +52,7 @@ JHtml::_('behavior.formvalidator');
 								<div class="control-label">
 									<?php echo $field->label; ?>
 									<?php if (!$field->required && $field->type !== 'Spacer') : ?>
-										<span class="optional"><?php echo JText::_('COM_USERS_OPTIONAL'); ?></span>
+										<span class="optional"><?php echo Text::_('COM_USERS_OPTIONAL'); ?></span>
 									<?php endif; ?>
 								</div>
 								<div class="controls">
@@ -67,15 +71,15 @@ JHtml::_('behavior.formvalidator');
 		<div class="control-group">
 			<div class="controls button-group">
 				<button type="submit" class="button primary validate">
-					<?php echo JText::_('JREGISTER'); ?>
+					<?php echo Text::_('JREGISTER'); ?>
 				</button>
-				<a class="button secondary" href="<?php echo JRoute::_(''); ?>" title="<?php echo JText::_('JCANCEL'); ?>">
-					<?php echo JText::_('JCANCEL'); ?>
+				<a class="button secondary" href="<?php echo Route::_(''); ?>" title="<?php echo Text::_('JCANCEL'); ?>">
+					<?php echo Text::_('JCANCEL'); ?>
 				</a>
 				<input type="hidden" name="option" value="com_users" />
 				<input type="hidden" name="task" value="registration.register" />
 			</div>
 		</div>
-		<?php echo JHtml::_('form.token'); ?>
+		<?php echo HTMLHelper::_('form.token'); ?>
 	</form>
 </div>

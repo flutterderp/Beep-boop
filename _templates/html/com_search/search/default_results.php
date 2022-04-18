@@ -8,13 +8,14 @@
  */
 
 defined('_JEXEC') or die;
+
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
 ?>
-
-
 
 <?php /*if ($this->total > 0) : ?>
 	<div class="form-limit">
-		<label for="limit"><?php echo JText::_('JGLOBAL_DISPLAY_NUM'); ?></label>
+		<label for="limit"><?php echo Text::_('JGLOBAL_DISPLAY_NUM'); ?></label>
 		<?php echo $this->pagination->getLimitBox(); ?>
 	</div>
 <?php endif;*/ ?>
@@ -22,7 +23,7 @@ defined('_JEXEC') or die;
 <div class="searchintro<?php echo $this->params->get('pageclass_sfx'); ?>">
 	<?php if (!empty($this->searchword)):?>
 	<p>
-		<?php echo JText::plural('COM_SEARCH_SEARCH_KEYWORD_N_RESULTS', '<span class="badge badge-info">'. $this->total. '</span>');?>
+		<?php echo Text::plural('COM_SEARCH_SEARCH_KEYWORD_N_RESULTS', '<span class="badge badge-info">'. $this->total. '</span>');?>
 		&nbsp;<b><?php echo $this->pagination->getPagesCounter(); ?></b>
 	</p>
 	<?php endif;?>
@@ -37,7 +38,7 @@ defined('_JEXEC') or die;
 	<dt class="result-title">
 		<?php echo $this->pagination->limitstart + $result->count.'. ';?>
 		<?php if ($result->href) :?>
-			<a href="<?php echo JRoute::_($result->href); ?>"<?php if ($result->browsernav == 1) :?> target="_blank"<?php endif;?>>
+			<a href="<?php echo Route::_($result->href); ?>"<?php if ($result->browsernav == 1) :?> target="_blank"<?php endif;?>>
 				<?php echo $this->escape($result->title);?>
 			</a>
 		<?php else:?>
@@ -56,7 +57,7 @@ defined('_JEXEC') or die;
 	</dd>
 	<?php if ($this->params->get('show_date')) : ?>
 		<dd class="result-created<?php echo $this->pageclass_sfx; ?>">
-			<?php echo JText::sprintf('JGLOBAL_CREATED_DATE_ON', $result->created); ?>
+			<?php echo Text::sprintf('JGLOBAL_CREATED_DATE_ON', $result->created); ?>
 		</dd>
 	<?php endif; ?>
 <?php endforeach; ?>

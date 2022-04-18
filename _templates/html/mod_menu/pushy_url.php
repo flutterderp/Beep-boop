@@ -9,6 +9,8 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Filter\OutputFilter;
+
 // Note. It is important to remove spaces between elements.
 $class = $item->anchor_css ? 'class="' . $item->anchor_css . '" ' : '';
 $title = $item->anchor_title ? 'title="' . $item->anchor_title . '" ' : '';
@@ -25,7 +27,7 @@ else
 }
 
 $flink = $item->flink;
-$flink = JFilterOutput::ampReplace(htmlspecialchars($flink));
+$flink = OutputFilter::ampReplace(htmlspecialchars($flink));
 
 switch ($item->browserNav) :
 	default:

@@ -7,13 +7,15 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-defined('JPATH_BASE') or die;
+defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\Router\Route;
 use Joomla\Registry\Registry;
 
 JLoader::register('TagsHelperRoute', JPATH_BASE . '/components/com_tags/helpers/route.php');
 
-$authorised = JFactory::getUser()->getAuthorisedViewLevels();
+$authorised = Factory::getUser()->getAuthorisedViewLevels();
 
 ?>
 <?php if (!empty($displayData)) : ?>
@@ -23,7 +25,7 @@ $authorised = JFactory::getUser()->getAuthorisedViewLevels();
 				<?php $tagParams = new Registry($tag->params); ?>
 				<?php $link_class = $tagParams->get('tag_link_class', 'label label-info'); ?>
 				<li class="tag-<?php echo $tag->tag_id; ?> tag-list<?php echo $i; ?>" itemprop="keywords">
-					<a href="<?php echo JRoute::_(TagsHelperRoute::getTagRoute($tag->tag_id . ':' . $tag->alias)); ?>" class="<?php echo $link_class; ?>">
+					<a href="<?php echo Route::_(TagsHelperRoute::getTagRoute($tag->tag_id . ':' . $tag->alias)); ?>" class="<?php echo $link_class; ?>">
 						<?php echo $this->escape($tag->title); ?>
 					</a>
 				</li>

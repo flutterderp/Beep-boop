@@ -9,6 +9,8 @@
 // No direct access.
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Helper\ModuleHelper;
+
 $n = 0;
 foreach ($list as $i => &$item) : ?>
 	<span class="horizontal-link">
@@ -21,7 +23,7 @@ foreach ($list as $i => &$item) : ?>
 	}
 
 	if (	$item->type == 'alias' &&
-			in_array($item->params->get('aliasoptions'),$path)
+			in_array($item->getParams()->get('aliasoptions'),$path)
 		||	in_array($item->id, $path)) {
 		$class .= ' active';
 	}
@@ -44,11 +46,11 @@ foreach ($list as $i => &$item) : ?>
 		case 'separator':
 		case 'url':
 		case 'component':
-			require JModuleHelper::getLayoutPath('mod_menu', 'default_'.$item->type);
+			require ModuleHelper::getLayoutPath('mod_menu', 'default_'.$item->type);
 			break;
 
 		default:
-			require JModuleHelper::getLayoutPath('mod_menu', 'default_url');
+			require ModuleHelper::getLayoutPath('mod_menu', 'default_url');
 			break;
 	}
 	?>

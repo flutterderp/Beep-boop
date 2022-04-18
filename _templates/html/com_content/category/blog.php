@@ -9,23 +9,38 @@
 
 defined('_JEXEC') or die;
 
-JHtml::addIncludePath(JPATH_COMPONENT . '/helpers');
+use Joomla\Component\Content\Administrator\Extension\ContentComponent;
+// use Joomla\Component\Content\Site\Helper\RouteHelper;
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Layout\FileLayout;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Version;
+use Joomla\Event\Dispatcher;
 
-JHtml::_('behavior.caption');
+HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers');
 
-$dispatcher = JEventDispatcher::getInstance();
+if(Version::MAJOR_VERSION < 4)
+{
+	HTMLHelper::_('behavior.caption');
+}
+
+$app         = Factory::getApplication();
+$currentDate = Factory::getDate()->format('Y-m-d H:i:s');
+$nullDate    = Factory::getDbo()->getNullDate();
+$pagesTotal  = (Version::MAJOR_VERSION === 4) ? $this->pagination->pagesTotal : $this->pagination->get('pages.total');
 
 $this->category->text = $this->category->description;
-$dispatcher->trigger('onContentPrepare', array($this->category->extension . '.categories', &$this->category, &$this->params, 0));
+$app->triggerEvent('onContentPrepare', array($this->category->extension . '.categories', &$this->category, &$this->params, 0));
 $this->category->description = $this->category->text;
 
-$results = $dispatcher->trigger('onContentAfterTitle', array($this->category->extension . '.categories', &$this->category, &$this->params, 0));
+$results = $app->triggerEvent('onContentAfterTitle', array($this->category->extension . '.categories', &$this->category, &$this->params, 0));
 $afterDisplayTitle = trim(implode("\n", $results));
 
-$results = $dispatcher->trigger('onContentBeforeDisplay', array($this->category->extension . '.categories', &$this->category, &$this->params, 0));
+$results = $app->triggerEvent('onContentBeforeDisplay', array($this->category->extension . '.categories', &$this->category, &$this->params, 0));
 $beforeDisplayContent = trim(implode("\n", $results));
 
-$results = $dispatcher->trigger('onContentAfterDisplay', array($this->category->extension . '.categories', &$this->category, &$this->params, 0));
+$results = $app->triggerEvent('onContentAfterDisplay', array($this->category->extension . '.categories', &$this->category, &$this->params, 0));
 $afterDisplayContent = trim(implode("\n", $results));
 
 ?>
@@ -46,7 +61,7 @@ $afterDisplayContent = trim(implode("\n", $results));
 	<?php echo $afterDisplayTitle; ?>
 
 	<?php if ($this->params->get('show_cat_tags', 1) && !empty($this->category->tags->itemTags)) : ?>
-		<?php $this->category->tagLayout = new JLayoutFile('joomla.content.tags'); ?>
+		<?php $this->category->tagLayout = new FileLayout('joomla.content.tags'); ?>
 		<?php echo $this->category->tagLayout->render($this->category->tags->itemTags); ?>
 	<?php endif; ?>
 
@@ -57,7 +72,7 @@ $afterDisplayContent = trim(implode("\n", $results));
 			<?php endif; ?>
 			<?php echo $beforeDisplayContent; ?>
 			<?php if ($this->params->get('show_description') && $this->category->description) : ?>
-				<?php echo JHtml::_('content.prepare', $this->category->description, '', 'com_content.category'); ?>
+				<?php echo HTMLHelper::_('content.prepare', $this->category->description, '', 'com_content.category'); ?>
 			<?php endif; ?>
 			<?php echo $afterDisplayContent; ?>
 		</div>
@@ -65,7 +80,7 @@ $afterDisplayContent = trim(implode("\n", $results));
 
 	<?php if (empty($this->lead_items) && empty($this->link_items) && empty($this->intro_items)) : ?>
 		<?php if ($this->params->get('show_no_articles', 1)) : ?>
-			<p><?php echo JText::_('COM_CONTENT_NO_ARTICLES'); ?></p>
+			<p><?php echo Text::_('COM_CONTENT_NO_ARTICLES'); ?></p>
 		<?php endif; ?>
 	<?php endif; ?>
 
@@ -73,13 +88,18 @@ $afterDisplayContent = trim(implode("\n", $results));
 	<?php if (!empty($this->lead_items)) : ?>
 		<div class="items-leading clearfix">
 			<?php foreach ($this->lead_items as &$item) : ?>
-				<div class="leading-<?php echo $leadingcount; ?><?php echo $item->state == 0 ? ' system-unpublished' : null; ?>"
+				<?php
+				$conditionUnpublished = $item->state == ((Version::MAJOR_VERSION === 4) ? ContentComponent::CONDITION_UNPUBLISHED : 0);
+				$isNotPublishedYet    = $item->publish_up > $currentDate;
+				$isExpired            = !is_null($item->publish_down) && $item->publish_down != $nullDate && $item->publish_down < $currentDate;
+				?>
+				<article class="leading-<?php echo $leadingcount; ?><?php echo ($conditionUnpublished || $isNotPublishedYet || $isExpired) ? ' system-unpublished' : null; ?>"
 					itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
 					<?php
 					$this->item = & $item;
 					echo $this->loadTemplate('item');
 					?>
-				</div>
+				</article>
 				<?php $leadingcount++; ?>
 			<?php endforeach; ?>
 		</div><!-- end items-leading -->
@@ -92,19 +112,24 @@ $afterDisplayContent = trim(implode("\n", $results));
 
 	<?php if (!empty($this->intro_items)) : ?>
 		<?php foreach ($this->intro_items as $key => &$item) : ?>
-			<?php $rowcount = ((int) $key % (int) $this->columns) + 1; ?>
+			<?php
+			$conditionUnpublished = $item->state == ((Version::MAJOR_VERSION === 4) ? ContentComponent::CONDITION_UNPUBLISHED : 0);
+			$isNotPublishedYet    = $item->publish_up > $currentDate;
+			$isExpired            = !is_null($item->publish_down) && $item->publish_down != $nullDate && $item->publish_down < $currentDate;
+			$rowcount             = ((int) $key % (int) $this->columns) + 1;
+			?>
 			<?php if ($rowcount === 1) : ?>
 				<?php $row = $counter / $this->columns; ?>
 				<div class="items-row cols-<?php echo (int) $this->columns; ?> <?php echo 'row-' . $row; ?> row-fluid clearfix">
 			<?php endif; ?>
 			<div class="span<?php echo round(12 / $this->columns); ?>">
-				<div class="item column-<?php echo $rowcount; ?><?php echo $item->state == 0 ? ' system-unpublished' : null; ?>"
+				<article class="item column-<?php echo $rowcount; ?><?php echo ($conditionUnpublished || $isNotPublishedYet || $isExpired) ? ' system-unpublished' : null; ?>"
 					itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
 					<?php
 					$this->item = & $item;
 					echo $this->loadTemplate('item');
 					?>
-				</div>
+				</article>
 				<!-- end item -->
 				<?php $counter++; ?>
 			</div><!-- end span -->
@@ -123,11 +148,11 @@ $afterDisplayContent = trim(implode("\n", $results));
 	<?php if ($this->maxLevel != 0 && !empty($this->children[$this->category->id])) : ?>
 		<div class="cat-children">
 			<?php if ($this->params->get('show_category_heading_title_text', 1) == 1) : ?>
-				<h3> <?php echo JText::_('JGLOBAL_SUBCATEGORIES'); ?> </h3>
+				<h3> <?php echo Text::_('JGLOBAL_SUBCATEGORIES'); ?> </h3>
 			<?php endif; ?>
 			<?php echo $this->loadTemplate('children'); ?> </div>
 	<?php endif; ?>
-	<?php if (($this->params->def('show_pagination', 1) == 1 || ($this->params->get('show_pagination') == 2)) && ($this->pagination->get('pages.total') > 1)) : ?>
+	<?php if (($this->params->def('show_pagination', 1) == 1 || ($this->params->get('show_pagination') == 2)) && ($pagesTotal > 1)) : ?>
 		<div class="pagination">
 			<?php if ($this->params->def('show_pagination_results', 1)) : ?>
 				<p class="counter pull-right"> <?php echo $this->pagination->getPagesCounter(); ?> </p>

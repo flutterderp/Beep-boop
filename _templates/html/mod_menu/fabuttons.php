@@ -9,6 +9,8 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Helper\ModuleHelper;
+
 $id = '';
 
 if ($tagId = $params->get('tag_id', ''))
@@ -58,11 +60,11 @@ foreach ($list as $i => &$item)
 		case 'component':
 		case 'heading':
 		case 'url':
-			require JModuleHelper::getLayoutPath('mod_menu', 'fabuttons_' . $item->type);
+			require ModuleHelper::getLayoutPath('mod_menu', 'fabuttons_' . $item->type);
 			break;
 
 		default:
-			require JModuleHelper::getLayoutPath('mod_menu', 'fabuttons_url');
+			require ModuleHelper::getLayoutPath('mod_menu', 'fabuttons_url');
 			break;
 	endswitch;
 }

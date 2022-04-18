@@ -3,7 +3,7 @@
  * @package     Joomla.Site
  * @subpackage  com_tags
  *
- * @copyright   Copyright (C) 2005 - 2019 Open Source Matters, Inc. All rights reserved.
+ * @copyright   (C) 2013 Open Source Matters, Inc. <https://www.joomla.org>
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -15,22 +15,22 @@ $isSingleTag = count($this->item) === 1;
 
 ?>
 <div class="tag-category<?php echo $this->pageclass_sfx; ?>">
-	<?php if ($this->params->get('show_tag_title', 1)) : ?>
-		<h1>
-			Tagged: <?php echo JHtml::_('content.prepare', $this->tags_title, '', 'com_tag.tag'); ?>
-		</h1>
-	<?php elseif ($this->params->get('show_page_heading')) : ?>
+	<?php if ($this->params->get('show_page_heading')) : ?>
 		<h1>
 			<?php echo $this->escape($this->params->get('page_heading')); ?>
 		</h1>
 	<?php endif; ?>
-
+	<?php if ($this->params->get('show_tag_title', 1)) : ?>
+		<h1>
+			<?php echo JHtml::_('content.prepare', $this->tags_title, '', 'com_tag.tag'); ?>
+		</h1>
+	<?php endif; ?>
 	<?php // We only show a tag description if there is a single tag. ?>
 	<?php if (count($this->item) === 1 && ($this->params->get('tag_list_show_tag_image', 1) || $this->params->get('tag_list_show_tag_description', 1))) : ?>
 		<div class="category-desc">
 			<?php $images = json_decode($this->item[0]->images); ?>
 			<?php if ($this->params->get('tag_list_show_tag_image', 1) == 1 && !empty($images->image_fulltext)) : ?>
-				<img src="<?php echo htmlspecialchars($images->image_fulltext, ENT_COMPAT, 'UTF-8'); ?>" alt="<?php echo htmlspecialchars($images->image_fulltext_alt); ?>" />
+				<img src="<?php echo htmlspecialchars($images->image_fulltext, ENT_QUOTES, 'UTF-8'); ?>" alt="<?php echo htmlspecialchars($images->image_fulltext_alt, ENT_QUOTES, 'UTF-8'); ?>" />
 			<?php endif; ?>
 			<?php if ($this->params->get('tag_list_show_tag_description') == 1 && $this->item[0]->description) : ?>
 				<?php echo JHtml::_('content.prepare', $this->item[0]->description, '', 'com_tags.tag'); ?>
@@ -41,7 +41,7 @@ $isSingleTag = count($this->item) === 1;
 	<?php // If there are multiple tags and a description or image has been supplied use that. ?>
 	<?php if ($this->params->get('tag_list_show_tag_description', 1) || $this->params->get('show_description_image', 1)) : ?>
 		<?php if ($this->params->get('show_description_image', 1) == 1 && $this->params->get('tag_list_image')) : ?>
-			<img src="<?php echo $this->params->get('tag_list_image'); ?>" />
+			<img src="<?php echo htmlspecialchars($this->params->get('tag_list_image'), ENT_QUOTES, 'UTF-8'); ?>" />
 		<?php endif; ?>
 		<?php if ($this->params->get('tag_list_description', '') > '') : ?>
 			<?php echo JHtml::_('content.prepare', $this->params->get('tag_list_description'), '', 'com_tags.tag'); ?>

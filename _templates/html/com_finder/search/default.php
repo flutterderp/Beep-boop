@@ -9,11 +9,13 @@
 
 defined('_JEXEC') or die;
 
-// JHtml::_('behavior.core');
-// JHtml::_('formbehavior.chosen');
-JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
-JHtml::_('stylesheet', 'com_finder/finder.css', array('version' => 'auto', 'relative' => true));
-JHtml::_('script', 'media/system/js/mootools-core.js', array('version' => 'auto', 'relative' => false));
+use Joomla\CMS\HTML\HTMLHelper;
+
+// HTMLHelper::_('behavior.core');
+// HTMLHelper::_('formbehavior.chosen');
+HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers/html');
+HTMLHelper::_('stylesheet', 'com_finder/finder.css', array('version' => 'auto', 'relative' => true));
+HTMLHelper::_('script', 'media/system/js/mootools-core.js', array('version' => 'auto', 'relative' => false));
 ?>
 <div class="finder<?php echo $this->pageclass_sfx; ?>">
 	<?php if ($this->params->get('show_page_heading')) : ?>

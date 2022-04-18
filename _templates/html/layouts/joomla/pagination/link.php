@@ -7,36 +7,38 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-defined('JPATH_BASE') or die;
+defined('_JEXEC') or die;
+
+use Joomla\CMS\Language\Text;
 
 /** @var JPaginationObject $item */
-$item = $displayData['data'];
+$item    = $displayData['data'];
 $display = $item->text;
-$class = array();
+$class   = array();
 
 switch ((string) $item->text)
 {
 	// Check for "Start" item
-	case JText::_('JLIB_HTML_START') :
+	case Text::_('JLIB_HTML_START') :
 		$icon = 'fa fa-fast-backward icon-first';
 		$class[] = 'nav-start';
 		break;
 
 	// Check for "Prev" item
-	case $item->text === JText::_('JPREV') :
-		$item->text = JText::_('JPREVIOUS');
+	case $item->text === Text::_('JPREV') :
+		$item->text = Text::_('JPREVIOUS');
 		$icon = 'fa fa-backward icon-previous';
 		$class[] = 'nav-prev';
 		break;
 
 	// Check for "Next" item
-	case JText::_('JNEXT') :
+	case Text::_('JNEXT') :
 		$icon = 'fa fa-forward icon-next';
 		$class[] = 'nav-next';
 		break;
 
 	// Check for "End" item
-	case JText::_('JLIB_HTML_END') :
+	case Text::_('JLIB_HTML_END') :
 		$icon = 'fa fa-fast-forward icon-last';
 		$class[] = 'nav-end';
 		break;
@@ -73,7 +75,7 @@ if ($displayData['active'])
 		$title = ' title="' . $item->text . '" ';
 	}
 
-	$onClick = 'document.paginationForm.' . $item->prefix . 'limitstart.value=' . ($item->base > 0 ? $item->base : '0') . '; document.paginationForm.submit(); return false;';
+	$onClick = 'document.forms.paginationForm.' . $item->prefix . 'limitstart.value=' . ($item->base > 0 ? $item->base : '0') . '; document.forms.paginationForm.submit(); return false;';
 }
 else
 {
@@ -82,7 +84,7 @@ else
 ?>
 <?php if ($displayData['active']) : ?>
 	<li class="<?php echo implode(' ', $class); ?>">
-		<a <?php echo $cssClasses ? 'class="' . implode(' ', $cssClasses) . '"' : ''; ?> <?php echo $title; ?> onclick="<?php echo $onClick; ?>">
+		<a <?php echo $cssClasses ? 'class="' . implode(' ', $cssClasses) . '"' : ''; ?> href="javascript:void();" <?php echo $title; ?> onclick="<?php echo $onClick; ?>">
 			<?php echo $display; ?>
 		</a>
 	</li>

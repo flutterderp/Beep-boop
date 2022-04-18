@@ -10,12 +10,14 @@
 // No direct access.
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Helper\ModuleHelper;
+
 // Note. It is important to remove spaces between elements.
 ?>
 
 <ul class="menu<?php echo $class_sfx;?>"<?php
 	$tag = '';
-	if ($params->get('tag_id')!=NULL) {
+	if ($params->get('tag_id') != null) {
 		$tag = $params->get('tag_id').'';
 		echo ' id="'.$tag.'"';
 	}
@@ -28,7 +30,7 @@ foreach ($list as $i => &$item) :
 	}
 
 	if (	$item->type == 'alias' &&
-			in_array($item->params->get('aliasoptions'),$path)
+			in_array($item->getParams()->get('aliasoptions'),$path)
 		||	in_array($item->id, $path)) {
 		$class .= ' active';
 	}
@@ -52,11 +54,11 @@ foreach ($list as $i => &$item) :
 		case 'separator':
 		case 'url':
 		case 'component':
-			require JModuleHelper::getLayoutPath('mod_menu', 'spanned_'.$item->type);
+			require ModuleHelper::getLayoutPath('mod_menu', 'spanned_'.$item->type);
 			break;
 
 		default:
-			require JModuleHelper::getLayoutPath('mod_menu', 'spanned_url');
+			require ModuleHelper::getLayoutPath('mod_menu', 'spanned_url');
 			break;
 	endswitch;
 

@@ -8,16 +8,41 @@ window.addEventListener('DOMContentLoaded', function() {
 
     if(href !== null) {
       let hash_split = href.split('#'),
-          target = document.querySelector('[id="'+hash_split[1]+'"]');
+      target     = document.querySelector('[id="'+hash_split[1]+'"]'),
+      coords     = null;
 
-      if(hash_split.length === 2 && typeof target === 'object') {
-        let coords = target.getBoundingClientRect();
+
+      if((hash_split.length === 2 && hash_split[0].length === 0) && (target !== null && typeof target === 'object')) {
+        try {
+          coords = target.getBoundingClientRect();
+        } catch (e) {
+          // Scroll to top if we can't find a target to scroll to
+          coords = document.body.getBoundingClientRect();
+          // console.warn('No anchor available to scroll to or something hecked up.\r\n'+e);
+        }
 
         // Scroll the window to the anchor
         event.preventDefault();
         window.scrollTo({left: coords['x'], top: coords['y'], behavior: 'smooth'});
       }
     }
+  }
+
+  const pushybtn = document.getElementById('pushy-menu-btn')
+
+  if(pushybtn && typeof pushybtn !== 'undefined') {
+    pushybtn.addEventListener('click', function() {
+      let pushy    = document.querySelector('.pushy'),
+          computed = window.getComputedStyle(pushy).visibility
+
+      if(typeof pushy == 'object' && computed == 'hidden') {
+        pushy.style.visibility = 'visible'
+      }
+    })
+  }
+
+  if(typeof jQuery.fn.foundation !== 'undefined' && jQuery.isFunction(jQuery.fn.foundation)) {
+    jQuery(document).foundation();
   }
 
   if(typeof lightcase !== 'undefined' && jQuery.isFunction(jQuery.fn.lightcase)) {

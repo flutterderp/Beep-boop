@@ -8,6 +8,8 @@
  */
 
 defined('_JEXEC') or die;
+
+use Joomla\CMS\Factory;
 ?>
 <div class="profile<?php echo $this->pageclass_sfx?>">
 <?php if ($this->params->get('show_page_heading')) : ?>
@@ -17,7 +19,7 @@ defined('_JEXEC') or die;
 	</h1>
 </div>
 <?php endif; ?>
-<?php if (JFactory::getUser()->id == $this->data->id) : ?>
+<?php if (Factory::getUser()->id == $this->data->id) : ?>
 <ul class="btn-toolbar pull-right">
 	<li class="btn-group">
 		<a class="btn" href="<?php echo JRoute::_('index.php?option=com_users&task=profile.edit&user_id=' . (int) $this->data->id);?>">

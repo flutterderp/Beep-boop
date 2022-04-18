@@ -8,6 +8,8 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Layout\LayoutHelper;
+
 /**
  * This is a file to add template specific chrome to pagination rendering.
  *
@@ -67,7 +69,7 @@ defined('_JEXEC') or die;
   */
  function pagination_list_footer($list)
  {
- 	return JLayoutHelper::render('joomla.pagination.list', ['list' => $list]);
+ 	return LayoutHelper::render('joomla.pagination.list', ['list' => $list]);
  }
 
 /**
@@ -79,7 +81,7 @@ defined('_JEXEC') or die;
  */
 function pagination_list_render($list)
 {
-	return JLayoutHelper::render('joomla.pagination.list', ['list' => $list]);
+	return LayoutHelper::render('joomla.pagination.list', ['list' => $list]);
 }
 
 /**
@@ -91,7 +93,7 @@ function pagination_list_render($list)
  */
 function pagination_item_active(&$item)
 {
-	return JLayoutHelper::render('joomla.pagination.link', ['data' => $item, 'active' => true]);
+	return LayoutHelper::render('joomla.pagination.link', ['data' => $item, 'active' => true]);
 }
 
 /**
@@ -103,5 +105,5 @@ function pagination_item_active(&$item)
  */
 function pagination_item_inactive(&$item)
 {
-	return JLayoutHelper::render('joomla.pagination.link', ['data' => $item, 'active' => false]);
+	return LayoutHelper::render('joomla.pagination.link', ['data' => $item, 'active' => false]);
 }
