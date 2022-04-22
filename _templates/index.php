@@ -56,8 +56,9 @@ $doc->addScript($this->baseurl . '/templates/' . $this->template . '/javascript/
 // Stylesheets
 $doc->addHeadLink('https://fonts.googleapis.com', 'preconnect');
 $doc->addHeadLink('https://fonts.gstatic.com', 'preconnect', 'rel', array('crossorigin' => 'crossorigin'));
-$doc->addStyleSheet('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600;700&Montserrat:ital,wght@0,400;0,700;1,700&family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+$doc->addStyleSheet('https://fonts.googleapis.com/css2?family=Caveat&family=Nunito:ital,wght@0,400;0,600;0,700;1,400;1,700&display=swap');
 $doc->addStyleSheet($this->baseurl . '/templates/system/css/system.css');
+$doc->addStyleSheet('https://use.fontawesome.com/releases/v5.15.4/css/all.css', null, array('crossorigin' => 'anonymous'));
 // $doc->addStyleSheet($this->baseurl . '/templates/' . $this->template . '/css/fa59-all.min.css');
 $doc->addStyleSheet($this->baseurl . '/templates/' . $this->template . '/css/custom.css');
 
@@ -102,12 +103,16 @@ $doc->addCustomTag('<meta property="og:image:height" content="' . $app->get('ogI
 	$wa->disableScript('bootstrap.collapse');
 	$wa->disableStyle('fontawesome');
 } */
+
+$app->enqueueMessage('Message test', 'info');
+$app->enqueueMessage('Message test', 'success');
+$app->enqueueMessage('Message test', 'warning');
+$app->enqueueMessage('Message test', 'error');
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>"
 	prefix="og: http://ogp.me/ns#" typeof="og:article">
 	<head>
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="msapplication-config" content="none">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<jdoc:include type="head" />
@@ -174,7 +179,7 @@ $doc->addCustomTag('<meta property="og:image:height" content="' . $app->get('ogI
 	</head>
 	<body itemscope itemtype="https://schema.org/WebPage">
 		<section name="pagetop" id="pagetop" aria-label="Anchor: top of page"></section>
-		<nav class="skiplink__landmark" aria-label="Allows users to skip to the main content"><a class="skiplink" href="#MainContent">Skip to Main Content</a></nav>
+		<nav class="skiplink__landmark" aria-label="Skip to main content"><a class="skiplink" href="#MainContent">Skip to Main Content</a></nav>
 
 		<?php if($base_image) : ?>
 			<div itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
@@ -196,73 +201,323 @@ $doc->addCustomTag('<meta property="og:image:height" content="' . $app->get('ogI
 		</nav>
 
 		<div class="wrapper pushy-container" id="container">
-			<header class="masthead<?php echo $is_home ? ' home' : ' inner'; ?>" id="masthead">
-				<div class="masthead-content row">
-					<jdoc:include type="modules" name="logo" style="xhtml5" />
+			<header id="masthead">
+				<section class="masthead<?php echo $is_home ? ' home' : ' inner'; ?>">
+					<h1><?php echo $app->get('sitename'); ?></h1>
+					<a href="#" class="mobilenav__btn" id="mobilenav" aria-label="Click to expand mobile menu"><span class="fa fa-bars fa-2x"></span></a>
 
-					<section class="topnavarea">
-						<jdoc:include type="modules" name="top" style="xhtml5" />
-						<jdoc:include type="modules" name="navigation" style="xhtml5" />
+					<?php /* <jdoc:include type="modules" name="top" style="xhtml5" />
+					<jdoc:include type="modules" name="navigation" style="xhtml5" /> */ ?>
 
-						<nav class="pushy-menu-btn__container">
-							<a class="pushy-menu-btn" id="pushy-menu-btn" href="javascript:void(0);" tabindex="0" title="Open mobile menu"><i class="fa fa-bars"></i></a>
-						</nav>
-					</section>
-				</div>
+					<nav class="menu mainmenu" role="navigation" aria-label="Main menu">
+						<div class="menu-item"><a href="index.html">Home</a></div>
+						<div class="menu-item has-submenu">
+							<a href="#">Articles <span class="fa fa-angle-right"></span></a>
+							<nav class="submenu" aria-label="Submenu – articles">
+								<div class="menu-item"><a href="home.html">Blog</a></div>
+								<div class="menu-item"><a href="home.html">Elegant Gothic Lolita</a></div>
+								<div class="menu-item has-submenu">
+									<a href="#">Music <span class="fa fa-angle-right"></span></a>
+									<nav class="submenu" aria-label="Submenu – music">
+										<div class="menu-item"><a href="home.html">Malice Mizer</a></div>
+										<div class="menu-item"><a href="home.html">Moi dix Mois</a></div>
+									</nav>
+								</div>
+								<div class="menu-item active"><a href="home.html">Stuff</a></div>
+							</nav>
+						</div>
+						<div class="menu-item active"><a href="home.html">Stuff</a></div>
+					</nav>
+				</section>
 			</header><?php /* end of masthead */ ?>
 
 			<?php if($is_home) : ?>
-				<section class="slideshow">
-					<jdoc:include type="modules" name="slideshow" style="none" />
-				</section>
-			<?php endif; ?>
-
-			<a id="MainContent"></a>
-
-			<section class="copyarea<?php echo $is_home ? ' home' : ' inner'; ?> row" id="copyarea">
-				<?php if($this->countModules('breadcrumb')) : ?>
-					<div class="small-12 columns" role="complementary" aria-label="Breadcrumbs">
-						<jdoc:include type="modules" name="breadcrumb" style="none" />
+				<section class="container" id="MainContent">
+					<div class="row">
+						<nav class="column" role="navigation" aria-label="Breadcrumbs">
+							<ul class="breadcrumb">
+								<li><a href="#">About us</a></li>
+								<li>Beep boop</li>
+								<li><a href="#">History of Lorem Ipsum</a></li>
+							</ul>
+						</nav>
+						<?php /* if($this->countModules('breadcrumb')) : ?>
+							<jdoc:include type="modules" name="breadcrumb" style="none" />
+						<?php endif; */ ?>
 					</div>
-				<?php endif; ?>
 
-				<main class="small-12 <?php echo !empty($sidebar_content) ? 'medium-8 large-9': ''; ?> columns copy" id="copy" role="main">
-					<jdoc:include type="message" />
-					<jdoc:include type="modules" name="copyhead" style="xhtml5" />
-					<jdoc:include type="component" />
-					<jdoc:include type="modules" name="copyfoot" style="xhtml5" />
-				</main><?php /* end of copy */ ?>
+					<a id="MainContent"></a>
 
-				<?php if(!empty($sidebar_content)) : ?>
-					<aside class="sidebar small-12 medium-4 large-3 columns" id="sidebar" role="complementary" aria-label="Sidebar content">
-						<?php echo $sidebar_content; ?>
-					</aside><?php /* end of sidebar */ ?>
-				<?php endif; ?>
-			</section><?php /* end of copyarea */ ?>
+					<div class="row">
+						<main class="contentarea column">
+							<jdoc:include type="message" />
 
-			<?php if($this->countModules('homeblocks')) : ?>
-				<section class="homeblockarea">
-					<jdoc:include type="modules" name="homeblocks" style="none" />
-				</section>
+							<jdoc:include type="component" />
+							<?php /* <jdoc:include type="modules" name="copyhead" style="xhtml5" /> */ ?>
+							<?php /* <jdoc:include type="modules" name="copyfoot" style="xhtml5" /> */ ?>
+
+							<article class="lead-item">
+								<h1>Beep boop</h1>
+								<div class="article-info">
+									<div class="created">
+										<time datetime="2014-10-05T14:24:27-04:00" itemprop="dateCreate">
+											Posted on 5 Oct 2014
+										</time>
+										<span class="createdby">by Gracelynn</span>
+									</div>
+								</div>
+								<p>Lorem ipsum dolor sit amet, <a href="#">consectetur adipiscing elit</a>. Duis posuere nisl vitae sem cursus, vitae convallis turpis egestas. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dapibus tempus ligula vel fermentum. Pellentesque cursus ullamcorper vulputate. Suspendisse quam tortor, feugiat nec interdum et, mattis et nisi. Integer et hendrerit lacus, sit amet pellentesque nisi. Phasellus et rutrum purus. Mauris pulvinar semper leo, quis pulvinar massa porttitor eget.</p>
+
+								<p><a class="button">Read more</a></p>
+
+								<div>
+									<a class="taglink">Nullam</a><a class="taglink">non</a><a class="taglink">nisl</a>
+									<a class="taglink">vel</a><a class="taglink">arcu</a><a class="taglink">lobortis</a>
+									<a class="taglink">commodo</a>
+								</div>
+							</article>
+
+							<article class="lead-item">
+								<h1>Beep boop</h1>
+								<div class="article-info">
+									<div class="created">
+										<time datetime="2014-10-05T14:24:27-04:00" itemprop="dateCreate">
+											Posted on 5 Oct 2014
+										</time>
+										<span class="createdby">by Gracelynn</span>
+									</div>
+								</div>
+								<p>Lorem ipsum dolor sit amet, <a href="#">consectetur adipiscing elit</a>. Duis posuere nisl vitae sem cursus, vitae convallis turpis egestas. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dapibus tempus ligula vel fermentum. Pellentesque cursus ullamcorper vulputate. Suspendisse quam tortor, feugiat nec interdum et, mattis et nisi. Integer et hendrerit lacus, sit amet pellentesque nisi. Phasellus et rutrum purus. Mauris pulvinar semper leo, quis pulvinar massa porttitor eget.</p>
+
+								<p><a class="button">Read more</a></p>
+
+								<div>
+									<a class="taglink">Nullam</a><a class="taglink">non</a><a class="taglink">nisl</a>
+									<a class="taglink">vel</a><a class="taglink">arcu</a><a class="taglink">lobortis</a>
+									<a class="taglink">commodo</a>
+								</div>
+							</article>
+
+							<article class="lead-item">
+								<h1>Beep boop</h1>
+								<div class="article-info">
+									<div class="created">
+										<time datetime="2014-10-05T14:24:27-04:00" itemprop="dateCreate">
+											Posted on 5 Oct 2014
+										</time>
+										<span class="createdby">by Gracelynn</span>
+									</div>
+								</div>
+								<p>Lorem ipsum dolor sit amet, <a href="#">consectetur adipiscing elit</a>. Duis posuere nisl vitae sem cursus, vitae convallis turpis egestas. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dapibus tempus ligula vel fermentum. Pellentesque cursus ullamcorper vulputate. Suspendisse quam tortor, feugiat nec interdum et, mattis et nisi. Integer et hendrerit lacus, sit amet pellentesque nisi. Phasellus et rutrum purus. Mauris pulvinar semper leo, quis pulvinar massa porttitor eget.</p>
+
+								<p><a class="button">Read more</a></p>
+
+								<div>
+									<a class="taglink">Nullam</a><a class="taglink">non</a><a class="taglink">nisl</a>
+									<a class="taglink">vel</a><a class="taglink">arcu</a><a class="taglink">lobortis</a>
+									<a class="taglink">commodo</a>
+								</div>
+							</article>
+
+							<nav class="pagination" aria-label="Pagination">
+								<ul>
+									<li><a href="" aria-label="First page"><i class="fa fa-angle-double-left"></i></a></li>
+									<li><a href="" aria-label="Previous page"><i class="fa fa-angle-left"></i></a></li>
+									<li><a href="">1</a></li>
+									<li><a href="">2</a></li>
+									<li><a href="">3</a></li>
+									<li><a href="" aria-label="Next page"><i class="fa fa-angle-right"></i></a></li>
+									<li><a href="" aria-label="Last page"><i class="fa fa-angle-double-right"></i></a></li>
+								</ul>
+							</nav>
+						</main>
+
+						<?php if(!empty($sidebar_content)) : ?>
+							<aside class="sidebar column" role="complementary" aria-label="Sidebar content">
+								<?php /* echo $sidebar_content; */ ?>
+
+								<div>
+									<h2>Beep boop</h2>
+									<p>Aliquam erat volutpat. Etiam a finibus nisi, ultricies auctor elit. Curabitur et tristique mi. Curabitur volutpat urna eu urna commodo ultrices. Vivamus lacinia aliquam ipsum, et feugiat.</p>
+									<ul class="menu vertical">
+										<li><a href="https://www.example.com" target="_blank" rel="noopener">Example link</a></li>
+										<li><a href="https://www.google.com" target="_blank" rel="noopener">Google</a></li>
+										<li><a href="https://www.example.com" target="_blank" rel="noopener">Example link</a></li>
+										<li><a href="https://www.google.com" target="_blank" rel="noopener">Google</a></li>
+									</ul>
+								</div>
+
+								<div>
+									<h2>Cool links</h2>
+									<ul class="menu vertical">
+										<li><a href="https://www.example.com" target="_blank" rel="noopener">Example link</a></li>
+										<li><a href="https://www.google.com" target="_blank" rel="noopener">Google</a></li>
+										<li><a href="https://www.example.com" target="_blank" rel="noopener">Example link</a></li>
+										<li><a href="https://www.google.com" target="_blank" rel="noopener">Google</a></li>
+									</ul>
+								</div>
+
+								<div>
+									<h2>Last.fm</h2>
+									<ul class="lastfm menu vertical">
+										<li class="lastfm-track">
+											<a class="lastfm-link" href="https://www.last.fm/music/%E5%88%86%E5%B3%B6%E8%8A%B1%E9%9F%B3/_/%E3%83%9E%E3%83%9C%E3%83%AD%E3%82%B7" target="_blank" rel="noopener">
+												<span class="lastfm-title">分島花音 – マボロシ</span>
+												<span class="lastfm-img">
+													<picture>
+														<source srcset="https://lastfm.freetls.fastly.net/i/u/300x300/493055bd674e45468af39f9bfaae1134.webp" type="image/webp">
+														<source srcset="https://lastfm.freetls.fastly.net/i/u/300x300/493055bd674e45468af39f9bfaae1134.png" type="image/png">
+														<img src="https://lastfm.freetls.fastly.net/i/u/300x300/493055bd674e45468af39f9bfaae1134.png" class="right" alt="album art 分島花音 – マボロシ" width="34" height="34" loading="lazy">
+													</picture>
+												</span>
+											</a>
+										</li>
+										<li class="lastfm-track">
+											<a class="lastfm-link" href="https://www.last.fm/music/%E5%88%86%E5%B3%B6%E8%8A%B1%E9%9F%B3/_/still+doll+(album+ver.)" target="_blank" rel="noopener">
+												<span class="lastfm-title">分島花音 – still doll (album ver.)</span>
+												<span class="lastfm-img">
+													<picture>
+														<source srcset="https://lastfm.freetls.fastly.net/i/u/300x300/493055bd674e45468af39f9bfaae1134.webp" type="image/webp">
+														<source srcset="https://lastfm.freetls.fastly.net/i/u/300x300/493055bd674e45468af39f9bfaae1134.png" type="image/png">
+														<img src="https://lastfm.freetls.fastly.net/i/u/300x300/493055bd674e45468af39f9bfaae1134.png" class="right" alt="album art 分島花音 – still doll (album ver.)" width="34" height="34" loading="lazy">
+													</picture>
+												</span>
+											</a>
+										</li>
+										<li class="lastfm-track">
+											<a class="lastfm-link" href="https://www.last.fm/music/%E5%88%86%E5%B3%B6%E8%8A%B1%E9%9F%B3/_/%E9%8F%A1" target="_blank" rel="noopener">
+												<span class="lastfm-title">分島花音 – 鏡</span>
+												<span class="lastfm-img">
+													<picture>
+														<source srcset="https://lastfm.freetls.fastly.net/i/u/300x300/493055bd674e45468af39f9bfaae1134.webp" type="image/webp">
+														<source srcset="https://lastfm.freetls.fastly.net/i/u/300x300/493055bd674e45468af39f9bfaae1134.png" type="image/png">
+														<img src="https://lastfm.freetls.fastly.net/i/u/300x300/493055bd674e45468af39f9bfaae1134.png" class="right" alt="album art 分島花音 – 鏡" width="34" height="34" loading="lazy">
+													</picture>
+												</span>
+											</a>
+										</li>
+										<li class="lastfm-track">
+											<a class="lastfm-link" href="https://www.last.fm/music/%E5%88%86%E5%B3%B6%E8%8A%B1%E9%9F%B3/_/%E7%9C%9F%E7%B4%85%E3%81%AE%E3%83%95%E3%82%A7%E3%83%BC%E3%82%BF%E3%83%AA%E3%82%BA%E3%83%A0" target="_blank" rel="noopener">
+												<span class="lastfm-title">分島花音 – 真紅のフェータリズム</span>
+												<span class="lastfm-img">
+													<picture>
+														<source srcset="https://lastfm.freetls.fastly.net/i/u/300x300/493055bd674e45468af39f9bfaae1134.webp" type="image/webp">
+														<source srcset="https://lastfm.freetls.fastly.net/i/u/300x300/493055bd674e45468af39f9bfaae1134.png" type="image/png">
+														<img src="https://lastfm.freetls.fastly.net/i/u/300x300/493055bd674e45468af39f9bfaae1134.png" class="right" alt="album art 分島花音 – 真紅のフェータリズム" width="34" height="34" loading="lazy">
+													</picture>
+												</span>
+											</a>
+										</li>
+										<li class="lastfm-track">
+											<a class="lastfm-link" href="https://www.last.fm/music/%E5%88%86%E5%B3%B6%E8%8A%B1%E9%9F%B3/_/sweet+ticket" target="_blank" rel="noopener">
+												<span class="lastfm-title">分島花音 – sweet ticket</span>
+												<span class="lastfm-img">
+													<picture>
+														<source srcset="https://lastfm.freetls.fastly.net/i/u/300x300/493055bd674e45468af39f9bfaae1134.webp" type="image/webp">
+														<source srcset="https://lastfm.freetls.fastly.net/i/u/300x300/493055bd674e45468af39f9bfaae1134.png" type="image/png">
+														<img src="https://lastfm.freetls.fastly.net/i/u/300x300/493055bd674e45468af39f9bfaae1134.png" class="right" alt="album art 分島花音 – sweet ticket" width="34" height="34" loading="lazy">
+													</picture>
+												</span>
+											</a>
+										</li>
+										<li class="lastfm-track">
+											<a class="lastfm-link" href="https://www.last.fm/music/Michael+Bolton/_/This+River" target="_blank" rel="noopener">
+												<span class="lastfm-title">Michael Bolton – This River</span>
+												<span class="lastfm-img">
+													<picture>
+														<source srcset="https://lastfm.freetls.fastly.net/i/u/300x300/f459b039a4e14bb0cb0998491611d340.webp" type="image/webp">
+														<source srcset="https://lastfm.freetls.fastly.net/i/u/300x300/f459b039a4e14bb0cb0998491611d340.png" type="image/png">
+														<img src="https://lastfm.freetls.fastly.net/i/u/300x300/f459b039a4e14bb0cb0998491611d340.png" class="right" alt="album art Michael Bolton – This River" width="34" height="34" loading="lazy">
+													</picture>
+												</span>
+											</a>
+										</li>
+										<li class="lastfm-track">
+											<a class="lastfm-link" href="https://www.last.fm/music/Michael+Bolton/_/A+Love+So+Beautiful" target="_blank" rel="noopener">
+												<span class="lastfm-title">Michael Bolton – A Love So Beautiful</span>
+												<span class="lastfm-img">
+													<picture>
+														<source srcset="https://lastfm.freetls.fastly.net/i/u/300x300/f459b039a4e14bb0cb0998491611d340.webp" type="image/webp">
+														<source srcset="https://lastfm.freetls.fastly.net/i/u/300x300/f459b039a4e14bb0cb0998491611d340.png" type="image/png">
+														<img src="https://lastfm.freetls.fastly.net/i/u/300x300/f459b039a4e14bb0cb0998491611d340.png" class="right" alt="album art Michael Bolton – A Love So Beautiful" width="34" height="34" loading="lazy">
+													</picture>
+												</span>
+											</a>
+										</li>
+										<li class="lastfm-track">
+											<a class="lastfm-link" href="https://www.last.fm/music/Michael+Bolton/_/I+Found+Someone" target="_blank" rel="noopener">
+												<span class="lastfm-title">Michael Bolton – I Found Someone</span>
+												<span class="lastfm-img">
+													<picture>
+														<source srcset="https://lastfm.freetls.fastly.net/i/u/300x300/f459b039a4e14bb0cb0998491611d340.webp" type="image/webp">
+														<source srcset="https://lastfm.freetls.fastly.net/i/u/300x300/f459b039a4e14bb0cb0998491611d340.png" type="image/png">
+														<img src="https://lastfm.freetls.fastly.net/i/u/300x300/f459b039a4e14bb0cb0998491611d340.png" class="right" alt="album art Michael Bolton – I Found Someone" width="34" height="34" loading="lazy">
+													</picture>
+												</span>
+											</a>
+										</li>
+										<li class="lastfm-track">
+											<a class="lastfm-link" href="https://www.last.fm/music/Michael+Bolton/_/I+Promise+You" target="_blank" rel="noopener">
+												<span class="lastfm-title">Michael Bolton – I Promise You</span>
+												<span class="lastfm-img">
+													<picture>
+														<source srcset="https://lastfm.freetls.fastly.net/i/u/300x300/f459b039a4e14bb0cb0998491611d340.webp" type="image/webp">
+														<source srcset="https://lastfm.freetls.fastly.net/i/u/300x300/f459b039a4e14bb0cb0998491611d340.png" type="image/png">
+														<img src="https://lastfm.freetls.fastly.net/i/u/300x300/f459b039a4e14bb0cb0998491611d340.png" class="right" alt="album art Michael Bolton – I Promise You" width="34" height="34" loading="lazy">
+													</picture>
+												</span>
+											</a>
+										</li>
+										<li class="lastfm-track">
+											<a class="lastfm-link" href="https://www.last.fm/music/Michael+Bolton/_/Can+I+Touch+You...There%3F" target="_blank" rel="noopener">
+												<span class="lastfm-title">Michael Bolton – Can I Touch You...There?</span>
+												<span class="lastfm-img">
+													<picture>
+														<source srcset="https://lastfm.freetls.fastly.net/i/u/300x300/f459b039a4e14bb0cb0998491611d340.webp" type="image/webp">
+														<source srcset="https://lastfm.freetls.fastly.net/i/u/300x300/f459b039a4e14bb0cb0998491611d340.png" type="image/png">
+														<img src="https://lastfm.freetls.fastly.net/i/u/300x300/f459b039a4e14bb0cb0998491611d340.png" class="right" alt="album art Michael Bolton – Can I Touch You...There?" width="34" height="34" loading="lazy">
+													</picture>
+												</span>
+											</a>
+										</li>
+										<li class="lastfm-track">
+											<a class="lastfm-link" href="https://www.last.fm/music/Michael+Bolton/_/Said+I+Loved+You...But+I+Lied" target="_blank" rel="noopener">
+												<span class="lastfm-title">Michael Bolton – Said I Loved You...But I Lied</span>
+												<span class="lastfm-img">
+													<picture>
+														<source srcset="https://lastfm.freetls.fastly.net/i/u/300x300/f459b039a4e14bb0cb0998491611d340.webp" type="image/webp">
+														<source srcset="https://lastfm.freetls.fastly.net/i/u/300x300/f459b039a4e14bb0cb0998491611d340.png" type="image/png">
+														<img src="https://lastfm.freetls.fastly.net/i/u/300x300/f459b039a4e14bb0cb0998491611d340.png" class="right" alt="album art Michael Bolton – Said I Loved You...But I Lied" width="34" height="34" loading="lazy">
+													</picture>
+												</span>
+											</a>
+										</li>
+									</ul>
+								</div>
+
+								<div>
+									<p>Curabitur sollicitudin iaculis ante, ac vehicula lacus pretium vel. Donec in rhoncus nunc, sit amet vulputate dui. Proin et nunc diam. Fusce ornare dui eget ante interdum, at ornare arcu mattis. Sed a euismod metus. Duis aliquam ultrices viverra. Pellentesque vestibulum erat metus, non iaculis tellus interdum in. Nunc quis aliquet leo. Ut efficitur risus eget ipsum pellentesque ultrices. Phasellus sed accumsan est. Nullam vestibulum nisi augue, a luctus augue condimentum id.</p>
+									<p>Aenean eget sem nec turpis scelerisque posuere interdum sit amet lorem. Praesent iaculis magna a vehicula sagittis. Mauris sed laoreet mi, non vestibulum sem. In est massa, faucibus at erat a, molestie cursus est. Sed sit amet elit lectus. Sed lobortis blandit magna non dignissim. Duis in elit rutrum, maximus arcu et, convallis massa. Praesent tempor pulvinar pharetra. Sed porta nec justo eu finibus. Vestibulum quis feugiat nibh. Pellentesque feugiat lectus nec odio mattis rutrum. Morbi egestas ultricies nunc eu molestie. Sed sit amet lectus eu mi rhoncus finibus sit amet a est.</p>
+								</div>
+
+								<div>
+									<p>Phasellus sollicitudin gravida orci, congue mattis justo interdum consectetur. Nam vehicula ut urna vitae tempus. Integer aliquam molestie sagittis. Nam vel posuere tellus. Donec eu dui interdum, luctus sem sed, fermentum sem. Donec varius sagittis metus vel ullamcorper. Etiam sagittis tellus urna. Pellentesque a imperdiet massa, in sollicitudin sem. Sed non ultrices lorem.</p>
+								</div>
+							</aside>
+						<?php endif; ?>
+					</div>
+				</section><?php /* end of copyarea */ ?>
+			<?php else : ?>
 			<?php endif; ?>
 
 			<footer role="contentinfo" arial-label="Footer content">
-				<div class="row">
-					<div class="small-12 columns">
-						<jdoc:include type="modules" name="footer" style="xhtml5" />
-					</div>
-				</div>
+				<div class="footer-item"><p><?php echo Text::sprintf('TPL_CANDELAALUMINIUM_COPYRIGHT', $today->format('Y')); ?></p></div>
+				<div class="footer-item"><p>&copy; 2018 Sitename</p></div>
 
-				<jdoc:include type="modules" name="bottom" style="xhtml5" />
-
-				<div class="row dev-copyright">
-					<div class="small-12 columns text-center">
-						<a href="http://www.southernanime.com" target="_blank">
-							<?php echo Text::sprintf('TPL_CANDELAALUMINIUM_COPYRIGHT', $today->format('Y')); ?>
-						</a>
-					</div>
-				</div>
-			</footer><?php /* end of footer */ ?>
+				<?php /* <jdoc:include type="modules" name="footer" style="xhtml5" />
+				<jdoc:include type="modules" name="bottom" style="xhtml5" /> */ ?>
+				<div class="footer-item"><p>some extra footer text</p></div>
+			</footer>
 
 			<jdoc:include type="modules" name="debug" />
 

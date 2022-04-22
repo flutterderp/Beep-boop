@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension version="3.9" type="template" client="site" method="upgrade">
 	<name>candelaaluminium</name>
-	<creationDate>January 2020</creationDate>
+	<creationDate>April 2022</creationDate>
 	<author>Southern Anime</author>
 	<authorEmail>webmaster@southernanime.com</authorEmail>
 	<authorUrl>https://www.southernanime.com</authorUrl>
 	<copyright>LICENSE.txt</copyright>
 	<license>MIT</license>
-	<version>1.7.5</version>
+	<version>1.7.6</version>
 	<description>TPL_CANDELAALUMINIUM_XML_DESCRIPTION</description>
 
 	<files>
 		<folder>css</folder>
-		<folder>fonts</folder>
 		<folder>forms</folder>
 		<folder>html</folder>
 		<folder>images</folder>
@@ -20,7 +19,6 @@
 		<folder>javascript</folder>
 		<folder>language</folder>
 		<folder>libraries</folder>
-		<folder>webfonts</folder>
 		<filename>index.html</filename>
 		<filename>favicon.ico</filename>
 		<filename>component.php</filename>
