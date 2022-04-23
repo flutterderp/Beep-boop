@@ -252,74 +252,11 @@ $app->enqueueMessage('Message test', 'error');
 						<main class="contentarea column">
 							<jdoc:include type="message" />
 
+							<jdoc:include type="modules" name="copyhead" style="xhtml5" />
 							<jdoc:include type="component" />
-							<?php /* <jdoc:include type="modules" name="copyhead" style="xhtml5" /> */ ?>
-							<?php /* <jdoc:include type="modules" name="copyfoot" style="xhtml5" /> */ ?>
+							<jdoc:include type="modules" name="copyfoot" style="xhtml5" />
 
-							<article class="lead-item">
-								<h1>Beep boop</h1>
-								<div class="article-info">
-									<div class="created">
-										<time datetime="2014-10-05T14:24:27-04:00" itemprop="dateCreate">
-											Posted on 5 Oct 2014
-										</time>
-										<span class="createdby">by Gracelynn</span>
-									</div>
-								</div>
-								<p>Lorem ipsum dolor sit amet, <a href="#">consectetur adipiscing elit</a>. Duis posuere nisl vitae sem cursus, vitae convallis turpis egestas. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dapibus tempus ligula vel fermentum. Pellentesque cursus ullamcorper vulputate. Suspendisse quam tortor, feugiat nec interdum et, mattis et nisi. Integer et hendrerit lacus, sit amet pellentesque nisi. Phasellus et rutrum purus. Mauris pulvinar semper leo, quis pulvinar massa porttitor eget.</p>
-
-								<p><a class="button">Read more</a></p>
-
-								<div>
-									<a class="taglink">Nullam</a><a class="taglink">non</a><a class="taglink">nisl</a>
-									<a class="taglink">vel</a><a class="taglink">arcu</a><a class="taglink">lobortis</a>
-									<a class="taglink">commodo</a>
-								</div>
-							</article>
-
-							<article class="lead-item">
-								<h1>Beep boop</h1>
-								<div class="article-info">
-									<div class="created">
-										<time datetime="2014-10-05T14:24:27-04:00" itemprop="dateCreate">
-											Posted on 5 Oct 2014
-										</time>
-										<span class="createdby">by Gracelynn</span>
-									</div>
-								</div>
-								<p>Lorem ipsum dolor sit amet, <a href="#">consectetur adipiscing elit</a>. Duis posuere nisl vitae sem cursus, vitae convallis turpis egestas. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dapibus tempus ligula vel fermentum. Pellentesque cursus ullamcorper vulputate. Suspendisse quam tortor, feugiat nec interdum et, mattis et nisi. Integer et hendrerit lacus, sit amet pellentesque nisi. Phasellus et rutrum purus. Mauris pulvinar semper leo, quis pulvinar massa porttitor eget.</p>
-
-								<p><a class="button">Read more</a></p>
-
-								<div>
-									<a class="taglink">Nullam</a><a class="taglink">non</a><a class="taglink">nisl</a>
-									<a class="taglink">vel</a><a class="taglink">arcu</a><a class="taglink">lobortis</a>
-									<a class="taglink">commodo</a>
-								</div>
-							</article>
-
-							<article class="lead-item">
-								<h1>Beep boop</h1>
-								<div class="article-info">
-									<div class="created">
-										<time datetime="2014-10-05T14:24:27-04:00" itemprop="dateCreate">
-											Posted on 5 Oct 2014
-										</time>
-										<span class="createdby">by Gracelynn</span>
-									</div>
-								</div>
-								<p>Lorem ipsum dolor sit amet, <a href="#">consectetur adipiscing elit</a>. Duis posuere nisl vitae sem cursus, vitae convallis turpis egestas. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dapibus tempus ligula vel fermentum. Pellentesque cursus ullamcorper vulputate. Suspendisse quam tortor, feugiat nec interdum et, mattis et nisi. Integer et hendrerit lacus, sit amet pellentesque nisi. Phasellus et rutrum purus. Mauris pulvinar semper leo, quis pulvinar massa porttitor eget.</p>
-
-								<p><a class="button">Read more</a></p>
-
-								<div>
-									<a class="taglink">Nullam</a><a class="taglink">non</a><a class="taglink">nisl</a>
-									<a class="taglink">vel</a><a class="taglink">arcu</a><a class="taglink">lobortis</a>
-									<a class="taglink">commodo</a>
-								</div>
-							</article>
-
-							<nav class="pagination" aria-label="Pagination">
+							<!-- <nav class="pagination" aria-label="Pagination">
 								<ul>
 									<li><a href="" aria-label="First page"><i class="fa fa-angle-double-left"></i></a></li>
 									<li><a href="" aria-label="Previous page"><i class="fa fa-angle-left"></i></a></li>
@@ -329,7 +266,7 @@ $app->enqueueMessage('Message test', 'error');
 									<li><a href="" aria-label="Next page"><i class="fa fa-angle-right"></i></a></li>
 									<li><a href="" aria-label="Last page"><i class="fa fa-angle-double-right"></i></a></li>
 								</ul>
-							</nav>
+							</nav> -->
 						</main>
 
 						<?php if(!empty($sidebar_content)) : ?>

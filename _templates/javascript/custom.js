@@ -1,7 +1,8 @@
 window.addEventListener('DOMContentLoaded', function() {
   let mobile_nav  = document.getElementById('mobilenav'),
       mainmenu    = document.querySelector('nav.mainmenu'),
-      has_submenu = document.querySelectorAll('.has-submenu')
+      has_submenu = document.querySelectorAll('.has-submenu'),
+      closables   = document.querySelectorAll('.callout[data-closable]')
 
   // Cycle through anchor links and attach click listeners
   document.addEventListener('click', clickListener)
@@ -36,6 +37,19 @@ window.addEventListener('DOMContentLoaded', function() {
         icon.classList.toggle('fa-angle-right')
         icon.classList.toggle('fa-angle-down')
       }
+    })
+  }
+
+  if(closables) {
+    closables.forEach(function(v, k) {
+      btn = v.querySelector('button[data-close]')
+
+      btn.addEventListener('click', function(e) {
+        e.preventDefault
+        e.stopPropagation
+
+        v.remove()
+      })
     })
   }
 
