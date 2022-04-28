@@ -54,12 +54,15 @@ $app->set('ogImageHeight', $img_height);
 <figure class="<?php echo htmlspecialchars($imgfloat); ?> item-image">
 	<meta name="twitter:image" content="<?php echo $img_url; ?>">
 
-	<img src="<?php echo htmlspecialchars($img_relative, ENT_COMPAT, 'utf-8'); ?>"
-		width="<?php echo $img_width; ?>" height="<?php echo $img_height; ?>"
-		<?php echo $alt_text; ?>
-		itemprop="image"
-		<?php echo $extraAttr; ?>
-	/>
+	<picture>
+		<img src="<?php echo htmlspecialchars($img_relative, ENT_COMPAT, 'utf-8'); ?>"
+			width="<?php echo $img_width; ?>" height="<?php echo $img_height; ?>"
+			<?php echo $alt_text; ?>
+			itemprop="image"
+			<?php echo $extraAttr; ?>
+		/>
+	</picture>
+
 	<?php if ($images->image_fulltext_caption !== '') : ?>
 		<figcaption class="caption"><?php echo htmlspecialchars($images->image_fulltext_caption, ENT_COMPAT, 'utf-8'); ?></figcaption>
 	<?php endif; ?>

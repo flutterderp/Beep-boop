@@ -53,20 +53,22 @@ if ($currentPage >= $step)
 	}
 }
 ?>
-
 <form action="<?php echo OutputFilter::ampReplace(Uri::getInstance()->toString()); ?>" id="paginationForm" name="paginationForm" method="post">
-	<div class="pagination-toolbar clearfix">
+	<?php if ($showLimitBox) : ?>
+		<div class="limit pull-right">
+			<?php echo Text::_('JGLOBAL_DISPLAY_NUM') . $list['limitfield']; ?>
+		</div>
+	<?php else : ?>
+		<input type="hidden" name="<?php echo $list['prefix']; ?>limit" value="<?php echo $list['limit']; ?>" />
+	<?php endif; ?>
 
-		<?php if ($showLimitBox) : ?>
-			<div class="limit pull-right">
-				<?php echo Text::_('JGLOBAL_DISPLAY_NUM') . $list['limitfield']; ?>
-			</div>
-		<?php else : ?>
-			<input type="hidden" name="<?php echo $list['prefix']; ?>limit" value="<?php echo $list['limit']; ?>" />
-		<?php endif; ?>
+	<?php if ($showLimitStart) : ?>
+		<input type="hidden" name="<?php echo $list['prefix']; ?>limitstart" value="<?php echo $list['limitstart']; ?>" />
+	<?php endif; ?>
 
+	<nav class="pagination" aria-label="Pagination">
 		<?php if ($showPagesLinks && (!empty($pages))) : ?>
-			<ul class="pagination">
+			<ul>
 				<?php
 					echo LayoutHelper::render('joomla.pagination.link', $pages['start']);
 					echo LayoutHelper::render('joomla.pagination.link', $pages['previous']); ?>
@@ -86,10 +88,5 @@ if ($currentPage >= $step)
 					echo LayoutHelper::render('joomla.pagination.link', $pages['end']); ?>
 			</ul>
 		<?php endif; ?>
-
-		<?php if ($showLimitStart) : ?>
-			<input type="hidden" name="<?php echo $list['prefix']; ?>limitstart" value="<?php echo $list['limitstart']; ?>" />
-		<?php endif; ?>
-
-	</div>
+	</nav>
 </form>

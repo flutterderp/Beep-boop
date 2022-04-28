@@ -14,8 +14,7 @@ use Joomla\CMS\Language\Text;
 
 HTMLHelper::_('bootstrap.tooltip');
 ?>
-
-<ul itemscope itemtype="https://schema.org/BreadcrumbList" class="breadcrumbs <?php echo $moduleclass_sfx; ?>">
+<ul itemscope itemtype="https://schema.org/BreadcrumbList" class="breadcrumb <?php echo $moduleclass_sfx; ?>">
 	<?php if ($params->get('showHere', 1)) : ?>
 		<li class="active" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
 			<meta itemprop="position" content="0">

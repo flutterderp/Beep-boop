@@ -28,13 +28,13 @@ switch($this->error->getCode())
 		break;
 }
 
-$utc_tz  = new DateTimeZone('UTC');
+/* $utc_tz  = new DateTimeZone('UTC');
 $today   = new DateTime(null, $utc_tz);
 $logFile = JPATH_BASE . '/error_log';
 $handle  = fopen($logFile, 'a+');
 error_log('[' . $today->format('H:i:s') . '] ' . htmlspecialchars($this->error->getCode() . ': ' . $this->error->getMessage(), ENT_QUOTES, 'utf-8') . ' in ', 3, $logFile);
 error_log(OutputFilter::ampReplace(Uri::getInstance()->getPath()) . PHP_EOL, 3, $logFile);
-fclose($handle);
+fclose($handle); */
 
 $app             = Factory::getApplication();
 $doc             = Factory::getDocument();

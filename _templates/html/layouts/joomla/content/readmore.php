@@ -22,27 +22,27 @@ $direction = Factory::getLanguage()->isRtl() ? 'left' : 'right';
 
 <p class="readmore">
 	<?php if (!$params->get('access-view')) : ?>
-		<a class="button secondary" href="<?php echo $displayData['link']; ?>" aria-label="<?php echo Text::_('JGLOBAL_REGISTER_TO_READ_MORE') . ' ' . $this->escape($item->title); ?>">
-			<?php echo '<span class="fa fa-chevron-' . $direction . '" aria-hidden="true"></span>'; ?>
+		<a class="button" href="<?php echo $displayData['link']; ?>" aria-label="<?php echo Text::_('JGLOBAL_REGISTER_TO_READ_MORE') . ' ' . $this->escape($item->title); ?>">
+			<?php /* echo '<span class="fa fa-chevron-' . $direction . '" aria-hidden="true"></span>'; */ ?>
 			<?php echo Text::_('JGLOBAL_REGISTER_TO_READ_MORE'); ?>
 		</a>
 	<?php elseif ($readmore = $item->alternative_readmore) : ?>
-		<a class="button secondary" href="<?php echo $displayData['link']; ?>" aria-label="<?php echo $this->escape($readmore . ' ' . $item->title); ?>">
-			<?php echo '<span class="fa fa-chevron-' . $direction . '" aria-hidden="true"></span>'; ?>
+		<a class="button" href="<?php echo $displayData['link']; ?>" aria-label="<?php echo $this->escape($readmore . ' ' . $item->title); ?>">
+			<?php /* echo '<span class="fa fa-chevron-' . $direction . '" aria-hidden="true"></span>'; */ ?>
 			<?php echo $readmore; ?>
 			<?php if ($params->get('show_readmore_title', 0) != 0) : ?>
 				<?php echo HTMLHelper::_('string.truncate', $item->title, $params->get('readmore_limit')); ?>
 			<?php endif; ?>
 		</a>
 	<?php elseif ($params->get('show_readmore_title', 0) == 0) : ?>
-		<a class="button secondary" href="<?php echo $displayData['link']; ?>" aria-label="<?php echo Text::_($option . '_READ_MORE') . $this->escape($item->title); ?>">
-			<?php echo '<span class="fa fa-chevron-' . $direction . '" aria-hidden="true"></span>'; ?>
-			<?php echo Text::_($option . '_READ_MORE'); ?>
+		<a class="button" href="<?php echo $displayData['link']; ?>" aria-label="<?php echo Text::_($option . '_READ_MORE') . $this->escape($item->title); ?>">
+			<?php /* echo '<span class="fa fa-chevron-' . $direction . '" aria-hidden="true"></span>'; */ ?>
+			<?php echo Text::_($option . '_READ_MORE_TITLE'); ?>
 		</a>
 	<?php else : ?>
-		<a class="button secondary" href="<?php echo $displayData['link']; ?>" aria-label="<?php echo Text::_($option . '_READ_MORE') . $this->escape($item->title); ?>">
-			<?php echo '<span class="fa fa-chevron-' . $direction . '" aria-hidden="true"></span>'; ?>
-			<?php echo Text::sprintf($option . '_READ_MORE_TITLE', HTMLHelper::_('string.truncate', $item->title, $params->get('readmore_limit'))); ?>
+		<a class="button" href="<?php echo $displayData['link']; ?>" aria-label="<?php echo Text::_($option . '_READ_MORE') . $this->escape($item->title); ?>">
+			<?php /* echo '<span class="fa fa-chevron-' . $direction . '" aria-hidden="true"></span>'; */ ?>
+			<?php echo Text::sprintf($option . '_READ_MORE', HTMLHelper::_('string.truncate', $item->title, $params->get('readmore_limit'))); ?>
 		</a>
 	<?php endif; ?>
 </p>

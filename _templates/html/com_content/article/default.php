@@ -36,6 +36,7 @@ $urls       = json_decode($this->item->urls);
 $jcfields   = array();
 $canEdit    = $params->get('access-edit');
 $info       = $params->get('info_block_position', 0);
+// $full_image = LayoutHelper::render('joomla.content.full_image', $this->item);
 
 foreach($this->item->jcfields as $key => $field)
 {
@@ -150,6 +151,8 @@ if(Version::MAJOR_VERSION < 4)
 		<?php echo LayoutHelper::render('joomla.content.info_block', array('item' => $this->item, 'params' => $params, 'position' => 'above')); ?>
 	<?php endif; ?>
 
+	<?php echo LayoutHelper::render('joomla.content.full_image', $this->item); ?>
+
 	<?php if ($info == 0 && $params->get('show_tags', 1) && !empty($this->item->tags->itemTags)) : ?>
 		<?php $this->item->tagLayout = new FileLayout('joomla.content.tags'); ?>
 
@@ -164,7 +167,7 @@ if(Version::MAJOR_VERSION < 4)
 	<?php echo $this->loadTemplate('links'); ?>
 	<?php endif; ?>
 	<?php if ($params->get('access-view')) : ?>
-	<?php echo LayoutHelper::render('joomla.content.full_image', $this->item); ?>
+
 	<?php
 	if (!empty($this->item->pagination) && $this->item->pagination && !$this->item->paginationposition && !$this->item->paginationrelative) :
 		echo $this->item->pagination;

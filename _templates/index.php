@@ -60,6 +60,14 @@ $doc->addStyleSheet('https://fonts.googleapis.com/css2?family=Caveat&family=Nuni
 $doc->addStyleSheet($this->baseurl . '/templates/system/css/system.css');
 $doc->addStyleSheet('https://use.fontawesome.com/releases/v5.15.4/css/all.css', null, array('crossorigin' => 'anonymous'));
 // $doc->addStyleSheet($this->baseurl . '/templates/' . $this->template . '/css/fa59-all.min.css');
+
+$css_keys = array_keys($oldHeadData['styleSheets']);
+
+foreach($css_keys as $styleSheet)
+{
+	$doc->addStyleSheet($styleSheet);
+}
+
 $doc->addStyleSheet($this->baseurl . '/templates/' . $this->template . '/css/custom.css');
 
 // Custom Metatags
@@ -104,10 +112,10 @@ $doc->addCustomTag('<meta property="og:image:height" content="' . $app->get('ogI
 	$wa->disableStyle('fontawesome');
 } */
 
-$app->enqueueMessage('Message test', 'info');
+/* $app->enqueueMessage('Message test', 'info');
 $app->enqueueMessage('Message test', 'success');
 $app->enqueueMessage('Message test', 'warning');
-$app->enqueueMessage('Message test', 'error');
+$app->enqueueMessage('Message test', 'error'); */
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>"
@@ -233,18 +241,65 @@ $app->enqueueMessage('Message test', 'error');
 
 			<?php if($is_home) : ?>
 				<section class="container" id="MainContent">
+					<a id="MainContent"></a>
+
 					<div class="row">
-						<nav class="column" role="navigation" aria-label="Breadcrumbs">
-							<ul class="breadcrumb">
-								<li><a href="#">About us</a></li>
-								<li>Beep boop</li>
-								<li><a href="#">History of Lorem Ipsum</a></li>
-							</ul>
-						</nav>
-						<?php /* if($this->countModules('breadcrumb')) : ?>
-							<jdoc:include type="modules" name="breadcrumb" style="none" />
-						<?php endif; */ ?>
+						<main class="contentarea column">
+							<jdoc:include type="message" />
+
+							<jdoc:include type="modules" name="copyhead" style="xhtml5" />
+							<jdoc:include type="component" />
+							<jdoc:include type="modules" name="copyfoot" style="xhtml5" />
+
+							<!-- <nav class="pagination" aria-label="Pagination">
+								<ul>
+									<li><a href="" aria-label="First page"><i class="fa fa-angle-double-left"></i></a></li>
+									<li><a href="" aria-label="Previous page"><i class="fa fa-angle-left"></i></a></li>
+									<li><a href="">1</a></li>
+									<li><a href="">2</a></li>
+									<li><a href="">3</a></li>
+									<li><a href="" aria-label="Next page"><i class="fa fa-angle-right"></i></a></li>
+									<li><a href="" aria-label="Last page"><i class="fa fa-angle-double-right"></i></a></li>
+								</ul>
+							</nav> -->
+						</main>
+
+						<?php if(!empty($sidebar_content)) : ?>
+							<aside class="sidebar column" role="complementary" aria-label="Sidebar content">
+								<?php echo $sidebar_content; ?>
+
+								<?php /* <div>
+									<h2>Beep boop</h2>
+									<p>Aliquam erat volutpat. Etiam a finibus nisi, ultricies auctor elit. Curabitur et tristique mi. Curabitur volutpat urna eu urna commodo ultrices. Vivamus lacinia aliquam ipsum, et feugiat.</p>
+									<ul class="menu vertical">
+										<li><a href="https://www.example.com" target="_blank" rel="noopener">Example link</a></li>
+										<li><a href="https://www.google.com" target="_blank" rel="noopener">Google</a></li>
+										<li><a href="https://www.example.com" target="_blank" rel="noopener">Example link</a></li>
+										<li><a href="https://www.google.com" target="_blank" rel="noopener">Google</a></li>
+									</ul>
+								</div> */ ?>
+
+								<div>
+									<p>Curabitur sollicitudin iaculis ante, ac vehicula lacus pretium vel. Donec in rhoncus nunc, sit amet vulputate dui. Proin et nunc diam. Fusce ornare dui eget ante interdum, at ornare arcu mattis. Sed a euismod metus. Duis aliquam ultrices viverra. Pellentesque vestibulum erat metus, non iaculis tellus interdum in. Nunc quis aliquet leo. Ut efficitur risus eget ipsum pellentesque ultrices. Phasellus sed accumsan est. Nullam vestibulum nisi augue, a luctus augue condimentum id.</p>
+									<p>Aenean eget sem nec turpis scelerisque posuere interdum sit amet lorem. Praesent iaculis magna a vehicula sagittis. Mauris sed laoreet mi, non vestibulum sem. In est massa, faucibus at erat a, molestie cursus est. Sed sit amet elit lectus. Sed lobortis blandit magna non dignissim. Duis in elit rutrum, maximus arcu et, convallis massa. Praesent tempor pulvinar pharetra. Sed porta nec justo eu finibus. Vestibulum quis feugiat nibh. Pellentesque feugiat lectus nec odio mattis rutrum. Morbi egestas ultricies nunc eu molestie. Sed sit amet lectus eu mi rhoncus finibus sit amet a est.</p>
+								</div>
+
+								<div>
+									<p>Phasellus sollicitudin gravida orci, congue mattis justo interdum consectetur. Nam vehicula ut urna vitae tempus. Integer aliquam molestie sagittis. Nam vel posuere tellus. Donec eu dui interdum, luctus sem sed, fermentum sem. Donec varius sagittis metus vel ullamcorper. Etiam sagittis tellus urna. Pellentesque a imperdiet massa, in sollicitudin sem. Sed non ultrices lorem.</p>
+								</div>
+							</aside>
+						<?php endif; ?>
 					</div>
+				</section><?php /* end of copyarea */ ?>
+			<?php else : ?>
+				<section class="container" id="MainContent">
+					<?php if($this->countModules('breadcrumb')) : ?>
+						<div class="row">
+							<nav class="column" role="navigation" aria-label="Breadcrumbs">
+								<jdoc:include type="modules" name="breadcrumb" style="none" />
+							</nav>
+						</div>
+					<?php endif; ?>
 
 					<a id="MainContent"></a>
 
@@ -271,166 +326,7 @@ $app->enqueueMessage('Message test', 'error');
 
 						<?php if(!empty($sidebar_content)) : ?>
 							<aside class="sidebar column" role="complementary" aria-label="Sidebar content">
-								<?php /* echo $sidebar_content; */ ?>
-
-								<div>
-									<h2>Beep boop</h2>
-									<p>Aliquam erat volutpat. Etiam a finibus nisi, ultricies auctor elit. Curabitur et tristique mi. Curabitur volutpat urna eu urna commodo ultrices. Vivamus lacinia aliquam ipsum, et feugiat.</p>
-									<ul class="menu vertical">
-										<li><a href="https://www.example.com" target="_blank" rel="noopener">Example link</a></li>
-										<li><a href="https://www.google.com" target="_blank" rel="noopener">Google</a></li>
-										<li><a href="https://www.example.com" target="_blank" rel="noopener">Example link</a></li>
-										<li><a href="https://www.google.com" target="_blank" rel="noopener">Google</a></li>
-									</ul>
-								</div>
-
-								<div>
-									<h2>Cool links</h2>
-									<ul class="menu vertical">
-										<li><a href="https://www.example.com" target="_blank" rel="noopener">Example link</a></li>
-										<li><a href="https://www.google.com" target="_blank" rel="noopener">Google</a></li>
-										<li><a href="https://www.example.com" target="_blank" rel="noopener">Example link</a></li>
-										<li><a href="https://www.google.com" target="_blank" rel="noopener">Google</a></li>
-									</ul>
-								</div>
-
-								<div>
-									<h2>Last.fm</h2>
-									<ul class="lastfm menu vertical">
-										<li class="lastfm-track">
-											<a class="lastfm-link" href="https://www.last.fm/music/%E5%88%86%E5%B3%B6%E8%8A%B1%E9%9F%B3/_/%E3%83%9E%E3%83%9C%E3%83%AD%E3%82%B7" target="_blank" rel="noopener">
-												<span class="lastfm-title">分島花音 – マボロシ</span>
-												<span class="lastfm-img">
-													<picture>
-														<source srcset="https://lastfm.freetls.fastly.net/i/u/300x300/493055bd674e45468af39f9bfaae1134.webp" type="image/webp">
-														<source srcset="https://lastfm.freetls.fastly.net/i/u/300x300/493055bd674e45468af39f9bfaae1134.png" type="image/png">
-														<img src="https://lastfm.freetls.fastly.net/i/u/300x300/493055bd674e45468af39f9bfaae1134.png" class="right" alt="album art 分島花音 – マボロシ" width="34" height="34" loading="lazy">
-													</picture>
-												</span>
-											</a>
-										</li>
-										<li class="lastfm-track">
-											<a class="lastfm-link" href="https://www.last.fm/music/%E5%88%86%E5%B3%B6%E8%8A%B1%E9%9F%B3/_/still+doll+(album+ver.)" target="_blank" rel="noopener">
-												<span class="lastfm-title">分島花音 – still doll (album ver.)</span>
-												<span class="lastfm-img">
-													<picture>
-														<source srcset="https://lastfm.freetls.fastly.net/i/u/300x300/493055bd674e45468af39f9bfaae1134.webp" type="image/webp">
-														<source srcset="https://lastfm.freetls.fastly.net/i/u/300x300/493055bd674e45468af39f9bfaae1134.png" type="image/png">
-														<img src="https://lastfm.freetls.fastly.net/i/u/300x300/493055bd674e45468af39f9bfaae1134.png" class="right" alt="album art 分島花音 – still doll (album ver.)" width="34" height="34" loading="lazy">
-													</picture>
-												</span>
-											</a>
-										</li>
-										<li class="lastfm-track">
-											<a class="lastfm-link" href="https://www.last.fm/music/%E5%88%86%E5%B3%B6%E8%8A%B1%E9%9F%B3/_/%E9%8F%A1" target="_blank" rel="noopener">
-												<span class="lastfm-title">分島花音 – 鏡</span>
-												<span class="lastfm-img">
-													<picture>
-														<source srcset="https://lastfm.freetls.fastly.net/i/u/300x300/493055bd674e45468af39f9bfaae1134.webp" type="image/webp">
-														<source srcset="https://lastfm.freetls.fastly.net/i/u/300x300/493055bd674e45468af39f9bfaae1134.png" type="image/png">
-														<img src="https://lastfm.freetls.fastly.net/i/u/300x300/493055bd674e45468af39f9bfaae1134.png" class="right" alt="album art 分島花音 – 鏡" width="34" height="34" loading="lazy">
-													</picture>
-												</span>
-											</a>
-										</li>
-										<li class="lastfm-track">
-											<a class="lastfm-link" href="https://www.last.fm/music/%E5%88%86%E5%B3%B6%E8%8A%B1%E9%9F%B3/_/%E7%9C%9F%E7%B4%85%E3%81%AE%E3%83%95%E3%82%A7%E3%83%BC%E3%82%BF%E3%83%AA%E3%82%BA%E3%83%A0" target="_blank" rel="noopener">
-												<span class="lastfm-title">分島花音 – 真紅のフェータリズム</span>
-												<span class="lastfm-img">
-													<picture>
-														<source srcset="https://lastfm.freetls.fastly.net/i/u/300x300/493055bd674e45468af39f9bfaae1134.webp" type="image/webp">
-														<source srcset="https://lastfm.freetls.fastly.net/i/u/300x300/493055bd674e45468af39f9bfaae1134.png" type="image/png">
-														<img src="https://lastfm.freetls.fastly.net/i/u/300x300/493055bd674e45468af39f9bfaae1134.png" class="right" alt="album art 分島花音 – 真紅のフェータリズム" width="34" height="34" loading="lazy">
-													</picture>
-												</span>
-											</a>
-										</li>
-										<li class="lastfm-track">
-											<a class="lastfm-link" href="https://www.last.fm/music/%E5%88%86%E5%B3%B6%E8%8A%B1%E9%9F%B3/_/sweet+ticket" target="_blank" rel="noopener">
-												<span class="lastfm-title">分島花音 – sweet ticket</span>
-												<span class="lastfm-img">
-													<picture>
-														<source srcset="https://lastfm.freetls.fastly.net/i/u/300x300/493055bd674e45468af39f9bfaae1134.webp" type="image/webp">
-														<source srcset="https://lastfm.freetls.fastly.net/i/u/300x300/493055bd674e45468af39f9bfaae1134.png" type="image/png">
-														<img src="https://lastfm.freetls.fastly.net/i/u/300x300/493055bd674e45468af39f9bfaae1134.png" class="right" alt="album art 分島花音 – sweet ticket" width="34" height="34" loading="lazy">
-													</picture>
-												</span>
-											</a>
-										</li>
-										<li class="lastfm-track">
-											<a class="lastfm-link" href="https://www.last.fm/music/Michael+Bolton/_/This+River" target="_blank" rel="noopener">
-												<span class="lastfm-title">Michael Bolton – This River</span>
-												<span class="lastfm-img">
-													<picture>
-														<source srcset="https://lastfm.freetls.fastly.net/i/u/300x300/f459b039a4e14bb0cb0998491611d340.webp" type="image/webp">
-														<source srcset="https://lastfm.freetls.fastly.net/i/u/300x300/f459b039a4e14bb0cb0998491611d340.png" type="image/png">
-														<img src="https://lastfm.freetls.fastly.net/i/u/300x300/f459b039a4e14bb0cb0998491611d340.png" class="right" alt="album art Michael Bolton – This River" width="34" height="34" loading="lazy">
-													</picture>
-												</span>
-											</a>
-										</li>
-										<li class="lastfm-track">
-											<a class="lastfm-link" href="https://www.last.fm/music/Michael+Bolton/_/A+Love+So+Beautiful" target="_blank" rel="noopener">
-												<span class="lastfm-title">Michael Bolton – A Love So Beautiful</span>
-												<span class="lastfm-img">
-													<picture>
-														<source srcset="https://lastfm.freetls.fastly.net/i/u/300x300/f459b039a4e14bb0cb0998491611d340.webp" type="image/webp">
-														<source srcset="https://lastfm.freetls.fastly.net/i/u/300x300/f459b039a4e14bb0cb0998491611d340.png" type="image/png">
-														<img src="https://lastfm.freetls.fastly.net/i/u/300x300/f459b039a4e14bb0cb0998491611d340.png" class="right" alt="album art Michael Bolton – A Love So Beautiful" width="34" height="34" loading="lazy">
-													</picture>
-												</span>
-											</a>
-										</li>
-										<li class="lastfm-track">
-											<a class="lastfm-link" href="https://www.last.fm/music/Michael+Bolton/_/I+Found+Someone" target="_blank" rel="noopener">
-												<span class="lastfm-title">Michael Bolton – I Found Someone</span>
-												<span class="lastfm-img">
-													<picture>
-														<source srcset="https://lastfm.freetls.fastly.net/i/u/300x300/f459b039a4e14bb0cb0998491611d340.webp" type="image/webp">
-														<source srcset="https://lastfm.freetls.fastly.net/i/u/300x300/f459b039a4e14bb0cb0998491611d340.png" type="image/png">
-														<img src="https://lastfm.freetls.fastly.net/i/u/300x300/f459b039a4e14bb0cb0998491611d340.png" class="right" alt="album art Michael Bolton – I Found Someone" width="34" height="34" loading="lazy">
-													</picture>
-												</span>
-											</a>
-										</li>
-										<li class="lastfm-track">
-											<a class="lastfm-link" href="https://www.last.fm/music/Michael+Bolton/_/I+Promise+You" target="_blank" rel="noopener">
-												<span class="lastfm-title">Michael Bolton – I Promise You</span>
-												<span class="lastfm-img">
-													<picture>
-														<source srcset="https://lastfm.freetls.fastly.net/i/u/300x300/f459b039a4e14bb0cb0998491611d340.webp" type="image/webp">
-														<source srcset="https://lastfm.freetls.fastly.net/i/u/300x300/f459b039a4e14bb0cb0998491611d340.png" type="image/png">
-														<img src="https://lastfm.freetls.fastly.net/i/u/300x300/f459b039a4e14bb0cb0998491611d340.png" class="right" alt="album art Michael Bolton – I Promise You" width="34" height="34" loading="lazy">
-													</picture>
-												</span>
-											</a>
-										</li>
-										<li class="lastfm-track">
-											<a class="lastfm-link" href="https://www.last.fm/music/Michael+Bolton/_/Can+I+Touch+You...There%3F" target="_blank" rel="noopener">
-												<span class="lastfm-title">Michael Bolton – Can I Touch You...There?</span>
-												<span class="lastfm-img">
-													<picture>
-														<source srcset="https://lastfm.freetls.fastly.net/i/u/300x300/f459b039a4e14bb0cb0998491611d340.webp" type="image/webp">
-														<source srcset="https://lastfm.freetls.fastly.net/i/u/300x300/f459b039a4e14bb0cb0998491611d340.png" type="image/png">
-														<img src="https://lastfm.freetls.fastly.net/i/u/300x300/f459b039a4e14bb0cb0998491611d340.png" class="right" alt="album art Michael Bolton – Can I Touch You...There?" width="34" height="34" loading="lazy">
-													</picture>
-												</span>
-											</a>
-										</li>
-										<li class="lastfm-track">
-											<a class="lastfm-link" href="https://www.last.fm/music/Michael+Bolton/_/Said+I+Loved+You...But+I+Lied" target="_blank" rel="noopener">
-												<span class="lastfm-title">Michael Bolton – Said I Loved You...But I Lied</span>
-												<span class="lastfm-img">
-													<picture>
-														<source srcset="https://lastfm.freetls.fastly.net/i/u/300x300/f459b039a4e14bb0cb0998491611d340.webp" type="image/webp">
-														<source srcset="https://lastfm.freetls.fastly.net/i/u/300x300/f459b039a4e14bb0cb0998491611d340.png" type="image/png">
-														<img src="https://lastfm.freetls.fastly.net/i/u/300x300/f459b039a4e14bb0cb0998491611d340.png" class="right" alt="album art Michael Bolton – Said I Loved You...But I Lied" width="34" height="34" loading="lazy">
-													</picture>
-												</span>
-											</a>
-										</li>
-									</ul>
-								</div>
+								<?php echo $sidebar_content; ?>
 
 								<div>
 									<p>Curabitur sollicitudin iaculis ante, ac vehicula lacus pretium vel. Donec in rhoncus nunc, sit amet vulputate dui. Proin et nunc diam. Fusce ornare dui eget ante interdum, at ornare arcu mattis. Sed a euismod metus. Duis aliquam ultrices viverra. Pellentesque vestibulum erat metus, non iaculis tellus interdum in. Nunc quis aliquet leo. Ut efficitur risus eget ipsum pellentesque ultrices. Phasellus sed accumsan est. Nullam vestibulum nisi augue, a luctus augue condimentum id.</p>
@@ -444,7 +340,6 @@ $app->enqueueMessage('Message test', 'error');
 						<?php endif; ?>
 					</div>
 				</section><?php /* end of copyarea */ ?>
-			<?php else : ?>
 			<?php endif; ?>
 
 			<footer role="contentinfo" arial-label="Footer content">

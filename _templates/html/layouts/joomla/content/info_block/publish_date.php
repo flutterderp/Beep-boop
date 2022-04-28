@@ -12,9 +12,17 @@ defined('_JEXEC') or die;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 ?>
-<dd class="published">
-	<span class="icon-calendar" aria-hidden="true"></span>
+<div class="created">
 	<time datetime="<?php echo HTMLHelper::_('date', $displayData['item']->publish_up, 'c'); ?>" itemprop="datePublished">
 		<?php echo Text::sprintf($displayData['context.option'].'_PUBLISHED_DATE_ON', HTMLHelper::_('date', $displayData['item']->publish_up, Text::_('DATE_FORMAT_LC3'))); ?>
 	</time>
-</dd>
+	<span class="createdby" itemprop="author" itemscope itemtype="https://schema.org/Person">
+		<?php $author = ($displayData['item']->created_by_alias ?: $displayData['item']->author); ?>
+		<?php $author = '<span itemprop="name">' . $author . '</span>'; ?>
+		<?php if (!empty($displayData['item']->contact_link ) && $displayData['params']->get('link_author') == true) : ?>
+			<?php echo Text::sprintf($displayData['context.option'].'_WRITTEN_BY', HTMLHelper::_('link', $displayData['item']->contact_link, $author, array('itemprop' => 'url'))); ?>
+		<?php else : ?>
+			<?php echo Text::sprintf($displayData['context.option'].'_WRITTEN_BY', $author); ?>
+		<?php endif; ?>
+	</span>
+</div>

@@ -19,17 +19,17 @@ $authorised = Factory::getUser()->getAuthorisedViewLevels();
 
 ?>
 <?php if (!empty($displayData)) : ?>
-	<ul class="tags inline">
+	<div class="tags inline">
 		<?php foreach ($displayData as $i => $tag) : ?>
 			<?php if (in_array($tag->access, $authorised)) : ?>
-				<?php $tagParams = new Registry($tag->params); ?>
-				<?php $link_class = $tagParams->get('tag_link_class', 'label label-info'); ?>
-				<li class="tag-<?php echo $tag->tag_id; ?> tag-list<?php echo $i; ?>" itemprop="keywords">
-					<a href="<?php echo Route::_(TagsHelperRoute::getTagRoute($tag->tag_id . ':' . $tag->alias)); ?>" class="<?php echo $link_class; ?>">
-						<?php echo $this->escape($tag->title); ?>
-					</a>
-				</li>
+				<?php
+				$tagParams  = new Registry($tag->params);
+				$link_class = $tagParams->get('tag_link_class', '');
+				?>
+				<a class="taglink <?php echo $link_class; ?>" href="<?php echo Route::_(TagsHelperRoute::getTagRoute($tag->tag_id . ':' . $tag->alias)); ?>" itemprop="keywords">
+					<?php echo $this->escape($tag->title); ?>
+				</a>
 			<?php endif; ?>
 		<?php endforeach; ?>
-	</ul>
+	</div>
 <?php endif; ?>

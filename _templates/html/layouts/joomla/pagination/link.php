@@ -20,26 +20,26 @@ switch ((string) $item->text)
 {
 	// Check for "Start" item
 	case Text::_('JLIB_HTML_START') :
-		$icon = 'fa fa-fast-backward icon-first';
+		$icon = 'fa fa-angle-double-left';
 		$class[] = 'nav-start';
 		break;
 
 	// Check for "Prev" item
 	case $item->text === Text::_('JPREV') :
 		$item->text = Text::_('JPREVIOUS');
-		$icon = 'fa fa-backward icon-previous';
+		$icon = 'fa fa-angle-left';
 		$class[] = 'nav-prev';
 		break;
 
 	// Check for "Next" item
 	case Text::_('JNEXT') :
-		$icon = 'fa fa-forward icon-next';
+		$icon = 'fa fa-angle-right';
 		$class[] = 'nav-next';
 		break;
 
 	// Check for "End" item
 	case Text::_('JLIB_HTML_END') :
-		$icon = 'fa fa-fast-forward icon-last';
+		$icon = 'fa fa-angle-double-right';
 		$class[] = 'nav-end';
 		break;
 
@@ -83,13 +83,13 @@ else
 }
 ?>
 <?php if ($displayData['active']) : ?>
-	<li class="<?php echo implode(' ', $class); ?>">
+	<li>
 		<a <?php echo $cssClasses ? 'class="' . implode(' ', $cssClasses) . '"' : ''; ?> href="javascript:void();" <?php echo $title; ?> onclick="<?php echo $onClick; ?>">
 			<?php echo $display; ?>
 		</a>
 	</li>
 <?php else : ?>
 	<li class="<?php echo implode(' ', $class); ?>">
-		<span><?php echo $display; ?></span>
+		<a aria-hidden="true"><?php echo $display; ?></a>
 	</li>
 <?php endif;

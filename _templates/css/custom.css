@@ -191,8 +191,10 @@ nav.pagination { clear: both; margin: 3.125rem auto 2rem; }
 .pagination ul li::before { content: none; }
 /* .pagination li:first-child { margin-left: 0; } */
 .pagination a { color: inherit; display: block; padding: 0.5rem 0.75rem; text-decoration: none; }
-.pagination li:active, .pagination li:focus, .pagination li:hover { background: #f0f0f0; }
-.pagination li:active a, .pagination li:focus a, .pagination li:hover a { text-decoration: underline; }
+.pagination li.active { background: var(--color__primary); color: var(--color__white); }
+.pagination li.active:is(:active, :focus, :hover) { background: var(--color__primary__focus); }
+.pagination li:is(:active, :focus, :hover) { background: #f0f0f0; }
+.pagination li:is(:active, :focus, :hover) a { text-decoration: underline; }
 /* End navigation */
 
 /* Copyarea */

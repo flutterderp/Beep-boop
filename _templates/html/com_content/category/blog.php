@@ -93,7 +93,7 @@ $afterDisplayContent = trim(implode("\n", $results));
 				$isNotPublishedYet    = $item->publish_up > $currentDate;
 				$isExpired            = !is_null($item->publish_down) && $item->publish_down != $nullDate && $item->publish_down < $currentDate;
 				?>
-				<article class="leading-<?php echo $leadingcount; ?><?php echo ($conditionUnpublished || $isNotPublishedYet || $isExpired) ? ' system-unpublished' : null; ?>"
+				<article class="leading-<?php echo $leadingcount; ?> lead-item<?php echo ($conditionUnpublished || $isNotPublishedYet || $isExpired) ? ' system-unpublished' : null; ?>"
 					itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
 					<?php
 					$this->item = & $item;
@@ -153,10 +153,10 @@ $afterDisplayContent = trim(implode("\n", $results));
 			<?php echo $this->loadTemplate('children'); ?> </div>
 	<?php endif; ?>
 	<?php if (($this->params->def('show_pagination', 1) == 1 || ($this->params->get('show_pagination') == 2)) && ($pagesTotal > 1)) : ?>
-		<div class="pagination">
-			<?php if ($this->params->def('show_pagination_results', 1)) : ?>
-				<p class="counter pull-right"> <?php echo $this->pagination->getPagesCounter(); ?> </p>
-			<?php endif; ?>
-			<?php echo $this->pagination->getPaginationLinks(); ?> </div>
+		<?php echo $this->pagination->getPaginationLinks(); ?>
+
+		<?php if ($this->params->def('show_pagination_results', 1)) : ?>
+			<p class="counter pull-right"> <?php echo $this->pagination->getPagesCounter(); ?> </p>
+		<?php endif; ?>
 	<?php endif; ?>
 </div>
