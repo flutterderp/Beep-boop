@@ -59,6 +59,7 @@ $doc->addHeadLink('https://fonts.gstatic.com', 'preconnect', 'rel', array('cross
 $doc->addStyleSheet('https://fonts.googleapis.com/css2?family=Caveat&family=Nunito:ital,wght@0,400;0,600;0,700;1,400;1,700&display=swap');
 $doc->addStyleSheet($this->baseurl . '/templates/system/css/system.css');
 $doc->addStyleSheet('https://use.fontawesome.com/releases/v5.15.4/css/all.css', null, array('crossorigin' => 'anonymous'));
+$doc->addStyleSheet($this->baseurl . '/templates/' . $this->template . '/css/glightbox.min.css');
 
 $css_keys = array_keys($oldHeadData['styleSheets']);
 
@@ -213,55 +214,33 @@ $app->enqueueMessage('Message test', 'error'); */
 			</section>
 		</header><?php /* end of masthead */ ?>
 
-		<?php if($is_home) : ?>
-			<section class="container" id="MainContent">
-				<a id="MainContent"></a>
-
+		<section class="container" id="MainContent">
+			<?php if($this->countModules('breadcrumb')) : ?>
 				<div class="row">
-					<main class="contentarea column">
-						<jdoc:include type="message" />
-
-						<jdoc:include type="modules" name="copyhead" style="xhtml5" />
-						<jdoc:include type="component" />
-						<jdoc:include type="modules" name="copyfoot" style="xhtml5" />
-					</main>
-
-					<?php if(!empty($sidebar_content)) : ?>
-						<aside class="sidebar column" role="complementary" aria-label="Sidebar content">
-							<?php echo $sidebar_content; ?>
-						</aside>
-					<?php endif; ?>
+					<nav class="column" role="navigation" aria-label="Breadcrumbs">
+						<jdoc:include type="modules" name="breadcrumb" style="none" />
+					</nav>
 				</div>
-			</section><?php /* end of copyarea */ ?>
-		<?php else : ?>
-			<section class="container" id="MainContent">
-				<?php if($this->countModules('breadcrumb')) : ?>
-					<div class="row">
-						<nav class="column" role="navigation" aria-label="Breadcrumbs">
-							<jdoc:include type="modules" name="breadcrumb" style="none" />
-						</nav>
-					</div>
+			<?php endif; ?>
+
+			<a id="MainContent"></a>
+
+			<div class="row">
+				<main class="contentarea column">
+					<jdoc:include type="message" />
+
+					<jdoc:include type="modules" name="copyhead" style="xhtml5" />
+					<jdoc:include type="component" />
+					<jdoc:include type="modules" name="copyfoot" style="xhtml5" />
+				</main>
+
+				<?php if(!empty($sidebar_content)) : ?>
+					<aside class="sidebar column" role="complementary" aria-label="Sidebar content">
+						<?php echo $sidebar_content; ?>
+					</aside>
 				<?php endif; ?>
-
-				<a id="MainContent"></a>
-
-				<div class="row">
-					<main class="contentarea column">
-						<jdoc:include type="message" />
-
-						<jdoc:include type="modules" name="copyhead" style="xhtml5" />
-						<jdoc:include type="component" />
-						<jdoc:include type="modules" name="copyfoot" style="xhtml5" />
-					</main>
-
-					<?php if(!empty($sidebar_content)) : ?>
-						<aside class="sidebar column" role="complementary" aria-label="Sidebar content">
-							<?php echo $sidebar_content; ?>
-						</aside>
-					<?php endif; ?>
-				</div>
-			</section><?php /* end of copyarea */ ?>
-		<?php endif; ?>
+			</div>
+		</section><?php /* end of copyarea */ ?>
 
 		<footer role="contentinfo" arial-label="Footer content">
 			<div class="footer-item"><p><?php echo Text::sprintf('TPL_CANDELAALUMINIUM_COPYRIGHT', $today->format('Y')); ?></p></div>
@@ -275,6 +254,8 @@ $app->enqueueMessage('Message test', 'error'); */
 		<nav class="up-button" role="navigation" aria-label="Up button">
 			<a class="up-button__link" href="#pagetop" aria-label="Action: scroll to top of page"></a>
 		</nav>
+
+		<script src="<?php echo $this->baseurl . '/templates/' . $this->template; ?>/javascript/glightbox.min.js"></script>
 
 		<?php
 		$script_keys = array_keys($oldHeadData['scripts']);

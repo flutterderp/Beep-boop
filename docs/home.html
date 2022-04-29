@@ -6,6 +6,7 @@
     <meta name="description" content="The person reading this is cute. :)">
     <link href="https://fonts.googleapis.com/css2?family=Caveat&family=Nunito:ital,wght@0,400;0,600;0,700;1,400;1,700&display=swap" rel="stylesheet">
     <link href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" rel="stylesheet" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link href="assets/css/glightbox.min.css" rel="stylesheet">
     <link href="assets/css/style.css" rel="stylesheet">
     <link href="favicon.ico" rel="shortcut icon" type="image/vnc.microsoft.icon">
 
@@ -71,11 +72,13 @@
                 <!-- <img src="https://78.media.tumblr.com/6f11ac01d71c825f1ae68044f92fc478/tumblr_p8e7ikMy821rqb8bbo1_1280.png" alt="image" width="1280" itemprop="image"> -->
                 <!-- <img src="https://66.media.tumblr.com/9c949c201675a9b748f46593c013839e/f69606a657a37ee0-9a/s1280x1920/d9681edcbfb435f89f4ac43446d76497f1239875.png" alt="image" width="1280" itemprop="image"> -->
                 <!-- <img src="https://64.media.tumblr.com/11e4194b73a3515fd2da032f2fe333d1/aefd02372036f053-b6/s1280x1920/9ff40160cfee13a405878b1974c53dca593fb6c6.png" alt="image" width="1920" itemprop="image" loading="lazy"> -->
-                <picture>
-                  <source srcset="images/2022-02-28_15-16-05-043_Neneko_Snap.webp" type="image/webp">
-                  <source srcset="images/2022-02-28_15-16-05-043_Neneko_Snap.png" type="image/png">
-                  <img src="images/2022-02-28_15-16-05-043_Neneko_Snap.png" alt="image" width="1920" itemprop="image" loading="lazy">
-                </picture>
+                <a class="glightbox" href="images/2022-02-28_15-16-05-043_Neneko_Snap.png" data-gallery="gallery name">
+                  <picture>
+                    <source srcset="images/2022-02-28_15-16-05-043_Neneko_Snap.webp" type="image/webp">
+                    <source srcset="images/2022-02-28_15-16-05-043_Neneko_Snap.png" type="image/png">
+                    <img src="images/2022-02-28_15-16-05-043_Neneko_Snap.png" alt="image" width="1920" itemprop="image" loading="lazy">
+                  </picture>
+                </a>
               </div>
               <p>Lorem ipsum dolor sit amet, <a href="#">consectetur adipiscing elit</a>. Duis posuere nisl vitae sem cursus, vitae convallis turpis egestas. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dapibus tempus ligula vel fermentum. Pellentesque cursus ullamcorper vulputate. Suspendisse quam tortor, feugiat nec interdum et, mattis et nisi. Integer et hendrerit lacus, sit amet pellentesque nisi. Phasellus et rutrum purus. Mauris pulvinar semper leo, quis pulvinar massa porttitor eget.</p>
 
@@ -206,6 +209,7 @@
       <div class="footer-item"><p>some extra footer text</p></div>
     </footer>
 
+    <script src="assets/js/glightbox.min.js"></script>
     <script src="assets/js/app.js"></script>
   </body>
 </html>

@@ -53,6 +53,14 @@ window.addEventListener('DOMContentLoaded', function() {
     })
   }
 
+  if(typeof GLightbox !== 'undefined') {
+    const lightbox = GLightbox({
+      autoplayVideos: false,
+      loop: true,
+      touchNavigation: true,
+    })
+  }
+
   function clickListener(event) {
     const href = event.target.getAttribute('href');
 
