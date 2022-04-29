@@ -40,6 +40,7 @@ $app             = Factory::getApplication();
 $doc             = Factory::getDocument();
 $user            = Factory::getUser();
 $error_type      = Version::MAJOR_VERSION === 4 ? 'error' : 'html';
+$today           = new DateTime(null, new DateTimeZone('UTC'));
 $isHtml          = ($doc->_type === $error_type) ? true : false;
 // $isHtml          = (method_exists($doc, 'getHeadData') !== true) ? true : false;
 $this->baseurl   = Uri::root(false);
@@ -89,15 +90,22 @@ else
 // JHtml::_('jquery.framework');
 
 // JavaScript files
-$doc->addScript($this->baseurl . '/templates/' . $this->template . '/javascript/jquery-3.4.1.min.js', null, array('async' => false));
-// $doc->addScript($this->baseurl . '/templates/' . $this->template . '/javascript/jquery-migrate-1.4.1.min.js', null, array('async' => true));
-$doc->addScript($this->baseurl . '/templates/' . $this->template . '/javascript/jquery-migrate-3.0.0.min.js', null, array('async' => true));
+$doc->addScript($this->baseurl . '/templates/' . $this->template . '/javascript/jquery-3.5.1.min.js', null, array('async' => false));
+// $doc->addScript($this->baseurl . '/templates/' . $this->template . '/javascript/jquery-migrate-3.0.0.min.js', null, array('async' => true));
 // Stylesheets
 $doc->addHeadLink('https://fonts.googleapis.com', 'preconnect');
 $doc->addHeadLink('https://fonts.gstatic.com', 'preconnect', 'rel', array('crossorigin' => 'crossorigin'));
-$doc->addStyleSheet('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,700;1,700&family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+$doc->addStyleSheet('https://fonts.googleapis.com/css2?family=Caveat&family=Nunito:ital,wght@0,400;0,600;0,700;1,400;1,700&display=swap');
 $doc->addStyleSheet($this->baseurl . '/templates/system/css/system.css');
-$doc->addStyleSheet($this->baseurl . '/templates/' . $this->template . '/css/fa59-all.min.css');
+$doc->addStyleSheet('https://use.fontawesome.com/releases/v5.15.4/css/all.css', null, array('crossorigin' => 'anonymous'));
+
+$css_keys = array_keys($oldHeadData['styleSheets']);
+
+foreach($css_keys as $styleSheet)
+{
+	$doc->addStyleSheet($styleSheet);
+}
+
 $doc->addStyleSheet($this->baseurl . '/templates/' . $this->template . '/css/custom.css');
 
 /* if(method_exists($doc, 'getHeadData'))
@@ -142,111 +150,94 @@ $head_data = $doc->getHeadData();
 
 	<body>
 		<section name="pagetop" id="pagetop" aria-label="Anchor: top of page"></section>
+		<nav class="skiplink__landmark" aria-label="Skip to main content"><a class="skiplink" href="#MainContent">Skip to Main Content</a></nav>
 
-		<nav class="pushy pushy-left" data-menu-btn-class=".pushy-menu-btn" role="navigation" arial-label="Mobile menu">
-			<?php echo $doc->getBuffer('modules', 'mobilemenu', array('style' => 'none')); ?>
-		</nav>
+		<header id="masthead">
+			<section class="masthead inner">
+				<h1><?php echo $app->get('sitename'); ?></h1>
+				<a href="#" class="mobilenav__btn" id="mobilenav" aria-label="Click to expand mobile menu"><span class="fa fa-bars fa-2x"></span></a>
 
-		<div class="wrapper pushy-container" id="wrapper">
-			<header class="masthead inner" id="masthead">
-				<div class="masthead-content row">
-					<?php echo $doc->getBuffer('modules', 'logo', array('style' => 'xhtml5')); ?>
+				<?php echo $doc->getBuffer('modules', 'navigation', array('style' => 'none')); ?>
+			</section>
+		</header><?php /* end of masthead */ ?>
 
-					<section class="topnavarea">
-						<?php
-						echo $doc->getBuffer('modules', 'top', array('style' => 'xhtml5'));
-						echo $doc->getBuffer('modules', 'navigation', array('style' => 'xhtml5'));
-						?>
-						<a class="pushy-menu-btn"><i class="fa fa-bars"></i></a>
-					</section>
-				</div>
-			</header><?php /* end of masthead */ ?>
+		<section class="container" id="MainContent">
+			<a id="MainContent"></a>
 
-			<section class="copyarea row" id="copyarea">
-				<main class="small-12 columns copy" id="copy" role="main">
-					<?php
-					echo $doc->getBuffer('message');
-					echo $doc->getBuffer('modules', 'copyhead', array('style' => 'xhtml5'));
-					?>
+			<div class="row">
+				<main class="contentarea column">
+					<?php echo $doc->getBuffer('message'); ?>
+					<?php /* echo $doc->getBuffer('modules', 'copyhead', array('style' => 'xhtml5')); */ ?>
 					<!-- Begin Content -->
 					<h1 class="page-header"><?php echo Text::_('JERROR_LAYOUT_PAGE_NOT_FOUND'); ?></h1>
-					<div class="well">
-						<div class="row collapse">
-							<div class="small-12 columns">
-								<p><strong><?php echo Text::_('JERROR_LAYOUT_ERROR_HAS_OCCURRED_WHILE_PROCESSING_YOUR_REQUEST'); ?></strong></p>
-								<p><?php echo Text::_('JERROR_LAYOUT_NOT_ABLE_TO_VISIT'); ?></p>
-								<ul>
-									<li><?php echo Text::_('JERROR_LAYOUT_AN_OUT_OF_DATE_BOOKMARK_FAVOURITE'); ?></li>
-									<li><?php echo Text::_('JERROR_LAYOUT_MIS_TYPED_ADDRESS'); ?></li>
-									<li><?php echo Text::_('JERROR_LAYOUT_SEARCH_ENGINE_OUT_OF_DATE_LISTING'); ?></li>
-									<li><?php echo Text::_('JERROR_LAYOUT_YOU_HAVE_NO_ACCESS_TO_THIS_PAGE'); ?></li>
-								</ul>
-							</div>
-							<div class="small-12 columns">
-								<?php if(JModuleHelper::getModule('search')) : ?>
-									<p><strong><?php echo Text::_('JERROR_LAYOUT_SEARCH'); ?></strong></p>
-									<p><?php echo Text::_('JERROR_LAYOUT_SEARCH_PAGE'); ?></p>
-									<?php echo $doc->getBuffer('module', 'search'); ?>
-								<?php endif; ?>
-								<p><a href="<?php echo $this->baseurl; ?>/" class="button"><span class="fa fa-home"></span> <?php echo Text::_('JERROR_LAYOUT_GO_TO_THE_HOME_PAGE'); ?></a></p>
-							</div>
+
+					<p><strong><?php echo Text::_('JERROR_LAYOUT_ERROR_HAS_OCCURRED_WHILE_PROCESSING_YOUR_REQUEST'); ?></strong></p>
+					<p><?php echo Text::_('JERROR_LAYOUT_NOT_ABLE_TO_VISIT'); ?></p>
+					<ul>
+						<li><?php echo Text::_('JERROR_LAYOUT_AN_OUT_OF_DATE_BOOKMARK_FAVOURITE'); ?></li>
+						<li><?php echo Text::_('JERROR_LAYOUT_MIS_TYPED_ADDRESS'); ?></li>
+						<li><?php echo Text::_('JERROR_LAYOUT_SEARCH_ENGINE_OUT_OF_DATE_LISTING'); ?></li>
+						<li><?php echo Text::_('JERROR_LAYOUT_YOU_HAVE_NO_ACCESS_TO_THIS_PAGE'); ?></li>
+					</ul>
+
+					<?php if(JModuleHelper::getModule('search')) : ?>
+						<p><strong><?php echo Text::_('JERROR_LAYOUT_SEARCH'); ?></strong></p>
+						<p><?php echo Text::_('JERROR_LAYOUT_SEARCH_PAGE'); ?></p>
+						<?php echo $doc->getBuffer('module', 'search'); ?>
+					<?php endif; ?>
+
+					<p><a href="<?php echo $this->baseurl; ?>/" class="button"><span class="fa fa-home"></span> <?php echo Text::_('JERROR_LAYOUT_GO_TO_THE_HOME_PAGE'); ?></a></p>
+					<hr>
+					<p><?php echo Text::_('JERROR_LAYOUT_PLEASE_CONTACT_THE_SYSTEM_ADMINISTRATOR'); ?></p>
+					<p>
+						<span class="label alert"><?php echo $this->error->getCode(); ?></span>
+						<?php echo htmlspecialchars($this->error->getMessage(), ENT_QUOTES, 'UTF-8');?>
+					</p>
+
+					<?php if($this->debug) : ?>
+						<div class="table-wrapper">
+							<?php echo $this->renderBacktrace(); ?>
+							<?php // Check if there are more Exceptions and render their data as well ?>
+							<?php if($this->error->getPrevious()) : ?>
+								<?php $loop = true; ?>
+								<?php // Reference $this->_error here and in the loop as setError() assigns errors to this property and we need this for the backtrace to work correctly ?>
+								<?php // Make the first assignment to setError() outside the loop so the loop does not skip Exceptions ?>
+								<?php $this->setError($this->_error->getPrevious()); ?>
+								<?php while($loop === true) : ?>
+									<p><strong><?php echo Text::_('JERROR_LAYOUT_PREVIOUS_ERROR'); ?></strong></p>
+									<p><?php echo htmlspecialchars($this->_error->getMessage(), ENT_QUOTES, 'UTF-8'); ?></p>
+									<?php echo $this->renderBacktrace(); ?>
+									<?php $loop = $this->setError($this->_error->getPrevious()); ?>
+								<?php endwhile; ?>
+								<?php // Reset the main error object to the base error ?>
+								<?php $this->setError($this->error); ?>
+							<?php endif; ?>
 						</div>
-						<hr>
-						<p><?php echo Text::_('JERROR_LAYOUT_PLEASE_CONTACT_THE_SYSTEM_ADMINISTRATOR'); ?></p>
-						<p>
-							<span class="label alert"><?php echo $this->error->getCode(); ?></span> <?php echo htmlspecialchars($this->error->getMessage(), ENT_QUOTES, 'UTF-8');?>
-						</p>
-						<?php if($this->debug) : ?>
-							<div>
-								<?php echo $this->renderBacktrace(); ?>
-								<?php // Check if there are more Exceptions and render their data as well ?>
-								<?php if($this->error->getPrevious()) : ?>
-									<?php $loop = true; ?>
-									<?php // Reference $this->_error here and in the loop as setError() assigns errors to this property and we need this for the backtrace to work correctly ?>
-									<?php // Make the first assignment to setError() outside the loop so the loop does not skip Exceptions ?>
-									<?php $this->setError($this->_error->getPrevious()); ?>
-									<?php while($loop === true) : ?>
-										<p><strong><?php echo Text::_('JERROR_LAYOUT_PREVIOUS_ERROR'); ?></strong></p>
-										<p><?php echo htmlspecialchars($this->_error->getMessage(), ENT_QUOTES, 'UTF-8'); ?></p>
-										<?php echo $this->renderBacktrace(); ?>
-										<?php $loop = $this->setError($this->_error->getPrevious()); ?>
-									<?php endwhile; ?>
-									<?php // Reset the main error object to the base error ?>
-									<?php $this->setError($this->error); ?>
-								<?php endif; ?>
-							</div>
-						<?php endif; ?>
-					</div>
+					<?php endif; ?>
 					<!-- End Content -->
-					<?php echo $doc->getBuffer('modules', 'copyfoot', array('style' => 'xhtml5')); ?>
-				</main><?php /* end of copy */ ?>
-			</section><?php /* end of copyarea */ ?>
+					<?php /* echo $doc->getBuffer('modules', 'copyfoot', array('style' => 'xhtml5')); */ ?>
+				</main>
 
-			<footer role="contentinfo" arial-label="Footer content">
-				<div class="row">
-					<div class="small-12 columns">
-						<?php echo $doc->getBuffer('modules', 'footer', array('style' => 'xhtml5')); ?>
-						<jdoc:include type="modules" name="footer" style="xhtml5" />
-					</div>
-				</div>
+				<?php /* if(!empty($sidebar_content)) : ?>
+					<aside class="sidebar column" role="complementary" aria-label="Sidebar content">
+						<?php echo $sidebar_content; ?>
+					</aside>
+				<?php endif; */ ?>
+			</div>
+		</section><?php /* end of copyarea */ ?>
 
-				<?php echo $doc->getBuffer('modules', 'bottom', array('style' => 'xhtml5')); ?>
+		<footer role="contentinfo" arial-label="Footer content">
+			<div class="footer-item"><p><?php echo Text::sprintf('TPL_CANDELAALUMINIUM_COPYRIGHT', $today->format('Y')); ?></p></div>
 
-				<div class="row dev-copyright">
-					<div class="small-12 columns text-center">
-						<a href="http://www.southernanime.com" target="_blank">
-							<?php echo Text::sprintf('TPL_CANDELAALUMINIUM_COPYRIGHT', JDate::getInstance('UTC')->format('Y')); ?>
-						</a>
-					</div>
-				</div>
-			</footer><?php /* end of footer */ ?>
+			<?php /* echo $doc->getBuffer('modules', 'footer', array('style' => 'xhtml5')); */ ?>
+			<?php /* echo $doc->getBuffer('modules', 'bottom', array('style' => 'xhtml5')); */ ?>
+		</footer>
 
-			<?php echo $doc->getBuffer('modules', 'debug', array('style' => 'none')); ?>
-			<jdoc:include type="modules" name="debug" />
-			<div class="pushy-site-overlay"></div>
+		<?php echo $doc->getBuffer('modules', 'debug', array('style' => 'none')); ?>
 
-			<a class="up-button" href="#pagetop" aria-label="Action: scroll to top of page"></a>
-		</div><?php /* end of wrapper */ ?>
+		<nav class="up-button" role="navigation" aria-label="Up button">
+			<a class="up-button__link" href="#pagetop" aria-label="Action: scroll to top of page"></a>
+		</nav>
 
 		<?php
 		$script_keys = array_keys($oldHeadData['scripts']);
@@ -258,8 +249,13 @@ $head_data = $doc->getHeadData();
 
 		<script src="<?php echo $this->baseurl . '/templates/' . $this->template; ?>/javascript/custom.js"></script>
 
-		<?php if(!empty($oldHeadData['script']['text/javascript'])) : ?>
-		 <script><?php echo $oldHeadData['script']['text/javascript']; ?></script>
+		<?php if(isset($oldHeadData['script']['text/javascript']) && !empty($oldHeadData['script']['text/javascript'])) : ?>
+			<?php if(Version::MAJOR_VERSION === 4) : ?>
+				<?php $script_text = implode(PHP_EOL, $oldHeadData['script']['text/javascript']); ?>
+				<script><?php echo $script_text; ?></script>
+			<?php else : ?>
+				<script><?php echo $oldHeadData['script']['text/javascript']; ?></script>
+			<?php endif; ?>
 		<?php endif; ?>
 	</body>
 </html>

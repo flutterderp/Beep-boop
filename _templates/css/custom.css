@@ -43,6 +43,7 @@ h1 { font-size: 3.25rem; line-height: calc(54 / 52); margin: 0 0 2rem; }
 h2 { font-size: 2.25rem; line-height: calc(42 / 36); margin: 1.4375rem 0; }
 h3 { font-size: 1.25rem; font-family: 'Nunito', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   line-height: calc(26 / 20); margin: 1.125rem 0 0.75rem; text-transform: uppercase; }
+hr { background: var(--color__black); border: 0; height: 1px; margin: 2rem auto; width: 100%; }
 img { display: inline-block; max-width: 100%; vertical-align: middle; }
 p { margin: 1.125rem 0; }
 ol, ul { list-style: none; margin: 1rem 0; overflow: auto; padding: 0 0 0 1.875rem; width: auto; }
@@ -76,19 +77,20 @@ th { text-align: left; vertical-align: middle; }
 .label { background: var(--color__secondary__focus); }
 
 .button { background: var(--color__primary); text-decoration: none; }
-.button, .button:active, .button:focus, .button:hover { color: var(--color__white); }
+.button, .button:is(:active, :focus, :hover) { color: var(--color__white); }
 .button:active, .button:focus, .button:hover { background: var(--color__primary__focus); }
 .taglink:active, .taglink:focus, .taglink:hover { background: var(--color__secondary__focus); color: inherit;
   text-decoration: underline; }
 
-.button.alert { background: var(--color__error); }
-.button.alert:focus, .button.alert:hover { background: var(--color__error__focus); }
+.label.alert { color: var(--color__white); }
+.button.alert, .label.alert { background: var(--color__error); }
+.button.alert:is(:focus, :hover), .label.alert:is(:focus, :hover) { background: var(--color__error__focus); }
 .button.secondary { background: var(--color__secondary); color: var(--color__black); }
-.button.secondary:focus, .button.secondary:hover { background: var(--color__secondary__focus); color: var(--color__black); }
+.button.secondary:is(:focus, :hover) { background: var(--color__secondary__focus); color: var(--color__black); }
 .button.success { background: var(--color__success); color: var(--color__black); }
-.button.success:focus, .button.success:hover { background: var(--color__success__focus); }
+.button.success:is(:focus, :hover) { background: var(--color__success__focus); }
 .button.warning { background: var(--color__warning); color: var(--color__black); }
-.button.warning:focus, .button.warning:hover { background: var(--color__warning__focus); }
+.button.warning:is(:focus, :hover) { background: var(--color__warning__focus); }
 
 .callout { background: var(--callout__secondary); border: 0; color: inherit; font-size: 1.125rem; font-weight: 600;
   padding: 1.25rem 1.5rem; position: relative; margin: 1.5rem 0; }

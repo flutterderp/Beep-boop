@@ -59,7 +59,6 @@ $doc->addHeadLink('https://fonts.gstatic.com', 'preconnect', 'rel', array('cross
 $doc->addStyleSheet('https://fonts.googleapis.com/css2?family=Caveat&family=Nunito:ital,wght@0,400;0,600;0,700;1,400;1,700&display=swap');
 $doc->addStyleSheet($this->baseurl . '/templates/system/css/system.css');
 $doc->addStyleSheet('https://use.fontawesome.com/releases/v5.15.4/css/all.css', null, array('crossorigin' => 'anonymous'));
-// $doc->addStyleSheet($this->baseurl . '/templates/' . $this->template . '/css/fa59-all.min.css');
 
 $css_keys = array_keys($oldHeadData['styleSheets']);
 
@@ -204,161 +203,78 @@ $app->enqueueMessage('Message test', 'error'); */
 			<!-- End Google Tag Manager (noscript) -->
 		<?php endif; ?>
 
-		<nav class="pushy pushy-left" data-menu-btn-class=".pushy-menu-btn" role="navigation" arial-label="Mobile menu">
-			<jdoc:include type="modules" name="mobilemenu" style="none" />
-		</nav>
+		<header id="masthead">
+			<section class="masthead<?php echo $is_home ? ' home' : ' inner'; ?>">
+				<h1><?php echo $app->get('sitename'); ?></h1>
+				<a href="#" class="mobilenav__btn" id="mobilenav" aria-label="Click to expand mobile menu"><span class="fa fa-bars fa-2x"></span></a>
 
-		<div class="wrapper pushy-container" id="container">
-			<header id="masthead">
-				<section class="masthead<?php echo $is_home ? ' home' : ' inner'; ?>">
-					<h1><?php echo $app->get('sitename'); ?></h1>
-					<a href="#" class="mobilenav__btn" id="mobilenav" aria-label="Click to expand mobile menu"><span class="fa fa-bars fa-2x"></span></a>
+				<jdoc:include type="modules" name="navigation" style="none" />
+				<?php /* <jdoc:include type="modules" name="top" style="xhtml5" /> */ ?>
+			</section>
+		</header><?php /* end of masthead */ ?>
 
-					<?php /* <jdoc:include type="modules" name="top" style="xhtml5" />
-					<jdoc:include type="modules" name="navigation" style="xhtml5" /> */ ?>
+		<?php if($is_home) : ?>
+			<section class="container" id="MainContent">
+				<a id="MainContent"></a>
 
-					<nav class="menu mainmenu" role="navigation" aria-label="Main menu">
-						<div class="menu-item"><a href="index.html">Home</a></div>
-						<div class="menu-item has-submenu">
-							<a href="#">Articles <span class="fa fa-angle-right"></span></a>
-							<nav class="submenu" aria-label="Submenu – articles">
-								<div class="menu-item"><a href="home.html">Blog</a></div>
-								<div class="menu-item"><a href="home.html">Elegant Gothic Lolita</a></div>
-								<div class="menu-item has-submenu">
-									<a href="#">Music <span class="fa fa-angle-right"></span></a>
-									<nav class="submenu" aria-label="Submenu – music">
-										<div class="menu-item"><a href="home.html">Malice Mizer</a></div>
-										<div class="menu-item"><a href="home.html">Moi dix Mois</a></div>
-									</nav>
-								</div>
-								<div class="menu-item active"><a href="home.html">Stuff</a></div>
-							</nav>
-						</div>
-						<div class="menu-item active"><a href="home.html">Stuff</a></div>
-					</nav>
-				</section>
-			</header><?php /* end of masthead */ ?>
+				<div class="row">
+					<main class="contentarea column">
+						<jdoc:include type="message" />
 
-			<?php if($is_home) : ?>
-				<section class="container" id="MainContent">
-					<a id="MainContent"></a>
+						<jdoc:include type="modules" name="copyhead" style="xhtml5" />
+						<jdoc:include type="component" />
+						<jdoc:include type="modules" name="copyfoot" style="xhtml5" />
+					</main>
 
-					<div class="row">
-						<main class="contentarea column">
-							<jdoc:include type="message" />
-
-							<jdoc:include type="modules" name="copyhead" style="xhtml5" />
-							<jdoc:include type="component" />
-							<jdoc:include type="modules" name="copyfoot" style="xhtml5" />
-
-							<!-- <nav class="pagination" aria-label="Pagination">
-								<ul>
-									<li><a href="" aria-label="First page"><i class="fa fa-angle-double-left"></i></a></li>
-									<li><a href="" aria-label="Previous page"><i class="fa fa-angle-left"></i></a></li>
-									<li><a href="">1</a></li>
-									<li><a href="">2</a></li>
-									<li><a href="">3</a></li>
-									<li><a href="" aria-label="Next page"><i class="fa fa-angle-right"></i></a></li>
-									<li><a href="" aria-label="Last page"><i class="fa fa-angle-double-right"></i></a></li>
-								</ul>
-							</nav> -->
-						</main>
-
-						<?php if(!empty($sidebar_content)) : ?>
-							<aside class="sidebar column" role="complementary" aria-label="Sidebar content">
-								<?php echo $sidebar_content; ?>
-
-								<?php /* <div>
-									<h2>Beep boop</h2>
-									<p>Aliquam erat volutpat. Etiam a finibus nisi, ultricies auctor elit. Curabitur et tristique mi. Curabitur volutpat urna eu urna commodo ultrices. Vivamus lacinia aliquam ipsum, et feugiat.</p>
-									<ul class="menu vertical">
-										<li><a href="https://www.example.com" target="_blank" rel="noopener">Example link</a></li>
-										<li><a href="https://www.google.com" target="_blank" rel="noopener">Google</a></li>
-										<li><a href="https://www.example.com" target="_blank" rel="noopener">Example link</a></li>
-										<li><a href="https://www.google.com" target="_blank" rel="noopener">Google</a></li>
-									</ul>
-								</div> */ ?>
-
-								<div>
-									<p>Curabitur sollicitudin iaculis ante, ac vehicula lacus pretium vel. Donec in rhoncus nunc, sit amet vulputate dui. Proin et nunc diam. Fusce ornare dui eget ante interdum, at ornare arcu mattis. Sed a euismod metus. Duis aliquam ultrices viverra. Pellentesque vestibulum erat metus, non iaculis tellus interdum in. Nunc quis aliquet leo. Ut efficitur risus eget ipsum pellentesque ultrices. Phasellus sed accumsan est. Nullam vestibulum nisi augue, a luctus augue condimentum id.</p>
-									<p>Aenean eget sem nec turpis scelerisque posuere interdum sit amet lorem. Praesent iaculis magna a vehicula sagittis. Mauris sed laoreet mi, non vestibulum sem. In est massa, faucibus at erat a, molestie cursus est. Sed sit amet elit lectus. Sed lobortis blandit magna non dignissim. Duis in elit rutrum, maximus arcu et, convallis massa. Praesent tempor pulvinar pharetra. Sed porta nec justo eu finibus. Vestibulum quis feugiat nibh. Pellentesque feugiat lectus nec odio mattis rutrum. Morbi egestas ultricies nunc eu molestie. Sed sit amet lectus eu mi rhoncus finibus sit amet a est.</p>
-								</div>
-
-								<div>
-									<p>Phasellus sollicitudin gravida orci, congue mattis justo interdum consectetur. Nam vehicula ut urna vitae tempus. Integer aliquam molestie sagittis. Nam vel posuere tellus. Donec eu dui interdum, luctus sem sed, fermentum sem. Donec varius sagittis metus vel ullamcorper. Etiam sagittis tellus urna. Pellentesque a imperdiet massa, in sollicitudin sem. Sed non ultrices lorem.</p>
-								</div>
-							</aside>
-						<?php endif; ?>
-					</div>
-				</section><?php /* end of copyarea */ ?>
-			<?php else : ?>
-				<section class="container" id="MainContent">
-					<?php if($this->countModules('breadcrumb')) : ?>
-						<div class="row">
-							<nav class="column" role="navigation" aria-label="Breadcrumbs">
-								<jdoc:include type="modules" name="breadcrumb" style="none" />
-							</nav>
-						</div>
+					<?php if(!empty($sidebar_content)) : ?>
+						<aside class="sidebar column" role="complementary" aria-label="Sidebar content">
+							<?php echo $sidebar_content; ?>
+						</aside>
 					<?php endif; ?>
-
-					<a id="MainContent"></a>
-
+				</div>
+			</section><?php /* end of copyarea */ ?>
+		<?php else : ?>
+			<section class="container" id="MainContent">
+				<?php if($this->countModules('breadcrumb')) : ?>
 					<div class="row">
-						<main class="contentarea column">
-							<jdoc:include type="message" />
-
-							<jdoc:include type="modules" name="copyhead" style="xhtml5" />
-							<jdoc:include type="component" />
-							<jdoc:include type="modules" name="copyfoot" style="xhtml5" />
-
-							<!-- <nav class="pagination" aria-label="Pagination">
-								<ul>
-									<li><a href="" aria-label="First page"><i class="fa fa-angle-double-left"></i></a></li>
-									<li><a href="" aria-label="Previous page"><i class="fa fa-angle-left"></i></a></li>
-									<li><a href="">1</a></li>
-									<li><a href="">2</a></li>
-									<li><a href="">3</a></li>
-									<li><a href="" aria-label="Next page"><i class="fa fa-angle-right"></i></a></li>
-									<li><a href="" aria-label="Last page"><i class="fa fa-angle-double-right"></i></a></li>
-								</ul>
-							</nav> -->
-						</main>
-
-						<?php if(!empty($sidebar_content)) : ?>
-							<aside class="sidebar column" role="complementary" aria-label="Sidebar content">
-								<?php echo $sidebar_content; ?>
-
-								<div>
-									<p>Curabitur sollicitudin iaculis ante, ac vehicula lacus pretium vel. Donec in rhoncus nunc, sit amet vulputate dui. Proin et nunc diam. Fusce ornare dui eget ante interdum, at ornare arcu mattis. Sed a euismod metus. Duis aliquam ultrices viverra. Pellentesque vestibulum erat metus, non iaculis tellus interdum in. Nunc quis aliquet leo. Ut efficitur risus eget ipsum pellentesque ultrices. Phasellus sed accumsan est. Nullam vestibulum nisi augue, a luctus augue condimentum id.</p>
-									<p>Aenean eget sem nec turpis scelerisque posuere interdum sit amet lorem. Praesent iaculis magna a vehicula sagittis. Mauris sed laoreet mi, non vestibulum sem. In est massa, faucibus at erat a, molestie cursus est. Sed sit amet elit lectus. Sed lobortis blandit magna non dignissim. Duis in elit rutrum, maximus arcu et, convallis massa. Praesent tempor pulvinar pharetra. Sed porta nec justo eu finibus. Vestibulum quis feugiat nibh. Pellentesque feugiat lectus nec odio mattis rutrum. Morbi egestas ultricies nunc eu molestie. Sed sit amet lectus eu mi rhoncus finibus sit amet a est.</p>
-								</div>
-
-								<div>
-									<p>Phasellus sollicitudin gravida orci, congue mattis justo interdum consectetur. Nam vehicula ut urna vitae tempus. Integer aliquam molestie sagittis. Nam vel posuere tellus. Donec eu dui interdum, luctus sem sed, fermentum sem. Donec varius sagittis metus vel ullamcorper. Etiam sagittis tellus urna. Pellentesque a imperdiet massa, in sollicitudin sem. Sed non ultrices lorem.</p>
-								</div>
-							</aside>
-						<?php endif; ?>
+						<nav class="column" role="navigation" aria-label="Breadcrumbs">
+							<jdoc:include type="modules" name="breadcrumb" style="none" />
+						</nav>
 					</div>
-				</section><?php /* end of copyarea */ ?>
-			<?php endif; ?>
+				<?php endif; ?>
 
-			<footer role="contentinfo" arial-label="Footer content">
-				<div class="footer-item"><p><?php echo Text::sprintf('TPL_CANDELAALUMINIUM_COPYRIGHT', $today->format('Y')); ?></p></div>
-				<div class="footer-item"><p>&copy; 2018 Sitename</p></div>
+				<a id="MainContent"></a>
 
-				<?php /* <jdoc:include type="modules" name="footer" style="xhtml5" />
-				<jdoc:include type="modules" name="bottom" style="xhtml5" /> */ ?>
-				<div class="footer-item"><p>some extra footer text</p></div>
-			</footer>
+				<div class="row">
+					<main class="contentarea column">
+						<jdoc:include type="message" />
 
-			<jdoc:include type="modules" name="debug" />
+						<jdoc:include type="modules" name="copyhead" style="xhtml5" />
+						<jdoc:include type="component" />
+						<jdoc:include type="modules" name="copyfoot" style="xhtml5" />
+					</main>
 
-			<nav class="up-button" role="navigation" aria-label="Up button">
-				<a class="up-button__link" href="#pagetop" aria-label="Action: scroll to top of page"></a>
-			</nav>
-		</div><?php /* end of wrapper */ ?>
+					<?php if(!empty($sidebar_content)) : ?>
+						<aside class="sidebar column" role="complementary" aria-label="Sidebar content">
+							<?php echo $sidebar_content; ?>
+						</aside>
+					<?php endif; ?>
+				</div>
+			</section><?php /* end of copyarea */ ?>
+		<?php endif; ?>
 
-		<div class="site-overlay"></div>
+		<footer role="contentinfo" arial-label="Footer content">
+			<div class="footer-item"><p><?php echo Text::sprintf('TPL_CANDELAALUMINIUM_COPYRIGHT', $today->format('Y')); ?></p></div>
+
+			<?php /* <jdoc:include type="modules" name="footer" style="xhtml5" />
+			<jdoc:include type="modules" name="bottom" style="xhtml5" /> */ ?>
+		</footer>
+
+		<jdoc:include type="modules" name="debug" />
+
+		<nav class="up-button" role="navigation" aria-label="Up button">
+			<a class="up-button__link" href="#pagetop" aria-label="Action: scroll to top of page"></a>
+		</nav>
 
 		<?php
 		$script_keys = array_keys($oldHeadData['scripts']);
