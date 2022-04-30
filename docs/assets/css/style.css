@@ -203,6 +203,10 @@ nav.pagination { clear: both; margin: 3.125rem auto 2rem; }
 article.lead-item:not(:last-of-type)::after { border-bottom: 0.0625rem solid var(--color__grey); content: '';
   display: block; margin: 2rem auto; width: 100%; }
 
+.avatar__gallery { align-items: flex-start; display: flex; flex-direction: row; flex-wrap: wrap; gap: 1rem;
+  justify-content: space-between; margin: 2rem 0; }
+.avatar { flex: 0 1 auto; }
+
 aside > div, blockquote { background: #f8f8f8; margin: 3.25rem 0; padding: 1.25rem 1.5rem; }
 aside > div { border-bottom-right-radius: 0.75rem; border-top: 0.25rem solid var(--color__blue);
   border-bottom-left-radius: 0.75rem; box-shadow: 0 0.0625rem 0.4375rem rgba(0,0,0,0.15);
