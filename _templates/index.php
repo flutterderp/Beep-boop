@@ -60,6 +60,7 @@ $doc->addStyleSheet('https://fonts.googleapis.com/css2?family=Caveat&family=Nuni
 $doc->addStyleSheet($this->baseurl . '/templates/system/css/system.css');
 $doc->addStyleSheet('https://use.fontawesome.com/releases/v5.15.4/css/all.css', null, array('crossorigin' => 'anonymous'));
 $doc->addStyleSheet($this->baseurl . '/templates/' . $this->template . '/css/glightbox.min.css');
+$doc->addStyleSheet($this->baseurl . '/templates/' . $this->template . '/css/joomla-a11y-checker.min.css');
 
 $css_keys = array_keys($oldHeadData['styleSheets']);
 
@@ -256,6 +257,8 @@ $app->enqueueMessage('Message test', 'error'); */
 		</nav>
 
 		<script src="<?php echo $this->baseurl . '/templates/' . $this->template; ?>/javascript/glightbox.min.js"></script>
+		<script src="<?php echo $this->baseurl . '/templates/' . $this->template; ?>/javascript/joomla-a11y-checker.umd.min.js"></script>
+		<script src="<?php echo $this->baseurl . '/templates/' . $this->template; ?>/javascript/en.umd.js"></script>
 
 		<?php
 		$script_keys = array_keys($oldHeadData['scripts']);
