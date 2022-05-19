@@ -61,6 +61,7 @@ $doc->addStyleSheet($this->baseurl . '/templates/system/css/system.css');
 $doc->addStyleSheet('https://use.fontawesome.com/releases/v5.15.4/css/all.css', null, array('crossorigin' => 'anonymous'));
 $doc->addStyleSheet($this->baseurl . '/templates/' . $this->template . '/css/glightbox.min.css');
 $doc->addStyleSheet($this->baseurl . '/templates/' . $this->template . '/css/joomla-a11y-checker.min.css');
+// $doc->addStyleSheet('https://cdn.jsdelivr.net/gh/ryersondmp/sa11y@2.2.3/src/sa11y.css');
 
 $css_keys = array_keys($oldHeadData['styleSheets']);
 
@@ -224,8 +225,6 @@ $app->enqueueMessage('Message test', 'error'); */
 				</div>
 			<?php endif; ?>
 
-			<a id="MainContent"></a>
-
 			<div class="row">
 				<main class="contentarea column">
 					<jdoc:include type="message" />
@@ -259,6 +258,7 @@ $app->enqueueMessage('Message test', 'error'); */
 		<script src="<?php echo $this->baseurl . '/templates/' . $this->template; ?>/javascript/glightbox.min.js"></script>
 		<script src="<?php echo $this->baseurl . '/templates/' . $this->template; ?>/javascript/joomla-a11y-checker.umd.min.js"></script>
 		<script src="<?php echo $this->baseurl . '/templates/' . $this->template; ?>/javascript/en.umd.js"></script>
+		<?php /* <script src="https://cdn.jsdelivr.net/combine/npm/@popperjs/core@2/dist/umd/popper.min.js,npm/tippy.js@6/dist/tippy.umd.min.js,gh/ryersondmp/sa11y@2.2.3/src/lang/en.min.js,gh/ryersondmp/sa11y@2.2.3/src/sa11y.min.js"></script> */ ?>
 
 		<?php
 		$script_keys = array_keys($oldHeadData['scripts']);

@@ -5,6 +5,7 @@ window.addEventListener('load', function() {
   // Instantiate
   const checker = new Jooa11y.Jooa11y(Jooa11yLangEn.options);
   checker.doInitialCheck();
+  // const sa11y = new Sa11y();
 });
 
 window.addEventListener('DOMContentLoaded', function() {

@@ -18,7 +18,7 @@ $default_img = 'https://via.placeholder.com/176x96.png?text=No%20image';
 <?php foreach ($list as $item) : ?>
 	<?php $images = json_decode($item->images); ?>
 	<article class="lead-item">
-		<h1 id="<?php echo $item->slug; ?>">
+		<h1 id="article_<?php echo $item->slug; ?>">
 			<?php if ($params->get('link_titles') == 1) : ?>
 				<a href="<?php echo $item->link; ?>"><?php echo $item->title; ?></a>
 			<?php else : ?>
@@ -53,7 +53,7 @@ $default_img = 'https://via.placeholder.com/176x96.png?text=No%20image';
 
 		<?php if ($params->get('show_readmore')) : ?>
 			<p class="readmore">
-				<a class="button <?php echo $item->active; ?>" href="<?php echo $item->link; ?>" aria-labelledby="<?php echo $item->slug; ?>">
+				<a class="button <?php echo $item->active; ?>" href="<?php echo $item->link; ?>" aria-labelledby="article_<?php echo $item->slug; ?>">
 					<?php if ($item->params->get('access-view') == false) : ?>
 						<?php echo Text::_('MOD_ARTICLES_CATEGORY_REGISTER_TO_READ_MORE'); ?>
 					<?php elseif ($readmore = $item->alternative_readmore) : ?>
