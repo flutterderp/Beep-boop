@@ -16,7 +16,7 @@ use Joomla\CMS\Version;
 
 include_once(__DIR__ . '/includes/functions.php');
 
-HTMLHelper::_('jquery.framework', true);
+// HTMLHelper::_('jquery.framework', true);
 
 $app             = Factory::getApplication();
 $doc             = Factory::getDocument();
@@ -27,50 +27,55 @@ $active          = $menu->getActive();
 $default         = $menu->getDefault();
 $is_home         = ($active === $default) ? true : false;
 $sidebar_content = getModContent('right', 'xhtml5');
-$doc->setGenerator('Southern Anime');
+$this->setGenerator('Southern Anime');
 // Clear out Joomla/JCE scripts and stylesheets
-$oldHeadData = $doc->getHeadData();
-$doc->resetHeadData();
-$doc->_custom                       = $oldHeadData['custom'];
-$doc->title                         = $oldHeadData['title'];
-$doc->description                   = $oldHeadData['description'];
-$doc->_styleSheets                  = $oldHeadData['styleSheets'];
-$doc->_metaTags['name']['keywords'] = isset($oldHeadData['metaTags']['name']['keywords']) ? $oldHeadData['metaTags']['name']['keywords'] : '';
-$active_page_robots                 = $active ? $active->getParams()->get('robots', '') : '';
+$oldHeadData = $this->getHeadData();
+$this->resetHeadData();
+$this->_custom                       = $oldHeadData['custom'];
+$this->title                         = $oldHeadData['title'];
+$this->description                   = $oldHeadData['description'];
+$this->_styleSheets                  = $oldHeadData['styleSheets'];
+$this->_metaTags['name']['keywords'] = isset($oldHeadData['metaTags']['name']['keywords']) ? $oldHeadData['metaTags']['name']['keywords'] : '';
+$active_page_robots                  = $active ? $active->getParams()->get('robots', '') : '';
 
 // unset _styleSheets because components using HTMLHelper to add stylesheets tend to render them before the other stylesheets below
-unset($doc->_styleSheets);
+unset($this->_styleSheets);
 
 if(isset($oldHeadData['metaTags']['name']['robots']))
 {
-	$doc->_metaTags['name']['robots'] = $oldHeadData['metaTags']['name']['robots'];
+	$this->_metaTags['name']['robots'] = $oldHeadData['metaTags']['name']['robots'];
 }
 elseif($active_page_robots)
 {
-	$doc->_metaTags['name']['robots'] = $active_page_robots;
+	$this->_metaTags['name']['robots'] = $active_page_robots;
 }
 
 // JavaScript
-$doc->addScript($this->baseurl . '/templates/' . $this->template . '/javascript/jquery-3.5.1.min.js', null, array('async' => false));
-// $doc->addScript($this->baseurl . '/templates/' . $this->template . '/javascript/jquery-migrate-3.0.0.min.js', null, array('async' => true));
+$this->addScript($this->baseurl . '/templates/' . $this->template . '/javascript/jquery-3.5.1.min.js', null, array('async' => false));
+// $this->addScript($this->baseurl . '/templates/' . $this->template . '/javascript/jquery-migrate-3.0.0.min.js', null, array('async' => true));
 // Stylesheets
-$doc->addHeadLink('https://fonts.googleapis.com', 'preconnect');
-$doc->addHeadLink('https://fonts.gstatic.com', 'preconnect', 'rel', array('crossorigin' => 'crossorigin'));
-$doc->addStyleSheet('https://fonts.googleapis.com/css2?family=Caveat&family=Nunito:ital,wght@0,400;0,600;0,700;1,400;1,700&display=swap');
-$doc->addStyleSheet($this->baseurl . '/templates/system/css/system.css');
-$doc->addStyleSheet('https://use.fontawesome.com/releases/v5.15.4/css/all.css', null, array('crossorigin' => 'anonymous'));
-$doc->addStyleSheet($this->baseurl . '/templates/' . $this->template . '/css/glightbox.min.css');
-$doc->addStyleSheet($this->baseurl . '/templates/' . $this->template . '/css/joomla-a11y-checker.min.css');
-// $doc->addStyleSheet('https://cdn.jsdelivr.net/gh/ryersondmp/sa11y@2.2.3/src/sa11y.css');
+$this->addHeadLink('https://fonts.googleapis.com', 'preconnect');
+$this->addHeadLink('https://fonts.gstatic.com', 'preconnect', 'rel', array('crossorigin' => 'crossorigin'));
+$this->addStyleSheet('https://fonts.googleapis.com/css2?family=Caveat&family=Nunito:ital,wght@0,400;0,600;0,700;1,400;1,700&display=swap');
+
+if(Version::MAJOR_VERSION < 4)
+{
+	$this->addStyleSheet($this->baseurl . '/templates/system/css/system.css');
+}
+
+$this->addStyleSheet('https://use.fontawesome.com/releases/v5.15.4/css/all.css', null, array('crossorigin' => 'anonymous'));
+$this->addStyleSheet($this->baseurl . '/templates/' . $this->template . '/css/glightbox.min.css');
+$this->addStyleSheet($this->baseurl . '/templates/' . $this->template . '/css/joomla-a11y-checker.min.css');
+// $this->addStyleSheet('https://cdn.jsdelivr.net/gh/ryersondmp/sa11y@2.2.3/src/sa11y.css');
 
 $css_keys = array_keys($oldHeadData['styleSheets']);
 
 foreach($css_keys as $styleSheet)
 {
-	$doc->addStyleSheet($styleSheet);
+	$this->addStyleSheet($styleSheet);
 }
 
-$doc->addStyleSheet($this->baseurl . '/templates/' . $this->template . '/css/custom.css');
+$this->addStyleSheet($this->baseurl . '/templates/' . $this->template . '/css/custom.css');
 
 // Custom Metatags
 $logo            = $this->params->get('logo');
@@ -82,9 +87,9 @@ $ga_anonymizeIp  = (bool) $this->params->get('ga_anonymizeip', true);
 $fbpixel         = $this->params->get('fbpixel', '');
 $adsense_key     = $this->params->get('googleads', '');
 $pageclass_sfx   = is_object($active) ? $active->getParams()->get('pageclass_sfx', ' inner-page') : ' inner-page';
-$og_title        = htmlentities($doc->getTitle(), ENT_QUOTES);
-$og_desc         = htmlentities($doc->getDescription(), ENT_QUOTES);
-$og_keywords     = htmlentities($doc->getMetaData('keywords'), ENT_QUOTES);
+$og_title        = htmlentities($this->getTitle(), ENT_QUOTES);
+$og_desc         = htmlentities($this->getDescription(), ENT_QUOTES);
+$og_keywords     = htmlentities($this->getMetaData('keywords'), ENT_QUOTES);
 $og_image        = '';
 $og_img_width    = 300;
 $og_img_height   = 300;
@@ -97,22 +102,35 @@ if($base_image && file_exists(JPATH_BASE . '/' . $base_image))
 
 	list($og_img_width, $og_img_height)     = getimagesize(JPATH_BASE . '/' . $base_image);
 	list($base_img_width, $base_img_height) = getimagesize(JPATH_BASE . '/' . $base_image);
-}
 
-$doc->addCustomTag('<meta property="og:image" content="' . $app->get('ogImage', $og_image) . '">');
-$doc->addCustomTag('<meta property="og:image:width" content="' . $app->get('ogImageWidth', $og_img_width) . '">');
-$doc->addCustomTag('<meta property="og:image:height" content="' . $app->get('ogImageHeight', $og_img_height) . '">');
+	$this->addCustomTag('<meta property="og:image" content="' . $app->get('ogImage', $og_image) . '">');
+	$this->addCustomTag('<meta property="og:image:width" content="' . $app->get('ogImageWidth', $og_img_width) . '">');
+	$this->addCustomTag('<meta property="og:image:height" content="' . $app->get('ogImageHeight', $og_img_height) . '">');
+}
 
 /**
  * Alternative way to disable unnecessary scripts/stylesheets
  * @link https://github.com/joomla/joomla-cms/discussions/32350#discussioncomment-347638
  */
-/* if(Version::MAJOR_VERSION === 4)
+if(Version::MAJOR_VERSION === 4)
 {
 	$wa = $this->getWebAssetManager();
 	$wa->disableScript('bootstrap.collapse');
+	$wa->disableScript('bootstrap.popover');
+	$wa->disableScript('bootstrap.es5');
+	$wa->disableScript('chosen');
+	$wa->disableScript('core');
+	$wa->disableScript('field.color-adv');
+	// $wa->disableScript('joomla.treeselectmenu');
+	$wa->disableScript('jquery-migrate');
+	$wa->disableScript('jquery-noconflict');
+	// $wa->disableScript('jquery');
+	// $wa->disableScript('minicolors');
+	// $wa->disableScript('wcpolyfill');
+	$wa->disableStyle('chosen');
+	// $wa->disableStyle('minicolors');
 	$wa->disableStyle('fontawesome');
-} */
+}
 
 /* $app->enqueueMessage('Message test', 'info');
 $app->enqueueMessage('Message test', 'success');
@@ -125,7 +143,14 @@ $app->enqueueMessage('Message test', 'error'); */
 	<head>
 		<meta name="msapplication-config" content="none">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<jdoc:include type="head" />
+
+		<?php if(Version::MAJOR_VERSION < 4) : ?>
+			<jdoc:include type="head" />
+		<?php else : ?>
+			<jdoc:include type="metas" />
+			<jdoc:include type="styles" />
+			<jdoc:include type="scripts" />
+		<?php endif; ?>
 
 		<?php if($gacode) : ?>
 			<script src="https://www.googletagmanager.com/gtag/js?id=<?php echo $gacode; ?>" async></script>
