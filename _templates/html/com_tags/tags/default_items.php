@@ -14,10 +14,15 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Version;
 
 HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers');
 
-HTMLHelper::_('behavior.caption');
+if(Version::MAJOR_VERSION < 4)
+{
+	HTMLHelper::_('behavior.caption');
+}
+
 HTMLHelper::_('behavior.core');
 
 // Get the user object.
@@ -27,6 +32,7 @@ $user = Factory::getUser();
 $canEdit      = $user->authorise('core.edit', 'com_tags');
 $canCreate    = $user->authorise('core.create', 'com_tags');
 $canEditState = $user->authorise('core.edit.state', 'com_tags');
+$pagesTotal   = (Version::MAJOR_VERSION === 4) ? $this->pagination->pagesTotal : $this->pagination->get('pages.total');
 
 $columns = $this->params->get('tag_columns', 1);
 
@@ -135,7 +141,7 @@ Factory::getDocument()->addScriptDeclaration("
 	<?php endif; ?>
 	<?php // Add pagination links ?>
 	<?php if (!empty($this->items)) : ?>
-		<?php if (($this->params->def('show_pagination', 2) == 1 || ($this->params->get('show_pagination') == 2)) && ($this->pagination->pagesTotal > 1)) : ?>
+		<?php if (($this->params->def('show_pagination', 2) == 1 || ($this->params->get('show_pagination') == 2)) && ($pagesTotal > 1)) : ?>
 			<div class="pagination">
 				<?php if ($this->params->def('show_pagination_results', 1)) : ?>
 					<p class="counter pull-right">

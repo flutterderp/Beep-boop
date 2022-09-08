@@ -9,8 +9,13 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Version;
+
+$pagesTotal  = (Version::MAJOR_VERSION === 4) ? $this->pagination->pagesTotal : $this->pagination->get('pages.total');
+
 // Note that there are certain parts of this layout used only when there is exactly one tag.
-JHtml::addIncludePath(JPATH_COMPONENT . '/helpers');
+HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers');
 $isSingleTag = count($this->item) === 1;
 
 ?>
@@ -22,7 +27,7 @@ $isSingleTag = count($this->item) === 1;
 	<?php endif; ?>
 	<?php if ($this->params->get('show_tag_title', 1)) : ?>
 		<h1>
-			<?php echo JHtml::_('content.prepare', $this->tags_title, '', 'com_tag.tag'); ?>
+			<?php echo HTMLHelper::_('content.prepare', $this->tags_title, '', 'com_tag.tag'); ?>
 		</h1>
 	<?php endif; ?>
 	<?php // We only show a tag description if there is a single tag. ?>
@@ -33,7 +38,7 @@ $isSingleTag = count($this->item) === 1;
 				<img src="<?php echo htmlspecialchars($images->image_fulltext, ENT_QUOTES, 'UTF-8'); ?>" alt="<?php echo htmlspecialchars($images->image_fulltext_alt, ENT_QUOTES, 'UTF-8'); ?>" />
 			<?php endif; ?>
 			<?php if ($this->params->get('tag_list_show_tag_description') == 1 && $this->item[0]->description) : ?>
-				<?php echo JHtml::_('content.prepare', $this->item[0]->description, '', 'com_tags.tag'); ?>
+				<?php echo HTMLHelper::_('content.prepare', $this->item[0]->description, '', 'com_tags.tag'); ?>
 			<?php endif; ?>
 			<div class="clr"></div>
 		</div>
@@ -44,11 +49,11 @@ $isSingleTag = count($this->item) === 1;
 			<img src="<?php echo htmlspecialchars($this->params->get('tag_list_image'), ENT_QUOTES, 'UTF-8'); ?>" />
 		<?php endif; ?>
 		<?php if ($this->params->get('tag_list_description', '') > '') : ?>
-			<?php echo JHtml::_('content.prepare', $this->params->get('tag_list_description'), '', 'com_tags.tag'); ?>
+			<?php echo HTMLHelper::_('content.prepare', $this->params->get('tag_list_description'), '', 'com_tags.tag'); ?>
 		<?php endif; ?>
 	<?php endif; ?>
 	<?php echo $this->loadTemplate('items'); ?>
-	<?php if (($this->params->def('show_pagination', 1) == 1 || ($this->params->get('show_pagination') == 2)) && ($this->pagination->get('pages.total') > 1)) : ?>
+	<?php if (($this->params->def('show_pagination', 1) == 1 || ($this->params->get('show_pagination') == 2)) && ($pagesTotal > 1)) : ?>
 		<div class="pagination">
 			<?php if ($this->params->def('show_pagination_results', 1)) : ?>
 				<p class="counter pull-right">
