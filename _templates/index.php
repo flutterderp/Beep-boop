@@ -27,6 +27,7 @@ $active          = $menu->getActive();
 $default         = $menu->getDefault();
 $is_home         = ($active === $default) ? true : false;
 $sidebar_content = getModContent('right', 'xhtml5');
+$this->setBase(Uri::root());
 $this->setGenerator('Southern Anime');
 // Clear out Joomla/JCE scripts and stylesheets
 $oldHeadData = $this->getHeadData();
@@ -48,6 +49,15 @@ if(isset($oldHeadData['metaTags']['name']['robots']))
 elseif($active_page_robots)
 {
 	$this->_metaTags['name']['robots'] = $active_page_robots;
+}
+
+if($app->get('seocfg_favicon', ''))
+{
+	$favicon          = HTMLHelper::cleanImageUrl($app->get('seocfg_favicon'));
+	$favicon_filename = pathinfo(JPATH_ROOT . '/' . $favicon->url, PATHINFO_FILENAME);
+
+	$this->addFavicon(Uri::root() . 'templates/' . $this->template . '/' . $favicon_filename . '.ico', 'image/vnd.microsoft.icon', 'shortcut icon');
+	$this->addFavicon(Uri::root() . $favicon->url, mime_content_type($favicon->url), 'shortcut icon');
 }
 
 // JavaScript
@@ -81,11 +91,11 @@ $this->addStyleSheet($this->baseurl . '/templates/' . $this->template . '/css/cu
 $logo            = $this->params->get('logo');
 $logo_footer     = $this->params->get('logo_footer');
 $base_image      = $this->params->get('base_image');
-$gacode          = $this->params->get('gacode', '');
-$gtmcode         = $this->params->get('gtmcode', '');
-$ga_anonymizeIp  = (bool) $this->params->get('ga_anonymizeip', true);
-$fbpixel         = $this->params->get('fbpixel', '');
-$adsense_key     = $this->params->get('googleads', '');
+$gacode          = $app->get('gacode', $this->params->get('gacode', ''));
+$gtmcode         = $app->get('gtmcode', $this->params->get('gtmcode', ''));
+$ga_anonymizeIp  = (bool) $app->get('ga_anonymizeip', true);
+$fbpixel         = $app->get('fbpixel', $this->params->get('fbpixel', ''));
+$adsense_key     = $app->get('googleads', $this->params->get('googleads', ''));
 $pageclass_sfx   = is_object($active) ? $active->getParams()->get('pageclass_sfx', ' inner-page') : ' inner-page';
 $og_title        = htmlentities($this->getTitle(), ENT_QUOTES);
 $og_desc         = htmlentities($this->getDescription(), ENT_QUOTES);
@@ -102,7 +112,14 @@ if($base_image && file_exists(JPATH_BASE . '/' . $base_image))
 
 	list($og_img_width, $og_img_height)     = getimagesize(JPATH_BASE . '/' . $base_image);
 	list($base_img_width, $base_img_height) = getimagesize(JPATH_BASE . '/' . $base_image);
+}
+else
+{
+	$og_image = $app->get('ogImage', $og_image);
+}
 
+if($og_image)
+{
 	$this->addCustomTag('<meta property="og:image" content="' . $app->get('ogImage', $og_image) . '">');
 	$this->addCustomTag('<meta property="og:image:width" content="' . $app->get('ogImageWidth', $og_img_width) . '">');
 	$this->addCustomTag('<meta property="og:image:height" content="' . $app->get('ogImageHeight', $og_img_height) . '">');
@@ -115,6 +132,14 @@ if($base_image && file_exists(JPATH_BASE . '/' . $base_image))
 if(Version::MAJOR_VERSION === 4)
 {
 	$wa = $this->getWebAssetManager();
+	$wr = $wa->getRegistry();
+
+	/* $wa->addInlineScript(
+		'{}',
+		['name' => 'joomla.script.options', 'position' => 'before'],
+		['type' => 'application/json', 'class' => 'joomla-script-options new'],
+		['core']
+	); */
 	$wa->disableScript('bootstrap.collapse');
 	$wa->disableScript('bootstrap.popover');
 	$wa->disableScript('bootstrap.es5');
@@ -124,7 +149,7 @@ if(Version::MAJOR_VERSION === 4)
 	// $wa->disableScript('joomla.treeselectmenu');
 	$wa->disableScript('jquery-migrate');
 	$wa->disableScript('jquery-noconflict');
-	// $wa->disableScript('jquery');
+	$wa->disableScript('jquery');
 	// $wa->disableScript('minicolors');
 	// $wa->disableScript('wcpolyfill');
 	$wa->disableStyle('chosen');
@@ -160,6 +185,8 @@ $app->enqueueMessage('Message test', 'error'); */
 				gtag('js', new Date());
 
 				gtag('config', '<?php echo $gacode; ?>', {
+					'storage': 'none',
+					'storeGac': false,
 					'anonymize_ip':   <?php echo $ga_anonymizeIp === true ? 'true' : 'false'; ?>,
 					'send_page_view': true
 				});
