@@ -60,6 +60,11 @@ if($app->get('seocfg_favicon', ''))
 	$this->addFavicon(Uri::root() . $favicon->url, mime_content_type($favicon->url), 'shortcut icon');
 }
 
+if($is_home)
+{
+	$this->addCustomTag('<link href="' . Uri::root() . '" rel="canonical">');
+}
+
 // JavaScript
 $this->addScript($this->baseurl . '/templates/' . $this->template . '/javascript/jquery-3.5.1.min.js', null, array('async' => false));
 // $this->addScript($this->baseurl . '/templates/' . $this->template . '/javascript/jquery-migrate-3.0.0.min.js', null, array('async' => true));

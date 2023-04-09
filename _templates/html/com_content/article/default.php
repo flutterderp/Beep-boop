@@ -36,7 +36,10 @@ $urls       = json_decode($this->item->urls);
 $jcfields   = array();
 $canEdit    = $params->get('access-edit');
 $info       = $params->get('info_block_position', 0);
+$root_url   = preg_replace("/\/$/", '', Uri::root());
 // $full_image = LayoutHelper::render('joomla.content.full_image', $this->item);
+// $doc->addHeadLink(Route::_(ContentHelperRoute::getArticleRoute($this->item->slug, $this->item->catid)), 'canonical');
+$doc->addCustomTag('<link href="' . $root_url . Route::_(ContentHelperRoute::getArticleRoute($this->item->slug, $this->item->catid)) . '" rel="canonical">');
 
 foreach($this->item->jcfields as $key => $field)
 {

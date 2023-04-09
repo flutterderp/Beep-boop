@@ -15,6 +15,8 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Layout\FileLayout;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Version;
 use Joomla\Event\Dispatcher;
 
@@ -26,9 +28,11 @@ if(Version::MAJOR_VERSION < 4)
 }
 
 $app         = Factory::getApplication();
+$doc         = Factory::getDocument();
 $currentDate = Factory::getDate()->format('Y-m-d H:i:s');
 $nullDate    = Factory::getDbo()->getNullDate();
 $pagesTotal  = (Version::MAJOR_VERSION === 4) ? $this->pagination->pagesTotal : $this->pagination->get('pages.total');
+$root_url    = preg_replace("/\/$/", '', Uri::root());
 
 $this->category->text = $this->category->description;
 $app->triggerEvent('onContentPrepare', array($this->category->extension . '.categories', &$this->category, &$this->params, 0));
@@ -43,6 +47,7 @@ $beforeDisplayContent = trim(implode("\n", $results));
 $results = $app->triggerEvent('onContentAfterDisplay', array($this->category->extension . '.categories', &$this->category, &$this->params, 0));
 $afterDisplayContent = trim(implode("\n", $results));
 
+$doc->addCustomTag('<link href="' . $root_url . Route::_(ContentHelperRoute::getCategoryRoute($this->category->id)) . '" rel="canonical">');
 ?>
 <div class="blog<?php echo $this->pageclass_sfx; ?>" itemscope itemtype="https://schema.org/Blog">
 	<?php if ($this->params->get('show_page_heading')) : ?>
