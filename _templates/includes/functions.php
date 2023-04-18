@@ -1,11 +1,25 @@
 <?php
-function addHttp( $url )
+defined('_JEXEC') or die;
+
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Date\Date;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Helper\ContentHelper;
+use Joomla\CMS\Helper\ModuleHelper;
+use Joomla\CMS\Helper\TagsHelper;
+use Joomla\CMS\Router\Route;
+use Joomla\Registry\Registry;
+
+if(!function_exists('addHttp'))
 {
-	if ( !preg_match( '~^(?:f|ht)tps?://~i', $url ) )
+	function addHttp($url)
 	{
-			$url = 'http://' . $url;
+		if (!preg_match('~^(?:f|ht)tps?://~i', $url))
+		{
+				$url = 'http://' . $url;
+		}
+		return $url;
 	}
-	return $url;
 }
 
 /**
@@ -13,24 +27,32 @@ function addHttp( $url )
  * Some modules (e.g. mod_tags_similar) don't have any content until they are actually rendered,
  * so we render the whole set and store it in a string for later.
  *
- * @param pos string
- * @param style string
- * @return result string
+ * @param string $pos
+ * @param string $style
+ * @return string $result
  */
 function getModContent(string $pos, string $style = 'xhtml5')
 {
 	$result  = '';
-	$modules = JModuleHelper::getModules($pos);
+	$modules = ModuleHelper::getModules($pos);
 
-	ob_start();
+	// ob_start();
 
 	foreach($modules as $module)
 	{
+		// clone $module and null it to prevent duplication if the module uses loadmodule or loadposition
+		$modcontent = clone $module;
+		$module     = null;
+		$registry   = new Registry($modcontent->params);
+		$params     = $registry->toObject();
+		$mod_style  = (isset($params->style) && $params->style != '0') ? $params->style : $style;
+
 		// Some modules (e.g. mod_tags_similar) don't have any content until they are actually rendered
-		echo JModuleHelper::renderModule($module, array('style' => $style));
+		// echo ModuleHelper::renderModule($modcontent, array('style' => $mod_style));
+		$result .= ModuleHelper::renderModule($modcontent, array('style' => $mod_style));
 	}
 
-	$result = ob_get_clean();
+	// $result = ob_get_clean();
 
 	return trim($result);
 }
@@ -43,12 +65,12 @@ function getModContent(string $pos, string $style = 'xhtml5')
 function countActiveModules($pos)
 {
 	$result  = 0;
-	$modules = JModuleHelper::getModules($pos);
+	$modules = ModuleHelper::getModules($pos);
 
 	/* foreach($modules as $module)
 	{
 		// Some modules (e.g. mod_tags_similar) don't have any content until they are actually rendered
-		JModuleHelper::renderModule($module);
+		ModuleHelper::renderModule($module);
 
 		if(empty($module->content))
 		{
@@ -65,20 +87,21 @@ function countActiveModules($pos)
 
 /**
  * Usage
- * @var search_type The content type alias
  * $results = findTags('com_products.product', $option, $view, $id);
+ *
+ * @param mixed $search_type The content type alias
  */
 function findTags($search_type, $option, $view, array $id)
 {
-	$app        = JFactory::getApplication();
-	$today      = JDate::getInstance('UTC');
-	$db         = JFactory::getDbo();
-	$user       = JFactory::getUser();
+	$app        = Factory::getApplication();
+	$today      = Date::getInstance('UTC');
+	$db         = Factory::getDbo();
+	$user       = Factory::getUser();
 	$groups     = implode(',', $user->getAuthorisedViewLevels());
 	$matchtype  = 'any';
 	$maximum    = 3;
 	$counter    = 0;
-	$tagsHelper = new JHelperTags;
+	$tagsHelper = new TagsHelper();
 	$prefix     = $option . '.' . $view;
 	$notags     = array('com_tags', 'com_users');
 	$found_tags = array();
@@ -109,13 +132,13 @@ function findTags($search_type, $option, $view, array $id)
 		->select('t.access, t.id, ct.router, cc.core_title, cc.core_alias, cc.core_catid, cc.core_language')
 		->select('cc.core_body, c.title AS core_category');
 
-	$query->from($db->qn('#__contentitem_tag_map', 'm'));
+	$query->from($db->quoteName('#__contentitem_tag_map', 'm'));
 
 	$query
-		->join('INNER', $db->qn('#__tags', 't') . ' ON m.tag_id = t.id')
-		->join('INNER', $db->qn('#__ucm_content', 'cc') . ' ON m.core_content_id = cc.core_content_id')
-		->join('INNER', $db->qn('#__content_types', 'ct') . ' ON m.type_alias = ct.type_alias')
-		->join('INNER', $db->qn('#__categories', 'c') . ' ON c.id = cc.core_catid');
+		->join('INNER', $db->quoteName('#__tags', 't') . ' ON m.tag_id = t.id')
+		->join('INNER', $db->quoteName('#__ucm_content', 'cc') . ' ON m.core_content_id = cc.core_content_id')
+		->join('INNER', $db->quoteName('#__content_types', 'ct') . ' ON m.type_alias = ct.type_alias')
+		->join('INNER', $db->quoteName('#__categories', 'c') . ' ON c.id = cc.core_catid');
 
 	$query->where('m.tag_id IN (' . $tagsToMatch . ')');
 	$query->where('t.access IN (' . $groups . ')');
@@ -130,13 +153,13 @@ function findTags($search_type, $option, $view, array $id)
 	$query->where('cc.core_state = 1 ');
 
 	// Optionally filter on language
-	$language = JComponentHelper::getParams('com_tags')->get('tag_list_language_filter', 'all');
+	$language = ComponentHelper::getParams('com_tags')->get('tag_list_language_filter', 'all');
 
 	if ($language != 'all')
 	{
 		if ($language == 'current_language')
 		{
-			$language = JHelperContent::getCurrentLanguage();
+			$language = ContentHelper::getCurrentLanguage();
 		}
 		$query->where('cc.core_language IN (' . $db->q($language) . ', ' . $db->q('*') . ')');
 	}
@@ -156,7 +179,7 @@ function findTags($search_type, $option, $view, array $id)
 		$query->having('COUNT(m.tag_id) >= 1');
 	}
 
-	// Order by content type ( i.e. Articles, then Videos )
+	// Order by content type (i.e. Articles, then Videos)
 	$query
 		->order('ct.type_title ASC')
 		->setLimit($maximum, 0);
