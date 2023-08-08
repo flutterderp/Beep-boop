@@ -21,7 +21,7 @@ include_once(__DIR__ . '/includes/functions.php');
 $app             = Factory::getApplication();
 $doc             = Factory::getDocument();
 $utc_tz          = new DateTimeZone('UTC');
-$today           = new DateTime(null, $utc_tz);
+$today           = new DateTime('', $utc_tz);
 $menu            = $app->getMenu();
 $active          = $menu->getActive();
 $default         = $menu->getDefault();
@@ -93,9 +93,9 @@ foreach($css_keys as $styleSheet)
 $this->addStyleSheet($this->baseurl . '/templates/' . $this->template . '/css/custom.css');
 
 // Custom Metatags
-$logo            = $this->params->get('logo');
-$logo_footer     = $this->params->get('logo_footer');
-$base_image      = $this->params->get('base_image');
+$logo            = $this->params->get('logo', '');
+$logo_footer     = $this->params->get('logo_footer', '');
+$base_image      = $this->params->get('base_image', '');
 $gacode          = $app->get('gacode', $this->params->get('gacode', ''));
 $gtmcode         = $app->get('gtmcode', $this->params->get('gtmcode', ''));
 $ga_anonymizeIp  = (bool) $app->get('ga_anonymizeip', true);
@@ -103,7 +103,7 @@ $fbpixel         = $app->get('fbpixel', $this->params->get('fbpixel', ''));
 $adsense_key     = $app->get('googleads', $this->params->get('googleads', ''));
 $pageclass_sfx   = is_object($active) ? $active->getParams()->get('pageclass_sfx', ' inner-page') : ' inner-page';
 $og_title        = htmlentities($this->getTitle(), ENT_QUOTES);
-$og_desc         = htmlentities($this->getDescription(), ENT_QUOTES);
+$og_desc         = $this->getDescription() ? htmlentities($this->getDescription(), ENT_QUOTES) : '';
 $og_keywords     = htmlentities($this->getMetaData('keywords'), ENT_QUOTES);
 $og_image        = '';
 $og_img_width    = 300;
@@ -145,6 +145,7 @@ if(Version::MAJOR_VERSION === 4)
 		['type' => 'application/json', 'class' => 'joomla-script-options new'],
 		['core']
 	); */
+
 	$wa->disableScript('bootstrap.collapse');
 	$wa->disableScript('bootstrap.popover');
 	$wa->disableScript('bootstrap.es5');
@@ -189,12 +190,7 @@ $app->enqueueMessage('Message test', 'error'); */
 				function gtag() { dataLayer.push(arguments); }
 				gtag('js', new Date());
 
-				gtag('config', '<?php echo $gacode; ?>', {
-					'storage': 'none',
-					'storeGac': false,
-					'anonymize_ip':   <?php echo $ga_anonymizeIp === true ? 'true' : 'false'; ?>,
-					'send_page_view': true
-				});
+				gtag('config', '<?php echo $gacode; ?>', { 'send_page_view': true });
 			</script>
 		<?php endif; ?>
 
