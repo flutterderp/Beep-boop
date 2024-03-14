@@ -26,10 +26,11 @@
   --color__warning: #fff48e;
   --color__warning__focus: #fee605;
   --color__white: #fefefe;
+  --sans-serif: 'Helvetica Neue', Helvetica, Aria, sans-serif;
 }
 
 * { box-sizing: border-box; margin: 0; min-height: 0; min-width: 0; padding: 0; }
-body { background: var(--color__white); color: var(--color__black); font-family: 'Nunito', 'Helvetica Neue', Helvetica, Aria, sans-serif;
+body { background: var(--color__white); color: var(--color__black); font-family: Arimo, var(--sans-serif);
   font-size: 16px; line-height: calc(25 / 16); }
 
 a { color: var(--color__primary); text-decoration: underline; }

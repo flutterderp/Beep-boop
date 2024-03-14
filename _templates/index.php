@@ -71,7 +71,7 @@ $this->addScript($this->baseurl . '/templates/' . $this->template . '/javascript
 // Stylesheets
 $this->addHeadLink('https://fonts.googleapis.com', 'preconnect');
 $this->addHeadLink('https://fonts.gstatic.com', 'preconnect', 'rel', array('crossorigin' => 'crossorigin'));
-$this->addStyleSheet('https://fonts.googleapis.com/css2?family=Caveat&family=Nunito:ital,wght@0,400;0,600;0,700;1,400;1,700&display=swap');
+$this->addStyleSheet('https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400..700;1,400..700&family=Caveat:wght@400..700&display=swap');
 
 if(Version::MAJOR_VERSION < 4)
 {

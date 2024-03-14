@@ -37,12 +37,12 @@ $direction = Factory::getLanguage()->isRtl() ? 'left' : 'right';
 	<?php elseif ($params->get('show_readmore_title', 0) == 0) : ?>
 		<a class="button" href="<?php echo $displayData['link']; ?>" aria-label="<?php echo Text::_($option . '_READ_MORE') . $this->escape($item->title); ?>">
 			<?php /* echo '<span class="fa fa-chevron-' . $direction . '" aria-hidden="true"></span>'; */ ?>
-			<?php echo Text::_($option . '_READ_MORE_TITLE'); ?>
+			<?php echo Text::_($option . '_READ_MORE'); ?>
 		</a>
 	<?php else : ?>
 		<a class="button" href="<?php echo $displayData['link']; ?>" aria-label="<?php echo Text::_($option . '_READ_MORE') . $this->escape($item->title); ?>">
 			<?php /* echo '<span class="fa fa-chevron-' . $direction . '" aria-hidden="true"></span>'; */ ?>
-			<?php echo Text::sprintf($option . '_READ_MORE', HTMLHelper::_('string.truncate', $item->title, $params->get('readmore_limit'))); ?>
+			<?php echo Text::_($option . '_READ_MORE'); ?>
 		</a>
 	<?php endif; ?>
 </p>
