@@ -11,6 +11,10 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Language\Text;
 
+if (empty($moduleclass_sfx))
+{
+	$moduleclass_sfx = '';
+}
 ?>
 <ul class="nav category-module<?php echo $moduleclass_sfx; ?> menu vertical">
 	<?php if ($grouped) : ?>

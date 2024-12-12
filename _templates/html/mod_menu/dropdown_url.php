@@ -29,6 +29,11 @@ if ($item->anchor_rel)
 	$attributes['rel'] = $item->anchor_rel;
 }
 
+if (empty($item->anchor_class))
+{
+	$item->anchor_class = '';
+}
+
 $linktype = $item->title;
 
 if ($item->menu_image)

@@ -13,6 +13,11 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 
 HTMLHelper::_('bootstrap.tooltip');
+
+if (empty($moduleclass_sfx))
+{
+	$moduleclass_sfx = '';
+}
 ?>
 <ul itemscope itemtype="https://schema.org/BreadcrumbList" class="breadcrumb <?php echo $moduleclass_sfx; ?>">
 	<?php if ($params->get('showHere', 1)) : ?>

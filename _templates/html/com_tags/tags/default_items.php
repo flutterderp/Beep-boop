@@ -15,6 +15,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Version;
+use Joomla\Component\Tags\Site\Helper\RouteHelper;
 
 HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers');
 
@@ -100,7 +101,7 @@ Factory::getDocument()->addScriptDeclaration("
 			<?php endif; ?>
 			<?php if ((!empty($item->access)) && in_array($item->access, $this->user->getAuthorisedViewLevels())) : ?>
 				<li class="cat-list-row<?php echo $i % 2; ?>">
-					<a href="<?php echo Route::_(TagsHelperRoute::getTagRoute($item->id . ':' . $item->alias)); ?>">
+					<a href="<?php echo Route::_(RouteHelper::getTagRoute($item->id . ':' . $item->alias)); ?>">
 						<?php echo $this->escape($item->title); ?>
 					</a>
 			<?php endif; ?>
