@@ -18,7 +18,7 @@ $default_img = 'https://via.placeholder.com/176x96.png?text=No%20image';
 <?php foreach ($list as $item) : ?>
 	<?php $images = json_decode($item->images); ?>
 	<article class="lead-item">
-		<h1 id="article_<?php echo $item->slug; ?>">
+		<h1 itemprop="name">
 			<?php if ($params->get('link_titles') == 1) : ?>
 				<a href="<?php echo $item->link; ?>"><?php echo $item->title; ?></a>
 			<?php else : ?>
@@ -53,14 +53,14 @@ $default_img = 'https://via.placeholder.com/176x96.png?text=No%20image';
 
 		<?php if ($params->get('show_readmore')) : ?>
 			<p class="readmore">
-				<a class="button <?php echo $item->active; ?>" href="<?php echo $item->link; ?>" aria-labelledby="article_<?php echo $item->slug; ?>">
+				<a class="button <?php echo $item->active; ?>" href="<?php echo $item->link; ?>" aria-label="<?php echo Text::_('MOD_ARTICLES_CATEGORY_READ_MORE') . $item->title; ?>">
 					<?php if ($item->params->get('access-view') == false) : ?>
 						<?php echo Text::_('MOD_ARTICLES_CATEGORY_REGISTER_TO_READ_MORE'); ?>
 					<?php elseif ($readmore = $item->alternative_readmore) : ?>
 						<?php echo $readmore; ?>
 						<?php echo HTMLHelper::_('string.truncate', $item->title, $params->get('readmore_limit')); ?>
 					<?php elseif ($params->get('show_readmore_title', 0) == 0) : ?>
-						<?php echo Text::sprintf('MOD_ARTICLES_CATEGORY_READ_MORE_TITLE'); ?>
+						<?php echo Text::_('MOD_ARTICLES_CATEGORY_READ_MORE_TITLE'); ?>
 					<?php else : ?>
 						<?php echo Text::_('MOD_ARTICLES_CATEGORY_READ_MORE'); ?>
 						<?php echo HTMLHelper::_('string.truncate', $item->title, $params->get('readmore_limit')); ?>
