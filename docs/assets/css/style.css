@@ -243,7 +243,28 @@ footer p { margin: 0; }
 .footer-item { margin: 14px auto; }
 /* End footer */
 
-/* Media queries */
+/* Theme preference queries */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color__primary: #efbcda;
+    --color__primary__focus: #ebacd1;
+    --color__secondary: #7a7a7a;
+    --color__secondary__focus: #8e8e8e;
+  }
+
+  body {
+    background-color: #12334a;
+    color: var(--color__white);
+  }
+
+  aside > div, blockquote {
+    background-color: #215e87;
+  }
+  .menu.vertical li { border-bottom-color: #06121b; }
+  .breadcrumb { background: #215e87; }
+}
+
+/* Responsive media queries */
 @media screen and (min-width: 28.125em) { }
 
 @media screen and (max-width: 36.188em) {
