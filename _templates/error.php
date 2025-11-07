@@ -13,7 +13,6 @@ use Joomla\CMS\Filter\OutputFilter;
 use Joomla\CMS\Helper\ModuleHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
-use Joomla\CMS\Version;
 
 // Set HTTP header
 switch($this->error->getCode())
@@ -28,10 +27,10 @@ switch($this->error->getCode())
 		break;
 }
 
-/* $utc_tz  = new DateTimeZone('UTC');
-$today   = new DateTime(null, $utc_tz);
+$utc_tz  = new DateTimeZone('UTC');
+$today   = new DateTime('', $utc_tz);
 $logFile = JPATH_BASE . '/error_log';
-$handle  = fopen($logFile, 'a+');
+/* $handle  = fopen($logFile, 'a+');
 error_log('[' . $today->format('H:i:s') . '] ' . htmlspecialchars($this->error->getCode() . ': ' . $this->error->getMessage(), ENT_QUOTES, 'utf-8') . ' in ', 3, $logFile);
 error_log(OutputFilter::ampReplace(Uri::getInstance()->getPath()) . PHP_EOL, 3, $logFile);
 fclose($handle); */
@@ -39,13 +38,12 @@ fclose($handle); */
 $app             = Factory::getApplication();
 $doc             = Factory::getDocument();
 $user            = Factory::getUser();
-$error_type      = Version::MAJOR_VERSION === 4 ? 'error' : 'html';
-$today           = new DateTime(null, new DateTimeZone('UTC'));
+$error_type      = 'error';
 $isHtml          = ($doc->_type === $error_type) ? true : false;
 // $isHtml          = (method_exists($doc, 'getHeadData') !== true) ? true : false;
 $this->baseurl   = Uri::root(false);
-$this->language  = $doc->language;
 $this->debug     = true;
+$this->language  = $doc->language;
 $this->direction = $doc->direction;
 $this->template  = 'candelaaluminium';
 // Getting params from template
@@ -60,7 +58,7 @@ $task            = $app->input->getCmd('task', '');
 $itemid          = $app->input->getCmd('Itemid', '');
 $sitename        = $app->get('sitename');
 
-if($isHtml !== true)
+if ($isHtml !== true)
 {
 	$uri      = Uri::getInstance();
 	$pathname = pathinfo($uri->getPath(), PATHINFO_DIRNAME);
@@ -77,7 +75,7 @@ $doc->title                         = $oldHeadData['title'];
 $doc->description                   = $oldHeadData['description'];
 $doc->_metaTags['name']['keywords'] = isset($oldHeadData['metaTags']['name']['keywords']) ? $oldHeadData['metaTags']['name']['keywords'] : '';
 
-if($task == "edit" || $layout == "form" )
+if ($task == "edit" || $layout == "form" )
 {
 	$fullWidth = 1;
 }
@@ -90,14 +88,14 @@ else
 // JHtml::_('jquery.framework');
 
 // JavaScript files
-$doc->addScript($this->baseurl . '/templates/' . $this->template . '/javascript/jquery-3.5.1.min.js', null, array('async' => false));
-// $doc->addScript($this->baseurl . '/templates/' . $this->template . '/javascript/jquery-migrate-3.0.0.min.js', null, array('async' => true));
+$doc->addScript($this->baseurl . '/templates/' . $this->template . '/javascript/jquery-3.5.1.min.js', null, ['async' => false]);
+// $doc->addScript($this->baseurl . '/templates/' . $this->template . '/javascript/jquery-migrate-3.0.0.min.js', null, ['async' => false]);
 // Stylesheets
 $doc->addHeadLink('https://fonts.googleapis.com', 'preconnect');
 $doc->addHeadLink('https://fonts.gstatic.com', 'preconnect', 'rel', array('crossorigin' => 'crossorigin'));
 $doc->addStyleSheet('https://fonts.googleapis.com/css2?family=Caveat&family=Nunito:ital,wght@0,400;0,600;0,700;1,400;1,700&display=swap');
-$doc->addStyleSheet($this->baseurl . '/templates/system/css/system.css');
-$doc->addStyleSheet('https://use.fontawesome.com/releases/v5.15.4/css/all.css', null, array('crossorigin' => 'anonymous'));
+$doc->addStyleSheet('https://use.fontawesome.com/releases/v6.7.1/css/all.css');
+// $doc->addStyleSheet('https://use.fontawesome.com/releases/v5.15.4/css/all.css');
 
 $css_keys = array_keys($oldHeadData['styleSheets']);
 
@@ -106,9 +104,9 @@ foreach($css_keys as $styleSheet)
 	$doc->addStyleSheet($styleSheet);
 }
 
-$doc->addStyleSheet($this->baseurl . '/templates/' . $this->template . '/css/custom.css');
+$doc->addStyleSheet($this->baseurl . '/templates/' . $this->template . '/css/custom.css?v=1.' . time());
 
-/* if(method_exists($doc, 'getHeadData'))
+/* if (method_exists($doc, 'getHeadData'))
 {
 	$head_data = $doc->getHeadData();
 }
@@ -180,7 +178,7 @@ $head_data = $doc->getHeadData();
 						<li><?php echo Text::_('JERROR_LAYOUT_YOU_HAVE_NO_ACCESS_TO_THIS_PAGE'); ?></li>
 					</ul>
 
-					<?php if(JModuleHelper::getModule('search')) : ?>
+					<?php if (JModuleHelper::getModule('search')) : ?>
 						<p><strong><?php echo Text::_('JERROR_LAYOUT_SEARCH'); ?></strong></p>
 						<p><?php echo Text::_('JERROR_LAYOUT_SEARCH_PAGE'); ?></p>
 						<?php echo $doc->getBuffer('module', 'search'); ?>
@@ -194,11 +192,11 @@ $head_data = $doc->getHeadData();
 						<?php echo htmlspecialchars($this->error->getMessage(), ENT_QUOTES, 'UTF-8');?>
 					</p>
 
-					<?php if($this->debug) : ?>
+					<?php if ($this->debug) : ?>
 						<div class="table-wrapper">
 							<?php echo $this->renderBacktrace(); ?>
 							<?php // Check if there are more Exceptions and render their data as well ?>
-							<?php if($this->error->getPrevious()) : ?>
+							<?php if ($this->error->getPrevious()) : ?>
 								<?php $loop = true; ?>
 								<?php // Reference $this->_error here and in the loop as setError() assigns errors to this property and we need this for the backtrace to work correctly ?>
 								<?php // Make the first assignment to setError() outside the loop so the loop does not skip Exceptions ?>
@@ -218,7 +216,7 @@ $head_data = $doc->getHeadData();
 					<?php /* echo $doc->getBuffer('modules', 'copyfoot', array('style' => 'xhtml5')); */ ?>
 				</main>
 
-				<?php /* if(!empty($sidebar_content)) : ?>
+				<?php /* if (!empty($sidebar_content)) : ?>
 					<aside class="sidebar column" role="complementary" aria-label="Sidebar content">
 						<?php echo $sidebar_content; ?>
 					</aside>
@@ -247,15 +245,11 @@ $head_data = $doc->getHeadData();
 			<script src="<?php echo $script; ?>"></script>
 		<?php endforeach; ?>
 
-		<script src="<?php echo $this->baseurl . '/templates/' . $this->template; ?>/javascript/custom.js"></script>
+		<script src="<?php echo $this->baseurl . '/templates/' . $this->template; ?>/javascript/custom.js?v=1.<?php echo time(); ?>"></script>
 
-		<?php if(isset($oldHeadData['script']['text/javascript']) && !empty($oldHeadData['script']['text/javascript'])) : ?>
-			<?php if(Version::MAJOR_VERSION === 4) : ?>
-				<?php $script_text = implode(PHP_EOL, $oldHeadData['script']['text/javascript']); ?>
-				<script><?php echo $script_text; ?></script>
-			<?php else : ?>
-				<script><?php echo $oldHeadData['script']['text/javascript']; ?></script>
-			<?php endif; ?>
+		<?php if (isset($oldHeadData['script']['text/javascript']) && !empty($oldHeadData['script']['text/javascript'])) : ?>
+			<?php $script_text = implode(PHP_EOL, $oldHeadData['script']['text/javascript']); ?>
+			<script><?php echo $script_text; ?></script>
 		<?php endif; ?>
 	</body>
 </html>
