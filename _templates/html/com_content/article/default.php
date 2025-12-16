@@ -7,10 +7,10 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\Component\Content\Administrator\Extension\ContentComponent;
-// use Joomla\Component\Content\Site\Helper\RouteHelper;
+use Joomla\Component\Content\Site\Helper\RouteHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filter\OutputFilter;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -38,8 +38,8 @@ $canEdit    = $params->get('access-edit');
 $info       = $params->get('info_block_position', 0);
 $root_url   = preg_replace("/\/$/", '', Uri::root());
 // $full_image = LayoutHelper::render('joomla.content.full_image', $this->item);
-// $doc->addHeadLink(Route::_(ContentHelperRoute::getArticleRoute($this->item->slug, $this->item->catid)), 'canonical');
-$doc->addCustomTag('<link href="' . $root_url . Route::_(ContentHelperRoute::getArticleRoute($this->item->slug, $this->item->catid)) . '" rel="canonical">');
+// $doc->addHeadLink(Route::_(RouteHelper::getArticleRoute($this->item->slug, $this->item->catid)), 'canonical');
+$doc->addCustomTag('<link href="' . $root_url . Route::_(RouteHelper::getArticleRoute($this->item->slug, $this->item->catid)) . '" rel="canonical">');
 
 foreach($this->item->jcfields as $key => $field)
 {
@@ -63,11 +63,11 @@ if(Version::MAJOR_VERSION < 4)
 	$image_fulltext = $images->image_fulltext ? $images->image_fulltext : $images->image_intro;
 	$image_fulltext = ($image_fulltext && file_exists(JPATH_BASE . '/' . $image_fulltext)) ? $image_fulltext : $tpl_params->get('logo', '');
 	// echo '<meta name="twitter:card" content="summary_large_image">';
-	// echo '<meta name="twitter:url" content="'.Route::_(ContentHelperRoute::getArticleRoute($this->item->slug, $this->item->catid)).'">';
+	// echo '<meta name="twitter:url" content="'.Route::_(RouteHelper::getArticleRoute($this->item->slug, $this->item->catid)).'">';
 	echo '<meta name="twitter:description" content="'.$this->escape($this->item->introtext).'">';
 
 	?>
-	<link itemprop="mainEntityOfPage" href="<?php echo Route::_(ContentHelperRoute::getArticleRoute($this->item->slug, $this->item->catid)); ?>">
+	<link itemprop="mainEntityOfPage" href="<?php echo Route::_(RouteHelper::getArticleRoute($this->item->slug, $this->item->catid)); ?>">
 	<meta itemprop="headline" content="<?php echo $this->escape($this->item->title); ?>">
 	<meta itemprop="author" content="<?php echo $this->item->created_by_alias ? $this->item->created_by_alias : $this->item->author; ?>">
 	<div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
@@ -215,7 +215,7 @@ if(Version::MAJOR_VERSION < 4)
 	<?php $active = $menu->getActive(); ?>
 	<?php $itemId = $active->id; ?>
 	<?php $link = new Uri(Route::_('index.php?option=com_users&view=login&Itemid=' . $itemId, false)); ?>
-	<?php $link->setVar('return', base64_encode(ContentHelperRoute::getArticleRoute($this->item->slug, $this->item->catid, $this->item->language))); ?>
+	<?php $link->setVar('return', base64_encode(RouteHelper::getArticleRoute($this->item->slug, $this->item->catid, $this->item->language))); ?>
 	<p class="readmore">
 		<a href="<?php echo $link; ?>" class="register">
 		<?php $attribs = json_decode($this->item->attribs); ?>

@@ -7,10 +7,10 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\Component\Content\Administrator\Extension\ContentComponent;
-// use Joomla\Component\Content\Site\Helper\RouteHelper;
+use Joomla\Component\Content\Site\Helper\RouteHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Layout\FileLayout;
@@ -22,16 +22,10 @@ use Joomla\Event\Dispatcher;
 
 HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers');
 
-if(Version::MAJOR_VERSION < 4)
-{
-	HTMLHelper::_('behavior.caption');
-}
-
 $app         = Factory::getApplication();
 $doc         = Factory::getDocument();
 $currentDate = Factory::getDate()->format('Y-m-d H:i:s');
 $nullDate    = Factory::getDbo()->getNullDate();
-$pagesTotal  = (Version::MAJOR_VERSION === 4) ? $this->pagination->pagesTotal : $this->pagination->get('pages.total');
 $root_url    = preg_replace("/\/$/", '', Uri::root());
 
 $this->category->text = $this->category->description;
@@ -47,7 +41,7 @@ $beforeDisplayContent = trim(implode("\n", $results));
 $results = $app->triggerEvent('onContentAfterDisplay', array($this->category->extension . '.categories', &$this->category, &$this->params, 0));
 $afterDisplayContent = trim(implode("\n", $results));
 
-$doc->addCustomTag('<link href="' . $root_url . Route::_(ContentHelperRoute::getCategoryRoute($this->category->id)) . '" rel="canonical">');
+$doc->addCustomTag('<link href="' . $root_url . Route::_(RouteHelper::getCategoryRoute($this->category->id)) . '" rel="canonical">');
 ?>
 <div class="blog<?php echo $this->pageclass_sfx; ?>" itemscope itemtype="https://schema.org/Blog">
 	<?php if ($this->params->get('show_page_heading')) : ?>
@@ -157,7 +151,7 @@ $doc->addCustomTag('<link href="' . $root_url . Route::_(ContentHelperRoute::get
 			<?php endif; ?>
 			<?php echo $this->loadTemplate('children'); ?> </div>
 	<?php endif; ?>
-	<?php if (($this->params->def('show_pagination', 1) == 1 || ($this->params->get('show_pagination') == 2)) && ($pagesTotal > 1)) : ?>
+	<?php if (($this->params->def('show_pagination', 1) == 1 || ($this->params->get('show_pagination') == 2)) && ($this->pagination->pagesTotal > 1)) : ?>
 		<?php echo $this->pagination->getPaginationLinks(); ?>
 
 		<?php if ($this->params->def('show_pagination_results', 1)) : ?>

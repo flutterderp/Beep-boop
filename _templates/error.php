@@ -6,7 +6,7 @@
  * @license GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filter\OutputFilter;
@@ -178,7 +178,7 @@ $head_data = $doc->getHeadData();
 						<li><?php echo Text::_('JERROR_LAYOUT_YOU_HAVE_NO_ACCESS_TO_THIS_PAGE'); ?></li>
 					</ul>
 
-					<?php if (JModuleHelper::getModule('search')) : ?>
+					<?php if (ModuleHelper::getModule('search')) : ?>
 						<p><strong><?php echo Text::_('JERROR_LAYOUT_SEARCH'); ?></strong></p>
 						<p><?php echo Text::_('JERROR_LAYOUT_SEARCH_PAGE'); ?></p>
 						<?php echo $doc->getBuffer('module', 'search'); ?>

@@ -7,8 +7,9 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
+use Joomla\CMS\Filter\OutputFilter;
 use Joomla\Utilities\ArrayHelper;
 
 $module  = $displayData['module'];
@@ -30,8 +31,8 @@ $moduleId      = !in_array($module->position, $modPositions) ? 'mod' . $module->
 $headerClass   = $params->get('header_class');
 $headerClass   = !empty($headerClass) ? ' class="' . htmlspecialchars($headerClass, ENT_COMPAT, 'UTF-8') . '"' : '';
 
-echo '<' . $moduleTag . ' class="moduletable' . htmlspecialchars($params->get('moduleclass_sfx'), ENT_COMPAT, 'UTF-8') . $moduleClass .
-	'" id="' . $moduleId . JFilterOutput::stringURLSafe($module->title) . '">';
+echo '<' . $moduleTag . ' class="moduletable' . htmlspecialchars($params->get('moduleclass_sfx', ''), ENT_COMPAT, 'UTF-8') . $moduleClass .
+	'" id="' . $moduleId . OutputFilter::stringURLSafe($module->title) . '">';
 
 if((bool) $module->showtitle)
 	echo '<' . $headerTag . $headerClass . '>' . $module->title . '</' . $headerTag . '>';
